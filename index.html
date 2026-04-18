@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI PULSE â Noticias de Inteligencia Artificial</title>
+<title>AI PULSE — Noticias de Inteligencia Artificial</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
   :root[data-theme="dark"] {
@@ -44,7 +44,7 @@
     overflow-x: hidden;
   }
 
-  /* ââ NOISE TEXTURE OVERLAY ââ */
+  /* ── NOISE TEXTURE OVERLAY ── */
   body::before {
     content: '';
     position: fixed; inset: 0;
@@ -52,7 +52,7 @@
     pointer-events: none; z-index: 0; opacity: 0.6;
   }
 
-  /* ââ HEADER ââ */
+  /* ── HEADER ── */
   header {
     position: sticky; top: 0; z-index: 100;
     background: var(--bg2);
@@ -94,7 +94,7 @@
     background: var(--glow);
   }
 
-  /* ââ HERO ââ */
+  /* ── HERO ── */
   .hero {
     position: relative;
     padding: 5rem 2rem 4rem;
@@ -170,7 +170,7 @@
     50% { transform: rotate(3deg); }
   }
 
-  /* ââ TICKER ââ */
+  /* ── TICKER ── */
   .ticker-wrap {
     background: var(--accent);
     color: var(--bg);
@@ -195,7 +195,7 @@
     to { transform: translateX(-50%); }
   }
 
-  /* ââ MAIN LAYOUT ââ */
+  /* ── MAIN LAYOUT ── */
   main {
     max-width: 1200px;
     margin: 0 auto;
@@ -203,7 +203,7 @@
     position: relative; z-index: 1;
   }
 
-  /* ââ SECTION HEADERS ââ */
+  /* ── SECTION HEADERS ── */
   .section-header {
     display: flex;
     align-items: center;
@@ -236,7 +236,7 @@
 
   section { margin-bottom: 4rem; }
 
-  /* ââ CARDS ââ */
+  /* ── CARDS ── */
   .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -332,7 +332,7 @@
     transition: gap 0.2s;
   }
   .card-link:hover { gap: 0.8rem; }
-  .card-link::after { content: 'â'; }
+  .card-link::after { content: '→'; }
 
   .card-platform {
     font-family: 'Space Mono', monospace;
@@ -343,7 +343,7 @@
     border-radius: 3px;
   }
 
-  /* ââ FEATURED CARD ââ */
+  /* ── FEATURED CARD ── */
   .card-featured {
     grid-column: 1 / -1;
     display: grid;
@@ -361,7 +361,7 @@
     .card-featured .card-emoji-banner { height: 120px; }
   }
 
-  /* ââ MEME DIVIDER ââ */
+  /* ── MEME DIVIDER ── */
   .meme-divider {
     text-align: center;
     padding: 2rem;
@@ -379,7 +379,7 @@
   }
   .meme-divider strong { color: var(--accent3); }
 
-  /* ââ BREAKING NEWS BANNER ââ */
+  /* ── BREAKING NEWS BANNER ── */
   .breaking {
     background: var(--accent2);
     border-radius: 6px;
@@ -406,7 +406,7 @@
     opacity: 0.95;
   }
 
-  /* ââ FOOTER ââ */
+  /* ── FOOTER ── */
   footer {
     border-top: 1px solid var(--border);
     padding: 3rem 2rem;
@@ -430,7 +430,7 @@
   }
   .footer-emojis { font-size: 1.5rem; margin: 1rem 0; letter-spacing: 0.5rem; }
 
-  /* ââ SCROLL ANIMATIONS ââ */
+  /* ── SCROLL ANIMATIONS ── */
   .reveal {
     opacity: 0;
     transform: translateY(30px);
@@ -441,7 +441,7 @@
     transform: translateY(0);
   }
 
-  /* ââ LANG HIDDEN ââ */
+  /* ── LANG HIDDEN ── */
   [data-lang] { display: none; }
   [data-lang-inline] { display: none; }
   .lang-es [data-lang="es"],
@@ -465,12 +465,12 @@
   <div class="logo">AI<span>PULSE</span></div>
   <div class="controls">
     <button class="btn-toggle" id="langBtn" onclick="toggleLang()">
-      <span data-lang-inline="es">ð EN</span>
-      <span data-lang-inline="en">ð ES</span>
+      <span data-lang-inline="es">🌐 EN</span>
+      <span data-lang-inline="en">🌐 ES</span>
     </button>
     <button class="btn-toggle" id="themeBtn" onclick="toggleTheme()">
-      <span data-lang-inline="es">âï¸ DÃA</span>
-      <span data-lang-inline="en">âï¸ DAY</span>
+      <span data-lang-inline="es">☀️ DÍA</span>
+      <span data-lang-inline="en">☀️ DAY</span>
     </button>
   </div>
 </header>
@@ -478,35 +478,35 @@
 <!-- HERO -->
 <div class="hero">
   <p class="hero-tag">
-    <span data-lang-inline="es">ð¤ Tu fuente de IA Â· EdiciÃ³n 2026</span>
-    <span data-lang-inline="en">ð¤ Your AI source Â· 2026 Edition</span>
+    <span data-lang-inline="es">🤖 Tu fuente de IA · Edición 2026</span>
+    <span data-lang-inline="en">🤖 Your AI source · 2026 Edition</span>
   </p>
   <h1>
     <span data-lang-inline="es">EL MUNDO<br>DE LA <em>IA</em></span>
     <span data-lang-inline="en">THE WORLD<br>OF <em>AI</em></span>
   </h1>
   <p class="hero-sub">
-    <span data-lang-inline="es">Noticias, videos y tendencias que estÃ¡n cambiando todo â para bien o para mal ð</span>
-    <span data-lang-inline="en">News, videos and trends changing everything â for better or worse ð</span>
+    <span data-lang-inline="es">Noticias, videos y tendencias que están cambiando todo — para bien o para mal 😅</span>
+    <span data-lang-inline="en">News, videos and trends changing everything — for better or worse 😅</span>
   </p>
-  <span class="comic-hero">ð§ </span>
+  <span class="comic-hero">🧠</span>
 </div>
 
 <!-- TICKER -->
 <div class="ticker-wrap" aria-hidden="true">
   <div class="ticker-inner" data-lang="es">
-    <span>ð´ CYBERSECURITY + IA = nueva era de amenazas</span>
-    <span>â¡ Spec Driven Development: el futuro del cÃ³digo</span>
-    <span>ð¤ Los LLMs ya escriben mejor cÃ³digo que muchos devs</span>
-    <span>ð¡ï¸ Mythode AI: nueva frontera en ciberseguridad</span>
-    <span>ð Stanford AI Index 2026: IA se adopta mÃ¡s rÃ¡pido que la PC o Internet</span>
+    <span>🔴 CYBERSECURITY + IA = nueva era de amenazas</span>
+    <span>⚡ Spec Driven Development: el futuro del código</span>
+    <span>🤖 Los LLMs ya escriben mejor código que muchos devs</span>
+    <span>🛡️ Mythode AI: nueva frontera en ciberseguridad</span>
+    <span>🚀 Stanford AI Index 2026: IA se adopta más rápido que la PC o Internet</span>
   </div>
   <div class="ticker-inner" data-lang="en">
-    <span>ð´ CYBERSECURITY + AI = new threat era</span>
-    <span>â¡ Spec Driven Development: the future of code</span>
-    <span>ð¤ LLMs already write better code than many devs</span>
-    <span>ð¡ï¸ Mythode AI: new frontier in cybersecurity</span>
-    <span>ð Stanford AI Index 2026: AI adopted faster than PC or Internet</span>
+    <span>🔴 CYBERSECURITY + AI = new threat era</span>
+    <span>⚡ Spec Driven Development: the future of code</span>
+    <span>🤖 LLMs already write better code than many devs</span>
+    <span>🛡️ Mythode AI: new frontier in cybersecurity</span>
+    <span>🚀 Stanford AI Index 2026: AI adopted faster than PC or Internet</span>
   </div>
 </div>
 
@@ -516,47 +516,47 @@
   <!-- BREAKING -->
   <div class="breaking reveal">
     <span class="breaking-label">
-      <span data-lang-inline="es">â¡ DESTACADO</span>
-      <span data-lang-inline="en">â¡ FEATURED</span>
+      <span data-lang-inline="es">⚡ DESTACADO</span>
+      <span data-lang-inline="en">⚡ FEATURED</span>
     </span>
     <p class="breaking-text">
-      <span data-lang-inline="es">La IA ya no es solo una herramienta â es un co-autor, un hacker potencial y el prÃ³ximo junior dev de tu equipo. Â¿EstÃ¡s listo?</span>
-      <span data-lang-inline="en">AI is no longer just a tool â it's a co-author, a potential hacker and your team's next junior dev. Are you ready?</span>
+      <span data-lang-inline="es">La IA ya no es solo una herramienta — es un co-autor, un hacker potencial y el próximo junior dev de tu equipo. ¿Estás listo?</span>
+      <span data-lang-inline="en">AI is no longer just a tool — it's a co-author, a potential hacker and your team's next junior dev. Are you ready?</span>
     </p>
   </div>
 
-  <!-- âââââââââââââââââââââââââââââââ -->
-  <!-- NOTICIA DEL DÃA                -->
-  <!-- âââââââââââââââââââââââââââââââ -->
+  <!-- ═══════════════════════════════ -->
+  <!-- NOTICIA DEL DÍA                -->
+  <!-- ═══════════════════════════════ -->
   <section>
     <div class="section-header reveal">
-      <span class="section-emoji">ð°</span>
+      <span class="section-emoji">📰</span>
       <h2 class="section-title">
-        <span data-lang-inline="es">Noticia del DÃ­a</span>
+        <span data-lang-inline="es">Noticia del Día</span>
         <span data-lang-inline="en">News of the Day</span>
       </h2>
       <span class="section-badge hot">
-        <span data-lang-inline="es">ð¥ HOY</span>
-        <span data-lang-inline="en">ð¥ TODAY</span>
+        <span data-lang-inline="es">🔥 HOY</span>
+        <span data-lang-inline="en">🔥 TODAY</span>
       </span>
     </div>
 
     <div class="cards-grid">
       <div class="card card-featured reveal">
-        <div class="card-emoji-banner">ððð¤</div>
+        <div class="card-emoji-banner">📊🌍🤖</div>
         <div style="display:flex; flex-direction:column; flex:1;">
           <div class="card-body">
             <p class="card-type">
-              <span data-lang-inline="es">ð Reporte Global Â· Stanford HAI</span>
-              <span data-lang-inline="en">ð Global Report Â· Stanford HAI</span>
+              <span data-lang-inline="es">📈 Reporte Global · Stanford HAI</span>
+              <span data-lang-inline="en">📈 Global Report · Stanford HAI</span>
             </p>
             <h3>
-              <span data-lang-inline="es">Stanford AI Index 2026: La IA se adopta mÃ¡s rÃ¡pido que la PC o el Internet</span>
+              <span data-lang-inline="es">Stanford AI Index 2026: La IA se adopta más rápido que la PC o el Internet</span>
               <span data-lang-inline="en">Stanford AI Index 2026: AI is adopted faster than the PC or the Internet</span>
             </h3>
             <p>
-              <span data-lang-inline="es">El reporte anual de Stanford revela que la IA generativa alcanzÃ³ 53% de adopciÃ³n global en solo 3 aÃ±os. En coding, los benchmarks pasaron del 60% al casi 100% del nivel humano en un solo aÃ±o. La inversiÃ³n privada en IA en EE.UU. llegÃ³ a $285.9 mil millones â 23 veces mÃ¡s que China. Pero el impacto ambiental preocupa: los centros de datos de IA ya consumen tanta energÃ­a como el estado de Nueva York.</span>
-              <span data-lang-inline="en">Stanford's annual report reveals generative AI reached 53% global adoption in just 3 years. In coding, benchmarks jumped from 60% to nearly 100% of human baseline in a single year. U.S. private AI investment reached $285.9 billion â 23 times more than China. But environmental impact is concerning: AI data centers now consume as much energy as the state of New York.</span>
+              <span data-lang-inline="es">El reporte anual de Stanford revela que la IA generativa alcanzó 53% de adopción global en solo 3 años. En coding, los benchmarks pasaron del 60% al casi 100% del nivel humano en un solo año. La inversión privada en IA en EE.UU. llegó a $285.9 mil millones — 23 veces más que China. Pero el impacto ambiental preocupa: los centros de datos de IA ya consumen tanta energía como el estado de Nueva York.</span>
+              <span data-lang-inline="en">Stanford's annual report reveals generative AI reached 53% global adoption in just 3 years. In coding, benchmarks jumped from 60% to nearly 100% of human baseline in a single year. U.S. private AI investment reached $285.9 billion — 23 times more than China. But environmental impact is concerning: AI data centers now consume as much energy as the state of New York.</span>
             </p>
           </div>
           <div class="card-footer">
@@ -571,19 +571,19 @@
     </div>
   </section>
 
-  <!-- âââââââââââââââââââââââââââââââ -->
-  <!-- SECCIÃN 1: CIBERSEGURIDAD + IA -->
-  <!-- âââââââââââââââââââââââââââââââ -->
+  <!-- ═══════════════════════════════ -->
+  <!-- SECCIÓN 1: CIBERSEGURIDAD + IA -->
+  <!-- ═══════════════════════════════ -->
   <section>
     <div class="section-header reveal">
-      <span class="section-emoji">ð¡ï¸</span>
+      <span class="section-emoji">🛡️</span>
       <h2 class="section-title">
         <span data-lang-inline="es">Ciberseguridad & IA</span>
         <span data-lang-inline="en">Cybersecurity & AI</span>
       </h2>
       <span class="section-badge hot">
-        <span data-lang-inline="es">ð¥ URGENTE</span>
-        <span data-lang-inline="en">ð¥ URGENT</span>
+        <span data-lang-inline="es">🔥 URGENTE</span>
+        <span data-lang-inline="en">🔥 URGENT</span>
       </span>
     </div>
 
@@ -592,20 +592,20 @@
       <!-- CARD FEATURED: Facebook cybersecurity -->
       <div class="card card-featured reveal">
         <div class="card-emoji-banner">
-          ðµï¸ââï¸ð»ð
+          🕵️‍♂️💻🔓
         </div>
         <div style="display:flex; flex-direction:column; flex:1;">
           <div class="card-body">
             <p class="card-type">
-              <span data-lang-inline="es">ð° Noticia General</span>
-              <span data-lang-inline="en">ð° General News</span>
+              <span data-lang-inline="es">📰 Noticia General</span>
+              <span data-lang-inline="en">📰 General News</span>
             </p>
             <h3>
               <span data-lang-inline="es">MYTHOS: Ciberseguridad en la Era de la IA</span>
               <span data-lang-inline="en">MYTHOS: Cybersecurity in the AI Era</span>
             </h3>
             <p>
-              <span data-lang-inline="es">La inteligencia artificial estÃ¡ redefiniendo el panorama de la ciberseguridad. Los atacantes ahora usan IA para crear malware mÃ¡s sofisticado, phishing personalizado y exploits automatizados. Pero tambiÃ©n los defensores tienen nuevas armas. Este video aborda los mitos mÃ¡s comunes sobre IA y seguridad, y por quÃ© es urgente que toda empresa entienda esta nueva realidad.</span>
+              <span data-lang-inline="es">La inteligencia artificial está redefiniendo el panorama de la ciberseguridad. Los atacantes ahora usan IA para crear malware más sofisticado, phishing personalizado y exploits automatizados. Pero también los defensores tienen nuevas armas. Este video aborda los mitos más comunes sobre IA y seguridad, y por qué es urgente que toda empresa entienda esta nueva realidad.</span>
               <span data-lang-inline="en">Artificial intelligence is redefining the cybersecurity landscape. Attackers now use AI to create more sophisticated malware, personalized phishing and automated exploits. But defenders also have new weapons. This video addresses the most common myths about AI and security, and why it's urgent for every company to understand this new reality.</span>
             </p>
           </div>
@@ -619,58 +619,31 @@
         </div>
       </div>
 
-    
-
-      <!-- Card added via Admin Panel - 2026-04-18 -->
-      <div class="card reveal">
-        <div class="card-emoji-banner">🤖🧠⚡</div>
-        <div class="card-body">
-          <p class="card-type">
-            <span data-lang-inline="es">🎥 Video YouTube</span>
-            <span data-lang-inline="en">🎥 Video YouTube</span>
-          </p>
-          <h3>
-            <span data-lang-inline="es">Prueba</span>
-            <span data-lang-inline="en">Test</span>
-          </h3>
-          <p>
-            <span data-lang-inline="es">Prueba es</span>
-            <span data-lang-inline="en">Test in</span>
-          </p>
-        </div>
-        <div class="card-footer">
-          <a class="card-link" href="yuyu" target="_blank" rel="noopener">
-              <span data-lang-inline="es">Ver mas</span>
-              <span data-lang-inline="en">See more</span>
-            </a>
-          <span class="card-platform">YouTube</span>
-        </div>
-      </div>
     </div><!-- /cards-grid -->
   </section>
 
   <!-- MEME DIVIDER -->
   <div class="meme-divider reveal">
-    <span class="meme-emoji">ð±ðð¤</span>
+    <span class="meme-emoji">😱🔓🤖</span>
     <p>
-      <span data-lang-inline="es">"Yo pensando que tenÃ­a buena contraseÃ±a..." <strong>vs la IA crackeÃ¡ndola en 0.3 segundos.</strong></span>
+      <span data-lang-inline="es">"Yo pensando que tenía buena contraseña..." <strong>vs la IA crackeándola en 0.3 segundos.</strong></span>
       <span data-lang-inline="en">"Me thinking I had a strong password..." <strong>vs the AI cracking it in 0.3 seconds.</strong></span>
     </p>
   </div>
 
-  <!-- ââââââââââââââââââââââââââââââââââââââ -->
-  <!-- SECCIÃN 2: EL FUTURO DE LA PROGRAMACIÃN -->
-  <!-- ââââââââââââââââââââââââââââââââââââââ -->
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECCIÓN 2: EL FUTURO DE LA PROGRAMACIÓN -->
+  <!-- ══════════════════════════════════════ -->
   <section>
     <div class="section-header reveal">
-      <span class="section-emoji">â¡</span>
+      <span class="section-emoji">⚡</span>
       <h2 class="section-title">
         <span data-lang-inline="es">El Futuro del Desarrollo</span>
         <span data-lang-inline="en">The Future of Development</span>
       </h2>
       <span class="section-badge new">
-        <span data-lang-inline="es">ð TENDENCIA</span>
-        <span data-lang-inline="en">ð TRENDING</span>
+        <span data-lang-inline="es">🆕 TENDENCIA</span>
+        <span data-lang-inline="en">🆕 TRENDING</span>
       </span>
     </div>
 
@@ -678,18 +651,18 @@
 
       <!-- CARD: Spec Driven Development -->
       <div class="card reveal">
-        <div class="card-emoji-banner">ðâï¸ð</div>
+        <div class="card-emoji-banner">📋✍️🚀</div>
         <div class="card-body">
           <p class="card-type">
-            <span data-lang-inline="es">ð¥ Video Â· YouTube</span>
-            <span data-lang-inline="en">ð¥ Video Â· YouTube</span>
+            <span data-lang-inline="es">🎥 Video · YouTube</span>
+            <span data-lang-inline="en">🎥 Video · YouTube</span>
           </p>
           <h3>
-            <span data-lang-inline="es">Spec Driven Development: El Futuro de la ProgramaciÃ³n</span>
+            <span data-lang-inline="es">Spec Driven Development: El Futuro de la Programación</span>
             <span data-lang-inline="en">Spec Driven Development: The Future of Programming</span>
           </h3>
           <p>
-            <span data-lang-inline="es">Â¿Y si en lugar de escribir cÃ³digo directamente, primero escribes una especificaciÃ³n detallada que la IA ejecuta? Spec Driven Development (SDD) es el paradigma que estÃ¡ reemplazando al "vibe coding". Aprende cÃ³mo estructurar tus prompts como specs formales, por quÃ© esto produce cÃ³digo mÃ¡s robusto, y cÃ³mo los Tech Leads pueden aprovechar esto para acelerar equipos enteros sin perder control de la arquitectura.</span>
+            <span data-lang-inline="es">¿Y si en lugar de escribir código directamente, primero escribes una especificación detallada que la IA ejecuta? Spec Driven Development (SDD) es el paradigma que está reemplazando al "vibe coding". Aprende cómo estructurar tus prompts como specs formales, por qué esto produce código más robusto, y cómo los Tech Leads pueden aprovechar esto para acelerar equipos enteros sin perder control de la arquitectura.</span>
             <span data-lang-inline="en">What if instead of writing code directly, you first write a detailed specification that AI executes? Spec Driven Development (SDD) is the paradigm replacing "vibe coding". Learn how to structure your prompts as formal specs, why this produces more robust code, and how Tech Leads can leverage this to accelerate entire teams without losing architectural control.</span>
           </p>
         </div>
@@ -707,103 +680,103 @@
 
   <!-- MEME DIVIDER 2 -->
   <div class="meme-divider reveal">
-    <span class="meme-emoji">ð¨âð»ðð¤¯</span>
+    <span class="meme-emoji">👨‍💻📝🤯</span>
     <p>
-      <span data-lang-inline="es">Desarrollador en 2020: <strong>"Escribo el cÃ³digo"</strong> â Desarrollador en 2025: <strong>"Escribo el spec y la IA escribe el cÃ³digo"</strong> â Desarrollador en 2030: ð¤</span>
-      <span data-lang-inline="en">Developer in 2020: <strong>"I write the code"</strong> â Developer in 2025: <strong>"I write the spec, AI writes the code"</strong> â Developer in 2030: ð¤</span>
+      <span data-lang-inline="es">Desarrollador en 2020: <strong>"Escribo el código"</strong> — Desarrollador en 2025: <strong>"Escribo el spec y la IA escribe el código"</strong> — Desarrollador en 2030: 🤔</span>
+      <span data-lang-inline="en">Developer in 2020: <strong>"I write the code"</strong> — Developer in 2025: <strong>"I write the spec, AI writes the code"</strong> — Developer in 2030: 🤔</span>
     </p>
   </div>
 
-  <!-- ââââââââââââââââââââââââââââââââââ -->
-  <!-- SECCIÃN 3: NOTICIAS DESTACADAS IA -->
-  <!-- ââââââââââââââââââââââââââââââââââ -->
+  <!-- ══════════════════════════════════ -->
+  <!-- SECCIÓN 3: NOTICIAS DESTACADAS IA -->
+  <!-- ══════════════════════════════════ -->
   <section>
     <div class="section-header reveal">
-      <span class="section-emoji">ð</span>
+      <span class="section-emoji">🌐</span>
       <h2 class="section-title">
         <span data-lang-inline="es">Lo que debes saber de IA</span>
         <span data-lang-inline="en">What you need to know about AI</span>
       </h2>
       <span class="section-badge trending">
-        <span data-lang-inline="es">ð TOP TEMAS</span>
-        <span data-lang-inline="en">ð TOP TOPICS</span>
+        <span data-lang-inline="es">📈 TOP TEMAS</span>
+        <span data-lang-inline="en">📈 TOP TOPICS</span>
       </span>
     </div>
 
     <div class="cards-grid">
 
       <div class="card reveal">
-        <div class="card-emoji-banner">ð¤ð§ â¡</div>
+        <div class="card-emoji-banner">🤖🧠⚡</div>
         <div class="card-body">
           <p class="card-type">
-            <span data-lang-inline="es">ð Concepto clave</span>
-            <span data-lang-inline="en">ð Key concept</span>
+            <span data-lang-inline="es">📌 Concepto clave</span>
+            <span data-lang-inline="en">📌 Key concept</span>
           </p>
           <h3>
-            <span data-lang-inline="es">Agentes de IA: Ya no solo responden, actÃºan</span>
+            <span data-lang-inline="es">Agentes de IA: Ya no solo responden, actúan</span>
             <span data-lang-inline="en">AI Agents: They no longer just respond, they act</span>
           </h3>
           <p>
-            <span data-lang-inline="es">Los LLMs pasaron de ser chatbots a agentes autÃ³nomos que navegan web, ejecutan cÃ³digo, gestionan archivos y coordinan otros agentes. Esto cambia completamente el rol del desarrollador: de escribir lÃ³gica a orquestar agentes especializados.</span>
+            <span data-lang-inline="es">Los LLMs pasaron de ser chatbots a agentes autónomos que navegan web, ejecutan código, gestionan archivos y coordinan otros agentes. Esto cambia completamente el rol del desarrollador: de escribir lógica a orquestar agentes especializados.</span>
             <span data-lang-inline="en">LLMs went from being chatbots to autonomous agents that browse the web, execute code, manage files and coordinate other agents. This completely changes the developer's role: from writing logic to orchestrating specialized agents.</span>
           </p>
         </div>
         <div class="card-footer">
           <a class="card-link" href="https://hai.stanford.edu/news/inside-the-ai-index-12-takeaways-from-the-2026-report" target="_blank" rel="noopener">
-            <span data-lang-inline="es">Leer mÃ¡s</span>
+            <span data-lang-inline="es">Leer más</span>
             <span data-lang-inline="en">Read more</span>
           </a>
-          <span class="card-platform">ð General</span>
+          <span class="card-platform">🌐 General</span>
         </div>
       </div>
 
       <div class="card reveal">
-        <div class="card-emoji-banner">ð¦ðð³</div>
+        <div class="card-emoji-banner">🏦🔒💳</div>
         <div class="card-body">
           <p class="card-type">
-            <span data-lang-inline="es">ð¢ IA en Empresas</span>
-            <span data-lang-inline="en">ð¢ AI in Business</span>
+            <span data-lang-inline="es">🏢 IA en Empresas</span>
+            <span data-lang-inline="en">🏢 AI in Business</span>
           </p>
           <h3>
-            <span data-lang-inline="es">IA en Banca: Entre la InnovaciÃ³n y el Riesgo</span>
+            <span data-lang-inline="es">IA en Banca: Entre la Innovación y el Riesgo</span>
             <span data-lang-inline="en">AI in Banking: Between Innovation and Risk</span>
           </h3>
           <p>
-            <span data-lang-inline="es">Los bancos globales estÃ¡n adoptando IA para detecciÃ³n de fraudes, onboarding digital y anÃ¡lisis de riesgo crediticio. Pero tambiÃ©n enfrentan nuevos vectores de ataque. La doble cara de la tecnologÃ­a mÃ¡s disruptiva del siglo.</span>
+            <span data-lang-inline="es">Los bancos globales están adoptando IA para detección de fraudes, onboarding digital y análisis de riesgo crediticio. Pero también enfrentan nuevos vectores de ataque. La doble cara de la tecnología más disruptiva del siglo.</span>
             <span data-lang-inline="en">Global banks are adopting AI for fraud detection, digital onboarding and credit risk analysis. But they also face new attack vectors. The double edge of the most disruptive technology of the century.</span>
           </p>
         </div>
         <div class="card-footer">
           <a class="card-link" href="https://www.pwc.com/gx/en/news-room/press-releases/2026/pwc-2026-ai-performance-study.html" target="_blank" rel="noopener">
-            <span data-lang-inline="es">Leer mÃ¡s</span>
+            <span data-lang-inline="es">Leer más</span>
             <span data-lang-inline="en">Read more</span>
           </a>
-          <span class="card-platform">ð¦ Fintech</span>
+          <span class="card-platform">🏦 Fintech</span>
         </div>
       </div>
 
       <div class="card reveal">
-        <div class="card-emoji-banner">âï¸ð¤ð</div>
+        <div class="card-emoji-banner">⚖️🤖📜</div>
         <div class="card-body">
           <p class="card-type">
-            <span data-lang-inline="es">âï¸ RegulaciÃ³n</span>
-            <span data-lang-inline="en">âï¸ Regulation</span>
+            <span data-lang-inline="es">⚖️ Regulación</span>
+            <span data-lang-inline="en">⚖️ Regulation</span>
           </p>
           <h3>
-            <span data-lang-inline="es">RegulaciÃ³n de IA: El mundo estÃ¡ tratando de ponerle reglas</span>
+            <span data-lang-inline="es">Regulación de IA: El mundo está tratando de ponerle reglas</span>
             <span data-lang-inline="en">AI Regulation: The world is trying to set rules</span>
           </h3>
           <p>
-            <span data-lang-inline="es">La UniÃ³n Europea lanzÃ³ el AI Act, MÃ©xico y LatinoamÃ©rica aÃºn debaten marcos normativos. Mientras tanto, las empresas tecnolÃ³gicas avanzan mÃ¡s rÃ¡pido que los reguladores. Â¿QuiÃ©n ganarÃ¡ esta carrera?</span>
+            <span data-lang-inline="es">La Unión Europea lanzó el AI Act, México y Latinoamérica aún debaten marcos normativos. Mientras tanto, las empresas tecnológicas avanzan más rápido que los reguladores. ¿Quién ganará esta carrera?</span>
             <span data-lang-inline="en">The EU launched the AI Act, Mexico and Latin America still debate regulatory frameworks. Meanwhile, tech companies advance faster than regulators. Who will win this race?</span>
           </p>
         </div>
         <div class="card-footer">
           <a class="card-link" href="https://www.eversheds-sutherland.com/en/global/insights/gloabl-ai-bulletin-april-2026" target="_blank" rel="noopener">
-            <span data-lang-inline="es">Leer mÃ¡s</span>
+            <span data-lang-inline="es">Leer más</span>
             <span data-lang-inline="en">Read more</span>
           </a>
-          <span class="card-platform">ð Global</span>
+          <span class="card-platform">🌍 Global</span>
         </div>
       </div>
 
@@ -812,10 +785,10 @@
 
   <!-- FINAL MEME -->
   <div class="meme-divider reveal" style="background: linear-gradient(135deg, var(--bg3), var(--bg2));">
-    <span class="meme-emoji">ð§ ðð®</span>
+    <span class="meme-emoji">🧠🚀🌮</span>
     <p>
-      <span data-lang-inline="es">El futuro llegÃ³ y tiene <strong>tokens, embeddings y Step Functions</strong>. Bienvenido a la era IA. ð²ð½</span>
-      <span data-lang-inline="en">The future arrived and it has <strong>tokens, embeddings and Step Functions</strong>. Welcome to the AI era. ð</span>
+      <span data-lang-inline="es">El futuro llegó y tiene <strong>tokens, embeddings y Step Functions</strong>. Bienvenido a la era IA. 🇲🇽</span>
+      <span data-lang-inline="en">The future arrived and it has <strong>tokens, embeddings and Step Functions</strong>. Welcome to the AI era. 🌎</span>
     </p>
   </div>
 
@@ -824,21 +797,21 @@
 <!-- FOOTER -->
 <footer>
   <span class="footer-logo">AIPULSE</span>
-  <div class="footer-emojis">ð¤ ð¡ï¸ â¡ ð§  ð</div>
+  <div class="footer-emojis">🤖 🛡️ ⚡ 🧠 🚀</div>
   <p>
-    <span data-lang-inline="es">Curado con â¤ï¸ + IA Â· Contenido educativo Â· 2026</span>
-    <span data-lang-inline="en">Curated with â¤ï¸ + AI Â· Educational content Â· 2026</span>
+    <span data-lang-inline="es">Curado con ❤️ + IA · Contenido educativo · 2026</span>
+    <span data-lang-inline="en">Curated with ❤️ + AI · Educational content · 2026</span>
   </p>
   <p style="margin-top: 0.5rem;">
     <a href="admin.html" style="font-family:'Space Mono',monospace; font-size:0.55rem; color:var(--text2); text-decoration:none; letter-spacing:2px; opacity:0.5;">
-      <span data-lang-inline="es">âï¸ ADMIN</span>
-      <span data-lang-inline="en">âï¸ ADMIN</span>
+      <span data-lang-inline="es">⚙️ ADMIN</span>
+      <span data-lang-inline="en">⚙️ ADMIN</span>
     </a>
   </p>
 </footer>
 
 <script>
-  // ââ THEME TOGGLE ââ
+  // ── THEME TOGGLE ──
   function toggleTheme() {
     const html = document.documentElement;
     const current = html.getAttribute('data-theme');
@@ -846,12 +819,12 @@
     const btn = document.getElementById('themeBtn');
     const isLight = html.getAttribute('data-theme') === 'light';
     btn.innerHTML = isLight
-      ? `<span data-lang-inline="es">ð NOCHE</span><span data-lang-inline="en">ð NIGHT</span>`
-      : `<span data-lang-inline="es">âï¸ DÃA</span><span data-lang-inline="en">âï¸ DAY</span>`;
+      ? `<span data-lang-inline="es">🌙 NOCHE</span><span data-lang-inline="en">🌙 NIGHT</span>`
+      : `<span data-lang-inline="es">☀️ DÍA</span><span data-lang-inline="en">☀️ DAY</span>`;
     applyLang();
   }
 
-  // ââ LANG TOGGLE ââ
+  // ── LANG TOGGLE ──
   let currentLang = 'es';
   function toggleLang() {
     currentLang = currentLang === 'es' ? 'en' : 'es';
@@ -865,11 +838,11 @@
 
     // Update page title
     document.title = currentLang === 'es'
-      ? 'AI PULSE â Noticias de Inteligencia Artificial'
-      : 'AI PULSE â Artificial Intelligence News';
+      ? 'AI PULSE — Noticias de Inteligencia Artificial'
+      : 'AI PULSE — Artificial Intelligence News';
   }
 
-  // ââ SCROLL REVEAL ââ
+  // ── SCROLL REVEAL ──
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -881,7 +854,7 @@
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // ââ TICKER DUPLICATE ââ
+  // ── TICKER DUPLICATE ──
   document.querySelectorAll('.ticker-inner').forEach(t => {
     t.innerHTML += t.innerHTML;
   });
