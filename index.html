@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI PULSE — Noticias de Inteligencia Artificial</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root[data-theme="dark"] {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #1a1a26;
+    --card: #16161f;
+    --border: #2a2a3d;
+    --text: #e8e8f0;
+    --text2: #9090b0;
+    --accent: #00f5d4;
+    --accent2: #ff6b6b;
+    --accent3: #ffd166;
+    --glow: rgba(0,245,212,0.15);
+  }
+  :root[data-theme="light"] {
+    --bg: #f0f0f5;
+    --bg2: #ffffff;
+    --bg3: #e8e8f0;
+    --card: #ffffff;
+    --border: #d0d0e0;
+    --text: #1a1a2e;
+    --text2: #5a5a7a;
+    --accent: #00b4a0;
+    --accent2: #e05050;
+    --accent3: #e6a000;
+    --glow: rgba(0,180,160,0.1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    transition: background 0.4s, color 0.4s;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.6;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(20px);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 4px;
+    color: var(--accent);
+    text-shadow: 0 0 20px var(--glow);
+  }
+  .logo span { color: var(--accent2); }
+
+  .controls {
+    display: flex; gap: 0.5rem; align-items: center;
+  }
+
+  .btn-toggle {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg3);
+    color: var(--text2);
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 1px;
+  }
+  .btn-toggle:hover, .btn-toggle.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--glow);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+    pointer-events: none;
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+    50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+  }
+
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 4px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.2s forwards;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 10vw, 8rem);
+    line-height: 0.9;
+    letter-spacing: 2px;
+    color: var(--text);
+    opacity: 0;
+    animation: fadeUp 0.6s 0.4s forwards;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+    text-shadow: 0 0 40px var(--glow);
+  }
+
+  .hero-sub {
+    font-size: 0.95rem;
+    color: var(--text2);
+    margin-top: 1.5rem;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.6s forwards;
+  }
+
+  .comic-hero {
+    font-size: 5rem;
+    display: block;
+    margin: 2rem auto 0;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.8s forwards, wiggle 3s 1.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px var(--glow));
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes wiggle {
+    0%,100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+  }
+
+  /* ── TICKER ── */
+  .ticker-wrap {
+    background: var(--accent);
+    color: var(--bg);
+    padding: 0.5rem 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .ticker-inner {
+    display: flex;
+    white-space: nowrap;
+    animation: ticker 30s linear infinite;
+  }
+  .ticker-inner span {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 0 3rem;
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── MAIN LAYOUT ── */
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    position: relative; z-index: 1;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-emoji { font-size: 2rem; }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: 3px;
+    color: var(--text);
+  }
+  .section-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 2px;
+    background: var(--accent2);
+    color: white;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-left: auto;
+  }
+  .section-badge.hot { background: var(--accent2); }
+  .section-badge.new { background: var(--accent); color: var(--bg); }
+  .section-badge.trending { background: var(--accent3); color: var(--bg); }
+
+  section { margin-bottom: 4rem; }
+
+  /* ── CARDS ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px var(--glow);
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .card:hover::before { opacity: 1; }
+
+  .card-emoji-banner {
+    background: var(--bg3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    height: 130px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-emoji-banner::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 60%, var(--glow));
+  }
+
+  .card-body { padding: 1.25rem; flex: 1; display: flex; flex-direction: column; }
+
+  .card-type {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+  }
+
+  .card p {
+    font-size: 0.85rem;
+    color: var(--text2);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .card-footer {
+    padding: 1rem 1.25rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-link {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: gap 0.2s;
+  }
+  .card-link:hover { gap: 0.8rem; }
+  .card-link::after { content: '→'; }
+
+  .card-platform {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text2);
+    background: var(--bg3);
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+  }
+
+  /* ── FEATURED CARD ── */
+  .card-featured {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+  }
+  .card-featured .card-emoji-banner {
+    height: 100%;
+    font-size: 5rem;
+    border-radius: 0;
+  }
+  @media (max-width: 600px) {
+    .card-featured {
+      grid-template-columns: 1fr;
+    }
+    .card-featured .card-emoji-banner { height: 120px; }
+  }
+
+  /* ── MEME DIVIDER ── */
+  .meme-divider {
+    text-align: center;
+    padding: 2rem;
+    margin: 2rem 0;
+    background: var(--bg3);
+    border-radius: 8px;
+    border: 1px dashed var(--border);
+  }
+  .meme-divider .meme-emoji { font-size: 3rem; display: block; margin-bottom: 0.5rem; }
+  .meme-divider p {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text2);
+    letter-spacing: 1px;
+  }
+  .meme-divider strong { color: var(--accent3); }
+
+  /* ── BREAKING NEWS BANNER ── */
+  .breaking {
+    background: var(--accent2);
+    border-radius: 6px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    animation: fadeUp 0.6s 1s both;
+  }
+  .breaking-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    color: white;
+    white-space: nowrap;
+    background: rgba(0,0,0,0.3);
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+  }
+  .breaking-text {
+    font-size: 0.85rem;
+    color: white;
+    opacity: 0.95;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 3rem 2rem;
+    text-align: center;
+    background: var(--bg2);
+    position: relative; z-index: 1;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--accent);
+    letter-spacing: 6px;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  footer p {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text2);
+    letter-spacing: 2px;
+  }
+  .footer-emojis { font-size: 1.5rem; margin: 1rem 0; letter-spacing: 0.5rem; }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── LANG HIDDEN ── */
+  [data-lang] { display: none; }
+  .lang-es [data-lang="es"],
+  .lang-en [data-lang="en"] { display: block; }
+  .ticker-wrap .lang-es [data-lang="es"],
+  .ticker-wrap .lang-en [data-lang="en"],
+  .lang-es .ticker-inner[data-lang="es"],
+  .lang-en .ticker-inner[data-lang="en"] { display: flex; }
+  .lang-es [data-lang-inline="es"],
+  .lang-en [data-lang-inline="en"] { display: inline; }
+
+  /* default show Spanish */
+  body { }
+
+</style>
+</head>
+<body class="lang-es">
+
+<!-- HEADER -->
+<header>
+  <div class="logo">AI<span>PULSE</span></div>
+  <div class="controls">
+    <button class="btn-toggle" id="langBtn" onclick="toggleLang()">
+      <span data-lang-inline="es">🌐 EN</span>
+      <span data-lang-inline="en">🌐 ES</span>
+    </button>
+    <button class="btn-toggle" id="themeBtn" onclick="toggleTheme()">
+      <span data-lang-inline="es">☀️ DÍA</span>
+      <span data-lang-inline="en">☀️ DAY</span>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-tag">
+    <span data-lang-inline="es">🤖 Tu fuente de IA · Edición 2026</span>
+    <span data-lang-inline="en">🤖 Your AI source · 2026 Edition</span>
+  </p>
+  <h1>
+    <span data-lang-inline="es">EL MUNDO<br>DE LA <em>IA</em></span>
+    <span data-lang-inline="en">THE WORLD<br>OF <em>AI</em></span>
+  </h1>
+  <p class="hero-sub">
+    <span data-lang-inline="es">Noticias, videos y tendencias que están cambiando todo — para bien o para mal 😅</span>
+    <span data-lang-inline="en">News, videos and trends changing everything — for better or worse 😅</span>
+  </p>
+  <span class="comic-hero">🧠</span>
+</div>
+
+<!-- TICKER -->
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-inner" data-lang="es">
+    <span>🔴 CYBERSECURITY + IA = nueva era de amenazas</span>
+    <span>⚡ Spec Driven Development: el futuro del código</span>
+    <span>🤖 Los LLMs ya escriben mejor código que muchos devs</span>
+    <span>🛡️ Mythode AI: nueva frontera en ciberseguridad</span>
+    <span>🚀 Vibe Coding vs Spec Coding: ¿cuál gana?</span>
+  </div>
+  <div class="ticker-inner" data-lang="en">
+    <span>🔴 CYBERSECURITY + AI = new threat era</span>
+    <span>⚡ Spec Driven Development: the future of code</span>
+    <span>🤖 LLMs already write better code than many devs</span>
+    <span>🛡️ Mythode AI: new frontier in cybersecurity</span>
+    <span>🚀 Vibe Coding vs Spec Coding: who wins?</span>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main>
+
+  <!-- BREAKING -->
+  <div class="breaking reveal">
+    <span class="breaking-label">
+      <span data-lang-inline="es">⚡ DESTACADO</span>
+      <span data-lang-inline="en">⚡ FEATURED</span>
+    </span>
+    <p class="breaking-text">
+      <span data-lang-inline="es">La IA ya no es solo una herramienta — es un co-autor, un hacker potencial y el próximo junior dev de tu equipo. ¿Estás listo?</span>
+      <span data-lang-inline="en">AI is no longer just a tool — it's a co-author, a potential hacker and your team's next junior dev. Are you ready?</span>
+    </p>
+  </div>
+
+  <!-- ═══════════════════════════════ -->
+  <!-- SECCIÓN 1: CIBERSEGURIDAD + IA -->
+  <!-- ═══════════════════════════════ -->
+  <section>
+    <div class="section-header reveal">
+      <span class="section-emoji">🛡️</span>
+      <h2 class="section-title">
+        <span data-lang-inline="es">Ciberseguridad & IA</span>
+        <span data-lang-inline="en">Cybersecurity & AI</span>
+      </h2>
+      <span class="section-badge hot">
+        <span data-lang-inline="es">🔥 URGENTE</span>
+        <span data-lang-inline="en">🔥 URGENT</span>
+      </span>
+    </div>
+
+    <div class="cards-grid">
+
+      <!-- CARD FEATURED: Facebook cybersecurity -->
+      <div class="card card-featured reveal">
+        <div class="card-emoji-banner">
+          🕵️‍♂️💻🔓
+        </div>
+        <div style="display:flex; flex-direction:column; flex:1;">
+          <div class="card-body">
+            <p class="card-type">
+              <span data-lang-inline="es">📰 Noticia General</span>
+              <span data-lang-inline="en">📰 General News</span>
+            </p>
+            <h3>
+              <span data-lang-inline="es">MYTHOS: Ciberseguridad en la Era de la IA</span>
+              <span data-lang-inline="en">MYTHOS: Cybersecurity in the AI Era</span>
+            </h3>
+            <p>
+              <span data-lang-inline="es">La inteligencia artificial está redefiniendo el panorama de la ciberseguridad. Los atacantes ahora usan IA para crear malware más sofisticado, phishing personalizado y exploits automatizados. Pero también los defensores tienen nuevas armas. Este video aborda los mitos más comunes sobre IA y seguridad, y por qué es urgente que toda empresa entienda esta nueva realidad.</span>
+              <span data-lang-inline="en">Artificial intelligence is redefining the cybersecurity landscape. Attackers now use AI to create more sophisticated malware, personalized phishing and automated exploits. But defenders also have new weapons. This video addresses the most common myths about AI and security, and why it's urgent for every company to understand this new reality.</span>
+            </p>
+          </div>
+          <div class="card-footer">
+            <a class="card-link" href="https://www.facebook.com/share/v/1Cmyoeezo5/" target="_blank" rel="noopener">
+              <span data-lang-inline="es">Ver video</span>
+              <span data-lang-inline="en">Watch video</span>
+            </a>
+            <span class="card-platform">Facebook Video</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /cards-grid -->
+  </section>
+
+  <!-- MEME DIVIDER -->
+  <div class="meme-divider reveal">
+    <span class="meme-emoji">😱🔓🤖</span>
+    <p>
+      <span data-lang-inline="es">"Yo pensando que tenía buena contraseña..." <strong>vs la IA crackeándola en 0.3 segundos.</strong></span>
+      <span data-lang-inline="en">"Me thinking I had a strong password..." <strong>vs the AI cracking it in 0.3 seconds.</strong></span>
+    </p>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- SECCIÓN 2: EL FUTURO DE LA PROGRAMACIÓN -->
+  <!-- ══════════════════════════════════════ -->
+  <section>
+    <div class="section-header reveal">
+      <span class="section-emoji">⚡</span>
+      <h2 class="section-title">
+        <span data-lang-inline="es">El Futuro del Desarrollo</span>
+        <span data-lang-inline="en">The Future of Development</span>
+      </h2>
+      <span class="section-badge new">
+        <span data-lang-inline="es">🆕 TENDENCIA</span>
+        <span data-lang-inline="en">🆕 TRENDING</span>
+      </span>
+    </div>
+
+    <div class="cards-grid">
+
+      <!-- CARD: Spec Driven Development -->
+      <div class="card reveal">
+        <div class="card-emoji-banner">📋✍️🚀</div>
+        <div class="card-body">
+          <p class="card-type">
+            <span data-lang-inline="es">🎥 Video · YouTube</span>
+            <span data-lang-inline="en">🎥 Video · YouTube</span>
+          </p>
+          <h3>
+            <span data-lang-inline="es">Spec Driven Development: El Futuro de la Programación</span>
+            <span data-lang-inline="en">Spec Driven Development: The Future of Programming</span>
+          </h3>
+          <p>
+            <span data-lang-inline="es">¿Y si en lugar de escribir código directamente, primero escribes una especificación detallada que la IA ejecuta? Spec Driven Development (SDD) es el paradigma que está reemplazando al "vibe coding". Aprende cómo estructurar tus prompts como specs formales, por qué esto produce código más robusto, y cómo los Tech Leads pueden aprovechar esto para acelerar equipos enteros sin perder control de la arquitectura.</span>
+            <span data-lang-inline="en">What if instead of writing code directly, you first write a detailed specification that AI executes? Spec Driven Development (SDD) is the paradigm replacing "vibe coding". Learn how to structure your prompts as formal specs, why this produces more robust code, and how Tech Leads can leverage this to accelerate entire teams without losing architectural control.</span>
+          </p>
+        </div>
+        <div class="card-footer">
+          <a class="card-link" href="https://youtu.be/p2WA672HrdI?si=k2vWrlYoioGEN6A-" target="_blank" rel="noopener">
+            <span data-lang-inline="es">Ver en YouTube</span>
+            <span data-lang-inline="en">Watch on YouTube</span>
+          </a>
+          <span class="card-platform">YouTube</span>
+        </div>
+      </div>
+
+      <!-- CARD EXTRA: Vibe Coding (contexto) -->
+      <div class="card reveal">
+        <div class="card-emoji-banner">🎸💻😎</div>
+        <div class="card-body">
+          <p class="card-type">
+            <span data-lang-inline="es">💡 Contexto relacionado</span>
+            <span data-lang-inline="en">💡 Related context</span>
+          </p>
+          <h3>
+            <span data-lang-inline="es">¿Qué es Vibe Coding y por qué ya no alcanza?</span>
+            <span data-lang-inline="en">What is Vibe Coding and why is it no longer enough?</span>
+          </h3>
+          <p>
+            <span data-lang-inline="es">El "vibe coding" — escribir prompts vagos y esperar que la IA adivine — funciona para proyectos pequeños. Pero cuando hablamos de sistemas enterprise como microservicios, AWS Step Functions o migraciones mainframe, necesitas algo más riguroso. El SDD es la respuesta: especificaciones antes de código, siempre.</span>
+            <span data-lang-inline="en">"Vibe coding" — writing vague prompts and hoping AI guesses right — works for small projects. But when talking about enterprise systems like microservices, AWS Step Functions or mainframe migrations, you need something more rigorous. SDD is the answer: specs before code, always.</span>
+          </p>
+        </div>
+        <div class="card-footer">
+          <a class="card-link" href="https://youtu.be/p2WA672HrdI?si=k2vWrlYoioGEN6A-" target="_blank" rel="noopener">
+            <span data-lang-inline="es">Ver video completo</span>
+            <span data-lang-inline="en">Watch full video</span>
+          </a>
+          <span class="card-platform">YouTube</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MEME DIVIDER 2 -->
+  <div class="meme-divider reveal">
+    <span class="meme-emoji">👨‍💻📝🤯</span>
+    <p>
+      <span data-lang-inline="es">Desarrollador en 2020: <strong>"Escribo el código"</strong> — Desarrollador en 2025: <strong>"Escribo el spec y la IA escribe el código"</strong> — Desarrollador en 2030: 🤔</span>
+      <span data-lang-inline="en">Developer in 2020: <strong>"I write the code"</strong> — Developer in 2025: <strong>"I write the spec, AI writes the code"</strong> — Developer in 2030: 🤔</span>
+    </p>
+  </div>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- SECCIÓN 3: NOTICIAS DESTACADAS IA -->
+  <!-- ══════════════════════════════════ -->
+  <section>
+    <div class="section-header reveal">
+      <span class="section-emoji">🌐</span>
+      <h2 class="section-title">
+        <span data-lang-inline="es">Lo que debes saber de IA</span>
+        <span data-lang-inline="en">What you need to know about AI</span>
+      </h2>
+      <span class="section-badge trending">
+        <span data-lang-inline="es">📈 TOP TEMAS</span>
+        <span data-lang-inline="en">📈 TOP TOPICS</span>
+      </span>
+    </div>
+
+    <div class="cards-grid">
+
+      <div class="card reveal">
+        <div class="card-emoji-banner">🤖🧠⚡</div>
+        <div class="card-body">
+          <p class="card-type">
+            <span data-lang-inline="es">📌 Concepto clave</span>
+            <span data-lang-inline="en">📌 Key concept</span>
+          </p>
+          <h3>
+            <span data-lang-inline="es">Agentes de IA: Ya no solo responden, actúan</span>
+            <span data-lang-inline="en">AI Agents: They no longer just respond, they act</span>
+          </h3>
+          <p>
+            <span data-lang-inline="es">Los LLMs pasaron de ser chatbots a agentes autónomos que navegan web, ejecutan código, gestionan archivos y coordinan otros agentes. Esto cambia completamente el rol del desarrollador: de escribir lógica a orquestar agentes especializados.</span>
+            <span data-lang-inline="en">LLMs went from being chatbots to autonomous agents that browse the web, execute code, manage files and coordinate other agents. This completely changes the developer's role: from writing logic to orchestrating specialized agents.</span>
+          </p>
+        </div>
+        <div class="card-footer">
+          <span class="card-link" style="cursor:default; opacity:0.5;">
+            <span data-lang-inline="es">Tema en tendencia</span>
+            <span data-lang-inline="en">Trending topic</span>
+          </span>
+          <span class="card-platform">🌐 General</span>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-emoji-banner">🏦🔒💳</div>
+        <div class="card-body">
+          <p class="card-type">
+            <span data-lang-inline="es">🏢 IA en Empresas</span>
+            <span data-lang-inline="en">🏢 AI in Business</span>
+          </p>
+          <h3>
+            <span data-lang-inline="es">IA en Banca: Entre la Innovación y el Riesgo</span>
+            <span data-lang-inline="en">AI in Banking: Between Innovation and Risk</span>
+          </h3>
+          <p>
+            <span data-lang-inline="es">Los bancos globales están adoptando IA para detección de fraudes, onboarding digital y análisis de riesgo crediticio. Pero también enfrentan nuevos vectores de ataque. La doble cara de la tecnología más disruptiva del siglo.</span>
+            <span data-lang-inline="en">Global banks are adopting AI for fraud detection, digital onboarding and credit risk analysis. But they also face new attack vectors. The double edge of the most disruptive technology of the century.</span>
+          </p>
+        </div>
+        <div class="card-footer">
+          <span class="card-link" style="cursor:default; opacity:0.5;">
+            <span data-lang-inline="es">Tema en tendencia</span>
+            <span data-lang-inline="en">Trending topic</span>
+          </span>
+          <span class="card-platform">🏦 Fintech</span>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-emoji-banner">⚖️🤖📜</div>
+        <div class="card-body">
+          <p class="card-type">
+            <span data-lang-inline="es">⚖️ Regulación</span>
+            <span data-lang-inline="en">⚖️ Regulation</span>
+          </p>
+          <h3>
+            <span data-lang-inline="es">Regulación de IA: El mundo está tratando de ponerle reglas</span>
+            <span data-lang-inline="en">AI Regulation: The world is trying to set rules</span>
+          </h3>
+          <p>
+            <span data-lang-inline="es">La Unión Europea lanzó el AI Act, México y Latinoamérica aún debaten marcos normativos. Mientras tanto, las empresas tecnológicas avanzan más rápido que los reguladores. ¿Quién ganará esta carrera?</span>
+            <span data-lang-inline="en">The EU launched the AI Act, Mexico and Latin America still debate regulatory frameworks. Meanwhile, tech companies advance faster than regulators. Who will win this race?</span>
+          </p>
+        </div>
+        <div class="card-footer">
+          <span class="card-link" style="cursor:default; opacity:0.5;">
+            <span data-lang-inline="es">Tema en tendencia</span>
+            <span data-lang-inline="en">Trending topic</span>
+          </span>
+          <span class="card-platform">🌍 Global</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FINAL MEME -->
+  <div class="meme-divider reveal" style="background: linear-gradient(135deg, var(--bg3), var(--bg2));">
+    <span class="meme-emoji">🧠🚀🌮</span>
+    <p>
+      <span data-lang-inline="es">El futuro llegó y tiene <strong>tokens, embeddings y Step Functions</strong>. Bienvenido a la era IA. 🇲🇽</span>
+      <span data-lang-inline="en">The future arrived and it has <strong>tokens, embeddings and Step Functions</strong>. Welcome to the AI era. 🌎</span>
+    </p>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">AIPULSE</span>
+  <div class="footer-emojis">🤖 🛡️ ⚡ 🧠 🚀</div>
+  <p>
+    <span data-lang-inline="es">Curado con ❤️ + IA · Contenido educativo · 2026</span>
+    <span data-lang-inline="en">Curated with ❤️ + AI · Educational content · 2026</span>
+  </p>
+</footer>
+
+<script>
+  // ── THEME TOGGLE ──
+  function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+    const btn = document.getElementById('themeBtn');
+    const isLight = html.getAttribute('data-theme') === 'light';
+    btn.innerHTML = isLight
+      ? `<span data-lang-inline="es">🌙 NOCHE</span><span data-lang-inline="en">🌙 NIGHT</span>`
+      : `<span data-lang-inline="es">☀️ DÍA</span><span data-lang-inline="en">☀️ DAY</span>`;
+    applyLang();
+  }
+
+  // ── LANG TOGGLE ──
+  let currentLang = 'es';
+  function toggleLang() {
+    currentLang = currentLang === 'es' ? 'en' : 'es';
+    applyLang();
+  }
+
+  function applyLang() {
+    document.body.classList.remove('lang-es', 'lang-en');
+    document.body.classList.add('lang-' + currentLang);
+    document.documentElement.lang = currentLang;
+
+    // Update page title
+    document.title = currentLang === 'es'
+      ? 'AI PULSE — Noticias de Inteligencia Artificial'
+      : 'AI PULSE — Artificial Intelligence News';
+  }
+
+  // ── SCROLL REVEAL ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── TICKER DUPLICATE ──
+  document.querySelectorAll('.ticker-inner').forEach(t => {
+    t.innerHTML += t.innerHTML;
+  });
+
+  // Init
+  applyLang();
+</script>
+</body>
+</html>
