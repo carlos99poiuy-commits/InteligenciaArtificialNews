@@ -33,31 +33,32 @@
   header {
     background: var(--bg2);
     border-bottom: 1px solid var(--border);
-    padding: 0 2rem;
+    padding: 0 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 64px;
+    height: 56px;
+    flex-wrap: wrap;
   }
 
   .logo {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     letter-spacing: 4px;
     color: var(--accent);
   }
   .logo span { color: var(--accent2); }
   .logo small {
     font-family: 'Space Mono', monospace;
-    font-size: 0.55rem;
+    font-size: 0.5rem;
     color: var(--text2);
     letter-spacing: 2px;
-    margin-left: 0.5rem;
+    margin-left: 0.4rem;
   }
 
   .back-link {
     font-family: 'Space Mono', monospace;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     color: var(--accent);
     text-decoration: none;
     letter-spacing: 1px;
@@ -65,65 +66,75 @@
   .back-link:hover { text-decoration: underline; }
 
   main {
-    max-width: 800px;
+    max-width: 700px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 1.5rem 1rem;
   }
 
   h2 {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     letter-spacing: 3px;
     color: var(--text);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.3rem;
   }
 
   .subtitle {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--text2);
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
   }
 
-  /* ── CONFIG SECTION ── */
+  /* ── CONFIG ── */
   .config-section {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
   }
 
   .config-section h3 {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     letter-spacing: 2px;
     color: var(--accent3);
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    margin-bottom: 0.8rem;
   }
 
-  /* ── FORM ── */
-  .form-group {
-    margin-bottom: 1.25rem;
+  .config-toggle {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--accent);
+    cursor: pointer;
+    letter-spacing: 1px;
+    background: none;
+    border: none;
+    padding: 0.3rem 0;
   }
+
+  .config-body { display: none; }
+  .config-body.open { display: block; }
+
+  /* ── FORM ── */
+  .form-group { margin-bottom: 1rem; }
 
   label {
     display: block;
     font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     letter-spacing: 2px;
     color: var(--accent);
     text-transform: uppercase;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.3rem;
   }
 
   input, textarea, select {
     width: 100%;
     font-family: 'Sora', sans-serif;
     font-size: 0.85rem;
-    padding: 0.7rem 1rem;
+    padding: 0.6rem 0.8rem;
     background: var(--bg3);
     border: 1px solid var(--border);
     border-radius: 6px;
@@ -138,35 +149,57 @@
   }
 
   textarea {
-    min-height: 80px;
+    min-height: 100px;
     resize: vertical;
-  }
-
-  select {
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2300f5d4' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    padding-right: 2.5rem;
   }
 
   .row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 0.8rem;
   }
 
   @media (max-width: 600px) {
     .row { grid-template-columns: 1fr; }
+    main { padding: 1rem 0.75rem; }
+    header { padding: 0 0.75rem; }
+  }
+
+  /* ── AUTO-DETECTED INFO ── */
+  .auto-info {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.8rem;
+    margin-top: 1rem;
+    display: none;
+  }
+  .auto-info.show { display: block; }
+  .auto-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.3rem 0;
+    font-size: 0.75rem;
+  }
+  .auto-info-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--text2);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .auto-info-value {
+    color: var(--accent);
+    font-weight: 600;
   }
 
   /* ── BUTTONS ── */
   .btn {
     font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     letter-spacing: 2px;
-    padding: 0.8rem 2rem;
+    padding: 0.75rem 1.5rem;
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -178,6 +211,7 @@
   .btn-primary {
     background: var(--accent);
     color: var(--bg);
+    width: 100%;
   }
   .btn-primary:hover {
     box-shadow: 0 4px 20px var(--glow);
@@ -202,19 +236,25 @@
 
   .btn-row {
     display: flex;
-    gap: 1rem;
-    margin-top: 1.5rem;
+    gap: 0.8rem;
+    margin-top: 1.2rem;
+  }
+
+  @media (max-width: 400px) {
+    .btn-row { flex-direction: column; }
+    .btn { width: 100%; }
   }
 
   /* ── STATUS ── */
   .status {
     font-family: 'Space Mono', monospace;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     letter-spacing: 1px;
-    padding: 0.8rem 1rem;
+    padding: 0.7rem 0.8rem;
     border-radius: 6px;
-    margin-top: 1rem;
+    margin-top: 0.8rem;
     display: none;
+    word-break: break-word;
   }
   .status.show { display: block; }
   .status.success {
@@ -238,17 +278,17 @@
     background: var(--bg3);
     border: 1px dashed var(--border);
     border-radius: 8px;
-    padding: 1.5rem;
-    margin-top: 1.5rem;
+    padding: 1rem;
+    margin-top: 1rem;
     display: none;
   }
   .preview-box.show { display: block; }
   .preview-box h4 {
     font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     letter-spacing: 2px;
     color: var(--accent3);
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
     text-transform: uppercase;
   }
 
@@ -258,42 +298,48 @@
     border-radius: 8px;
     overflow: hidden;
   }
-  .preview-card .card-emoji-banner {
+  .preview-card .p-emoji {
     background: var(--bg);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3rem;
-    height: 80px;
+    font-size: 2.5rem;
+    height: 70px;
   }
-  .preview-card .card-body {
-    padding: 1rem;
-  }
-  .preview-card .card-type {
+  .preview-card .p-body { padding: 0.8rem; }
+  .preview-card .p-type {
     font-family: 'Space Mono', monospace;
-    font-size: 0.55rem;
+    font-size: 0.5rem;
     letter-spacing: 2px;
     color: var(--accent);
     text-transform: uppercase;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.2rem;
   }
-  .preview-card h3 {
+  .preview-card .p-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     letter-spacing: 1px;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
   }
-  .preview-card p {
-    font-size: 0.75rem;
+  .preview-card .p-desc {
+    font-size: 0.7rem;
     color: var(--text2);
     line-height: 1.5;
   }
+  .preview-card .p-section {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.5rem;
+    color: var(--accent3);
+    padding: 0.5rem 0.8rem;
+    border-top: 1px solid var(--border);
+    letter-spacing: 1px;
+  }
 
-  /* ── TOKEN SAVED INDICATOR ── */
+  /* ── TOKEN ── */
   .token-status {
     font-family: 'Space Mono', monospace;
-    font-size: 0.6rem;
-    margin-top: 0.3rem;
+    font-size: 0.55rem;
+    margin-top: 0.2rem;
   }
   .token-status.saved { color: var(--accent); }
   .token-status.not-saved { color: var(--text2); }
@@ -303,24 +349,32 @@
     background: var(--bg3);
     border: 1px solid var(--border);
     border-radius: 6px;
-    padding: 0.8rem 1rem;
-    margin-bottom: 0.5rem;
-    font-size: 0.75rem;
+    padding: 0.6rem 0.8rem;
+    margin-bottom: 0.4rem;
+    font-size: 0.7rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 0.5rem;
   }
-  .history-item .time {
+  .history-item .h-title {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .history-item .h-time {
     font-family: 'Space Mono', monospace;
-    font-size: 0.6rem;
+    font-size: 0.5rem;
     color: var(--text2);
+    white-space: nowrap;
   }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">AI<span>PULSE</span> <small>ADMIN PANEL</small></div>
+  <div class="logo">AI<span>PULSE</span> <small>ADMIN</small></div>
   <a class="back-link" href="index.html">← Volver al sitio</a>
 </header>
 
@@ -328,93 +382,76 @@
 
   <!-- ── GITHUB CONFIG ── -->
   <div class="config-section">
-    <h3>🔑 Configuracion GitHub</h3>
-    <p class="subtitle">Tu token se guarda solo en tu navegador (localStorage). Nunca se envia a otro servidor.</p>
-
-    <div class="row">
-      <div class="form-group">
-        <label>GitHub Username</label>
-        <input type="text" id="ghUser" placeholder="carlos99poiuy-commits">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <h3>🔑 GitHub</h3>
+      <button class="config-toggle" id="configToggle" onclick="toggleConfig()">▼ Mostrar</button>
+    </div>
+    <div id="tokenStatusTop" class="token-status not-saved" style="margin-bottom:0.5rem;">No configurado</div>
+    <div class="config-body" id="configBody">
+      <p class="subtitle" style="margin-bottom:0.8rem;">Token guardado solo en tu navegador (localStorage).</p>
+      <div class="row">
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" id="ghUser" placeholder="carlos99poiuy-commits">
+        </div>
+        <div class="form-group">
+          <label>Repositorio</label>
+          <input type="text" id="ghRepo" placeholder="InteligenciaArtificialNews">
+        </div>
       </div>
       <div class="form-group">
-        <label>Repositorio</label>
-        <input type="text" id="ghRepo" placeholder="InteligenciaArtificialNews">
+        <label>Personal Access Token (scope: repo)</label>
+        <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxx">
       </div>
+      <button class="btn btn-secondary" onclick="saveConfig()">Guardar</button>
     </div>
-    <div class="form-group">
-      <label>Personal Access Token (scope: repo)</label>
-      <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxx">
-      <div class="token-status not-saved" id="tokenStatus">No guardado</div>
-    </div>
-    <button class="btn btn-secondary" onclick="saveConfig()">Guardar configuracion</button>
   </div>
 
-  <!-- ── ADD CONTENT FORM ── -->
+  <!-- ── ADD CONTENT ── -->
   <h2>Agregar Contenido</h2>
-  <p class="subtitle">Completa los campos y presiona "Cargar" para actualizar la pagina y publicar en GitHub.</p>
+  <p class="subtitle">Solo ingresa la URL y una descripcion. La seccion, emojis y tipo se generan automaticamente.</p>
 
   <div class="form-group">
-    <label>Seccion</label>
-    <select id="section">
-      <option value="news-of-day">📰 Noticia del Dia</option>
-      <option value="cybersecurity">🛡️ Ciberseguridad & IA</option>
-      <option value="development">⚡ El Futuro del Desarrollo</option>
-      <option value="general-ai">🌐 Lo que debes saber de IA</option>
-    </select>
+    <label>URL del video o articulo</label>
+    <input type="url" id="contentUrl" placeholder="https://youtu.be/..." oninput="onInputChange()">
   </div>
 
   <div class="form-group">
-    <label>Tipo de contenido</label>
-    <select id="contentType">
-      <option value="video-youtube">🎥 Video YouTube</option>
-      <option value="video-facebook">📺 Video Facebook</option>
-      <option value="article">📰 Articulo / Noticia</option>
-      <option value="concept">📌 Concepto clave</option>
-    </select>
+    <label>Descripcion del contenido</label>
+    <textarea id="contentDesc" placeholder="Escribe de que trata el video o articulo. Con esto se detecta automaticamente la seccion, los emojis y el idioma..." oninput="onInputChange()"></textarea>
   </div>
 
-  <div class="form-group">
-    <label>Link (URL)</label>
-    <input type="url" id="contentLink" placeholder="https://youtu.be/..." oninput="updatePreview()">
-  </div>
-
-  <div class="form-group">
-    <label>Emojis para banner (3 emojis)</label>
-    <input type="text" id="contentEmoji" placeholder="🤖🧠⚡" oninput="updatePreview()">
-  </div>
-
-  <div class="row">
-    <div class="form-group">
-      <label>Titulo (Espanol)</label>
-      <input type="text" id="titleEs" placeholder="Titulo de la noticia..." oninput="updatePreview()">
+  <!-- AUTO-DETECTED -->
+  <div class="auto-info" id="autoInfo">
+    <div class="auto-info-row">
+      <span class="auto-info-label">Seccion detectada</span>
+      <span class="auto-info-value" id="autoSection">—</span>
     </div>
-    <div class="form-group">
-      <label>Title (English)</label>
-      <input type="text" id="titleEn" placeholder="News title..." oninput="updatePreview()">
+    <div class="auto-info-row">
+      <span class="auto-info-label">Tipo</span>
+      <span class="auto-info-value" id="autoType">—</span>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="form-group">
-      <label>Descripcion (Espanol)</label>
-      <textarea id="descEs" placeholder="Descripcion de la noticia..." oninput="updatePreview()"></textarea>
+    <div class="auto-info-row">
+      <span class="auto-info-label">Emojis</span>
+      <span class="auto-info-value" id="autoEmoji">—</span>
     </div>
-    <div class="form-group">
-      <label>Description (English)</label>
-      <textarea id="descEn" placeholder="News description..." oninput="updatePreview()"></textarea>
+    <div class="auto-info-row">
+      <span class="auto-info-label">Plataforma</span>
+      <span class="auto-info-value" id="autoPlatform">—</span>
     </div>
   </div>
 
   <!-- PREVIEW -->
   <div class="preview-box" id="previewBox">
-    <h4>Vista previa</h4>
+    <h4>Vista previa de la card</h4>
     <div class="preview-card">
-      <div class="card-emoji-banner" id="previewEmoji">🤖🧠⚡</div>
-      <div class="card-body">
-        <p class="card-type" id="previewType">📰 Noticia</p>
-        <h3 id="previewTitle">Titulo aqui</h3>
-        <p id="previewDesc">Descripcion aqui</p>
+      <div class="p-emoji" id="pvEmoji">🤖🧠⚡</div>
+      <div class="p-body">
+        <p class="p-type" id="pvType">📰 Noticia</p>
+        <p class="p-title" id="pvTitle">Titulo aqui</p>
+        <p class="p-desc" id="pvDesc">Descripcion aqui</p>
       </div>
+      <div class="p-section" id="pvSection">SECCION: —</div>
     </div>
   </div>
 
@@ -427,16 +464,352 @@
   <div class="status" id="statusMsg"></div>
 
   <!-- HISTORY -->
-  <div style="margin-top: 3rem;">
+  <div style="margin-top: 2rem;">
     <h2>Historial</h2>
-    <p class="subtitle">Ultimas actualizaciones realizadas desde este panel.</p>
+    <p class="subtitle">Ultimas actualizaciones desde este panel.</p>
     <div id="history"></div>
   </div>
 
 </main>
 
 <script>
-  // ── CONFIG ──
+  // ══════════════════════════════════════
+  // AUTO-DETECTION ENGINE
+  // ══════════════════════════════════════
+
+  const SECTION_RULES = [
+    {
+      id: 'cybersecurity',
+      marker: 'CIBERSEGURIDAD',
+      name: '🛡️ Ciberseguridad & IA',
+      keywords: ['ciberseguridad','cybersecurity','seguridad','security','hack','malware',
+        'phishing','ransomware','vulnerability','vulnerabilidad','firewall','exploit',
+        'breach','ataque','attack','threat','amenaza','encryption','cifrado','password',
+        'credential','zero-day','pentest','soc','siem','cve','darkweb']
+    },
+    {
+      id: 'development',
+      marker: 'FUTURO DE',
+      name: '⚡ El Futuro del Desarrollo',
+      keywords: ['desarrollo','development','programacion','programming','codigo','code',
+        'framework','api','sdk','devops','deploy','git','react','node','python','javascript',
+        'typescript','rust','golang','spec driven','sdd','vibe coding','frontend','backend',
+        'microservicio','serverless','cloud','aws','azure','gcp','docker','kubernetes',
+        'developer','desarrollador','software','fullstack','stack','ide','compiler','debug']
+    },
+    {
+      id: 'general-ai',
+      marker: 'NOTICIAS DESTACADAS IA',
+      name: '🌐 Lo que debes saber de IA',
+      keywords: ['regulacion','regulation','etica','ethics','ley','law','gobierno','government',
+        'empresa','enterprise','negocio','business','banca','banking','fintech','salud','health',
+        'educacion','education','trabajo','employment','job','sociedad','society','futuro','future',
+        'agente','agent','llm','gpt','modelo','model','openai','anthropic','google','gemini',
+        'chatbot','generativa','generative','adopcion','adoption']
+    }
+  ];
+
+  const EMOJI_MAP = {
+    'cybersecurity': ['🛡️🔒💻','🕵️‍♂️🔓🤖','🔐💀⚠️','🛡️🤖🔥','🔒⚡💻'],
+    'development':   ['💻🚀📋','📋✍️🚀','👨‍💻⚡🔧','🛠️💡🚀','💻🧠📝'],
+    'general-ai':    ['🤖🧠⚡','🌐🤖📈','🏦🔒💳','⚖️🤖📜','🧬🤖🔬'],
+    'news-of-day':   ['📰🤖🔥','🌍⚡🤖','📊🤖💡','🚨🤖📢','📰🧠🔥']
+  };
+
+  const TYPE_LABELS = {
+    'youtube':  '🎥 Video · YouTube',
+    'facebook': '📺 Video · Facebook',
+    'article':  '📰 Articulo',
+    'general':  '📌 Contenido'
+  };
+
+  function detectPlatform(url) {
+    if (!url) return { type: 'general', platform: 'Web', linkEs: 'Ver mas', linkEn: 'See more' };
+    const u = url.toLowerCase();
+    if (u.includes('youtu.be') || u.includes('youtube.com'))
+      return { type: 'youtube', platform: 'YouTube', linkEs: 'Ver en YouTube', linkEn: 'Watch on YouTube' };
+    if (u.includes('facebook.com') || u.includes('fb.com') || u.includes('fb.watch'))
+      return { type: 'facebook', platform: 'Facebook Video', linkEs: 'Ver en Facebook', linkEn: 'Watch on Facebook' };
+    if (u.includes('tiktok.com'))
+      return { type: 'general', platform: 'TikTok', linkEs: 'Ver en TikTok', linkEn: 'Watch on TikTok' };
+    if (u.includes('instagram.com'))
+      return { type: 'general', platform: 'Instagram', linkEs: 'Ver en Instagram', linkEn: 'See on Instagram' };
+    if (u.includes('twitter.com') || u.includes('x.com'))
+      return { type: 'general', platform: 'X / Twitter', linkEs: 'Ver post', linkEn: 'See post' };
+    return { type: 'article', platform: 'Web', linkEs: 'Leer mas', linkEn: 'Read more' };
+  }
+
+  function detectSection(desc) {
+    const text = desc.toLowerCase();
+    let bestMatch = null;
+    let bestScore = 0;
+
+    for (const rule of SECTION_RULES) {
+      let score = 0;
+      for (const kw of rule.keywords) {
+        if (text.includes(kw)) score++;
+      }
+      if (score > bestScore) {
+        bestScore = score;
+        bestMatch = rule;
+      }
+    }
+
+    return bestMatch || SECTION_RULES[2]; // default: general-ai
+  }
+
+  function pickEmoji(sectionId) {
+    const pool = EMOJI_MAP[sectionId] || EMOJI_MAP['general-ai'];
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  function generateTitle(desc) {
+    // Take first sentence or first 80 chars as title
+    let title = desc.split(/[.\n]/)[0].trim();
+    if (title.length > 80) title = title.substring(0, 77) + '...';
+    if (title.length < 5) title = desc.substring(0, 60).trim();
+    return title;
+  }
+
+  // ══════════════════════════════════════
+  // UI LOGIC
+  // ══════════════════════════════════════
+
+  let detected = {};
+
+  function onInputChange() {
+    const url = document.getElementById('contentUrl').value.trim();
+    const desc = document.getElementById('contentDesc').value.trim();
+
+    if (!desc) {
+      document.getElementById('autoInfo').classList.remove('show');
+      document.getElementById('previewBox').classList.remove('show');
+      checkFormReady();
+      return;
+    }
+
+    const section = detectSection(desc);
+    const platform = detectPlatform(url);
+    const emoji = pickEmoji(section.id);
+    const title = generateTitle(desc);
+
+    detected = { section, platform, emoji, title };
+
+    // Update auto-info
+    document.getElementById('autoSection').textContent = section.name;
+    document.getElementById('autoType').textContent = TYPE_LABELS[platform.type] || '📌 Contenido';
+    document.getElementById('autoEmoji').textContent = emoji;
+    document.getElementById('autoPlatform').textContent = platform.platform;
+    document.getElementById('autoInfo').classList.add('show');
+
+    // Update preview
+    document.getElementById('pvEmoji').textContent = emoji;
+    document.getElementById('pvType').textContent = TYPE_LABELS[platform.type] || '📌 Contenido';
+    document.getElementById('pvTitle').textContent = title;
+    document.getElementById('pvDesc').textContent = desc.length > 200 ? desc.substring(0, 197) + '...' : desc;
+    document.getElementById('pvSection').textContent = 'SECCION: ' + section.name;
+    document.getElementById('previewBox').classList.add('show');
+
+    checkFormReady();
+  }
+
+  function checkFormReady() {
+    const token = localStorage.getItem('aipulse_token');
+    const desc = document.getElementById('contentDesc').value.trim();
+    document.getElementById('btnUpload').disabled = !(token && desc.length >= 10);
+  }
+
+  function clearForm() {
+    document.getElementById('contentUrl').value = '';
+    document.getElementById('contentDesc').value = '';
+    document.getElementById('autoInfo').classList.remove('show');
+    document.getElementById('previewBox').classList.remove('show');
+    detected = {};
+    checkFormReady();
+  }
+
+  // ══════════════════════════════════════
+  // UTF-8 SAFE BASE64 ENCODE/DECODE
+  // ══════════════════════════════════════
+
+  function utf8Decode(base64) {
+    const binStr = atob(base64);
+    const bytes = new Uint8Array(binStr.length);
+    for (let i = 0; i < binStr.length; i++) {
+      bytes[i] = binStr.charCodeAt(i);
+    }
+    return new TextDecoder('utf-8').decode(bytes);
+  }
+
+  function utf8Encode(str) {
+    const bytes = new TextEncoder().encode(str);
+    let binary = '';
+    for (let i = 0; i < bytes.length; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
+  }
+
+  // ══════════════════════════════════════
+  // HTML CARD GENERATOR
+  // ══════════════════════════════════════
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function buildCardHtml() {
+    const url = document.getElementById('contentUrl').value.trim();
+    const desc = document.getElementById('contentDesc').value.trim();
+    const { section, platform, emoji, title } = detected;
+
+    const safeTitle = escapeHtml(title);
+    const safeDesc = escapeHtml(desc);
+    const safeUrl = escapeHtml(url);
+    const typeLabel = TYPE_LABELS[platform.type] || '📌 Contenido';
+    const date = new Date().toISOString().split('T')[0];
+
+    const linkBlock = url
+      ? `<a class="card-link" href="${safeUrl}" target="_blank" rel="noopener">
+            <span data-lang-inline="es">${escapeHtml(platform.linkEs)}</span>
+            <span data-lang-inline="en">${escapeHtml(platform.linkEn)}</span>
+          </a>`
+      : `<span class="card-link" style="cursor:default;opacity:0.5;">
+            <span data-lang-inline="es">Tema en tendencia</span>
+            <span data-lang-inline="en">Trending topic</span>
+          </span>`;
+
+    return `
+      <!-- Card added via Admin Panel - ${date} -->
+      <div class="card reveal visible">
+        <div class="card-emoji-banner">${emoji}</div>
+        <div class="card-body">
+          <p class="card-type">
+            <span data-lang-inline="es">${typeLabel}</span>
+            <span data-lang-inline="en">${typeLabel}</span>
+          </p>
+          <h3>
+            <span data-lang-inline="es">${safeTitle}</span>
+            <span data-lang-inline="en">${safeTitle}</span>
+          </h3>
+          <p>
+            <span data-lang-inline="es">${safeDesc}</span>
+            <span data-lang-inline="en">${safeDesc}</span>
+          </p>
+        </div>
+        <div class="card-footer">
+          ${linkBlock}
+          <span class="card-platform">${escapeHtml(platform.platform)}</span>
+        </div>
+      </div>`;
+  }
+
+  // ══════════════════════════════════════
+  // GITHUB UPLOAD
+  // ══════════════════════════════════════
+
+  async function uploadContent() {
+    const user = localStorage.getItem('aipulse_user');
+    const repo = localStorage.getItem('aipulse_repo');
+    const token = localStorage.getItem('aipulse_token');
+
+    if (!user || !repo || !token) {
+      showStatus('Configura GitHub primero (username, repo, token).', 'error');
+      return;
+    }
+
+    if (!detected.section) {
+      showStatus('Escribe una descripcion primero.', 'error');
+      return;
+    }
+
+    const btn = document.getElementById('btnUpload');
+    btn.disabled = true;
+    showStatus('Obteniendo index.html desde GitHub...', 'loading');
+
+    try {
+      // 1. GET current file (UTF-8 safe)
+      const getResp = await fetch(
+        `https://api.github.com/repos/${user}/${repo}/contents/index.html`,
+        { headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' } }
+      );
+
+      if (!getResp.ok) {
+        throw new Error(`Error al obtener archivo: ${getResp.status} ${getResp.statusText}`);
+      }
+
+      const fileData = await getResp.json();
+      const currentContent = utf8Decode(fileData.content.replace(/\n/g, ''));
+      const sha = fileData.sha;
+
+      // 2. Find insertion point in the correct section
+      const marker = detected.section.marker;
+      const cardHtml = buildCardHtml();
+
+      const markerIdx = currentContent.indexOf(marker);
+      if (markerIdx === -1) {
+        throw new Error(`No se encontro la seccion "${marker}" en index.html`);
+      }
+
+      const gridStart = currentContent.indexOf('<div class="cards-grid">', markerIdx);
+      if (gridStart === -1) {
+        throw new Error('No se encontro cards-grid en la seccion');
+      }
+
+      const sectionEnd = currentContent.indexOf('</section>', gridStart);
+      const gridEnd = currentContent.lastIndexOf('</div>', sectionEnd);
+
+      const newContent = currentContent.slice(0, gridEnd) + '\n' + cardHtml + '\n    ' + currentContent.slice(gridEnd);
+
+      showStatus('Subiendo cambios a GitHub...', 'loading');
+
+      // 3. PUT updated file (UTF-8 safe)
+      const commitTitle = detected.title.substring(0, 50);
+      const putResp = await fetch(
+        `https://api.github.com/repos/${user}/${repo}/contents/index.html`,
+        {
+          method: 'PUT',
+          headers: {
+            Authorization: `token ${token}`,
+            Accept: 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            message: `content: add "${commitTitle}" via admin panel`,
+            content: utf8Encode(newContent),
+            sha: sha,
+          }),
+        }
+      );
+
+      if (!putResp.ok) {
+        const errData = await putResp.json();
+        throw new Error(`Error al subir: ${putResp.status} - ${errData.message}`);
+      }
+
+      showStatus(`Publicado! "${commitTitle}" agregada a ${detected.section.name}. GitHub Pages se actualiza en ~1 min.`, 'success');
+      addToHistory(commitTitle, detected.section.name);
+      clearForm();
+
+    } catch (err) {
+      showStatus(`Error: ${err.message}`, 'error');
+      btn.disabled = false;
+    }
+  }
+
+  // ══════════════════════════════════════
+  // CONFIG
+  // ══════════════════════════════════════
+
+  function toggleConfig() {
+    const body = document.getElementById('configBody');
+    const btn = document.getElementById('configToggle');
+    const isOpen = body.classList.toggle('open');
+    btn.textContent = isOpen ? '▲ Ocultar' : '▼ Mostrar';
+  }
+
   function loadConfig() {
     const user = localStorage.getItem('aipulse_user') || '';
     const repo = localStorage.getItem('aipulse_repo') || '';
@@ -448,6 +821,12 @@
 
     updateTokenStatus(!!token);
     checkFormReady();
+
+    // Auto-open config if no token
+    if (!token) {
+      document.getElementById('configBody').classList.add('open');
+      document.getElementById('configToggle').textContent = '▲ Ocultar';
+    }
   }
 
   function saveConfig() {
@@ -460,235 +839,39 @@
     localStorage.setItem('aipulse_token', token);
 
     updateTokenStatus(!!token);
-    showStatus('Configuracion guardada en localStorage.', 'success');
+    showStatus('Configuracion guardada.', 'success');
     checkFormReady();
+
+    if (token) {
+      document.getElementById('configBody').classList.remove('open');
+      document.getElementById('configToggle').textContent = '▼ Mostrar';
+    }
   }
 
   function updateTokenStatus(saved) {
-    const el = document.getElementById('tokenStatus');
+    const el = document.getElementById('tokenStatusTop');
     if (saved) {
-      el.textContent = '✓ Token guardado en navegador';
+      el.textContent = '✓ Conectado a GitHub';
       el.className = 'token-status saved';
     } else {
-      el.textContent = 'No guardado';
+      el.textContent = '✗ No configurado — expande para conectar';
       el.className = 'token-status not-saved';
     }
   }
 
-  // ── PREVIEW ──
-  function updatePreview() {
-    const emoji = document.getElementById('contentEmoji').value || '🤖🧠⚡';
-    const titleEs = document.getElementById('titleEs').value || 'Titulo aqui';
-    const descEs = document.getElementById('descEs').value || 'Descripcion aqui';
-    const type = document.getElementById('contentType');
-    const typeText = type.options[type.selectedIndex].text;
+  // ══════════════════════════════════════
+  // STATUS & HISTORY
+  // ══════════════════════════════════════
 
-    document.getElementById('previewEmoji').textContent = emoji;
-    document.getElementById('previewTitle').textContent = titleEs;
-    document.getElementById('previewDesc').textContent = descEs;
-    document.getElementById('previewType').textContent = typeText;
-
-    document.getElementById('previewBox').classList.add('show');
-    checkFormReady();
-  }
-
-  function checkFormReady() {
-    const token = localStorage.getItem('aipulse_token');
-    const titleEs = document.getElementById('titleEs').value.trim();
-    const titleEn = document.getElementById('titleEn').value.trim();
-    const descEs = document.getElementById('descEs').value.trim();
-
-    document.getElementById('btnUpload').disabled = !(token && titleEs && titleEn && descEs);
-  }
-
-  function clearForm() {
-    document.getElementById('contentLink').value = '';
-    document.getElementById('contentEmoji').value = '';
-    document.getElementById('titleEs').value = '';
-    document.getElementById('titleEn').value = '';
-    document.getElementById('descEs').value = '';
-    document.getElementById('descEn').value = '';
-    document.getElementById('previewBox').classList.remove('show');
-    checkFormReady();
-  }
-
-  // ── GENERATE HTML CARD ──
-  function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-  }
-
-  function generateCardHtml() {
-    const emoji = escapeHtml(document.getElementById('contentEmoji').value || '🤖🧠⚡');
-    const link = escapeHtml(document.getElementById('contentLink').value);
-    const titleEs = escapeHtml(document.getElementById('titleEs').value);
-    const titleEn = escapeHtml(document.getElementById('titleEn').value);
-    const descEs = escapeHtml(document.getElementById('descEs').value);
-    const descEn = escapeHtml(document.getElementById('descEn').value || descEs);
-    const type = document.getElementById('contentType');
-    const typeText = type.options[type.selectedIndex].text;
-
-    const platformMap = {
-      'video-youtube': 'YouTube',
-      'video-facebook': 'Facebook Video',
-      'article': 'Web',
-      'concept': 'General',
-    };
-    const platform = platformMap[type.value] || 'Web';
-
-    const linkTextEs = link ? 'Ver mas' : 'Tema en tendencia';
-    const linkTextEn = link ? 'See more' : 'Trending topic';
-
-    const linkHtml = link
-      ? `<a class="card-link" href="${link}" target="_blank" rel="noopener">
-              <span data-lang-inline="es">${linkTextEs}</span>
-              <span data-lang-inline="en">${linkTextEn}</span>
-            </a>`
-      : `<span class="card-link" style="cursor:default; opacity:0.5;">
-              <span data-lang-inline="es">${linkTextEs}</span>
-              <span data-lang-inline="en">${linkTextEn}</span>
-            </span>`;
-
-    return `
-      <!-- Card added via Admin Panel - ${new Date().toISOString().split('T')[0]} -->
-      <div class="card reveal">
-        <div class="card-emoji-banner">${emoji}</div>
-        <div class="card-body">
-          <p class="card-type">
-            <span data-lang-inline="es">${typeText}</span>
-            <span data-lang-inline="en">${typeText}</span>
-          </p>
-          <h3>
-            <span data-lang-inline="es">${titleEs}</span>
-            <span data-lang-inline="en">${titleEn}</span>
-          </h3>
-          <p>
-            <span data-lang-inline="es">${descEs}</span>
-            <span data-lang-inline="en">${descEn}</span>
-          </p>
-        </div>
-        <div class="card-footer">
-          ${linkHtml}
-          <span class="card-platform">${platform}</span>
-        </div>
-      </div>`;
-  }
-
-  // ── SECTION MARKERS ──
-  function getSectionMarker(sectionId) {
-    const markers = {
-      'news-of-day': 'NOTICIA DEL D',
-      'cybersecurity': 'CIBERSEGURIDAD',
-      'development': 'FUTURO DE LA PROGRAMACI',
-      'general-ai': 'NOTICIAS DESTACADAS IA',
-    };
-    return markers[sectionId] || 'NOTICIAS DESTACADAS IA';
-  }
-
-  // ── UPLOAD TO GITHUB ──
-  async function uploadContent() {
-    const user = localStorage.getItem('aipulse_user');
-    const repo = localStorage.getItem('aipulse_repo');
-    const token = localStorage.getItem('aipulse_token');
-
-    if (!user || !repo || !token) {
-      showStatus('Configura tu GitHub primero (username, repo, token).', 'error');
-      return;
-    }
-
-    showStatus('Obteniendo index.html desde GitHub...', 'loading');
-
-    try {
-      // 1. Get current file
-      const getResp = await fetch(
-        `https://api.github.com/repos/${user}/${repo}/contents/index.html`,
-        { headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' } }
-      );
-
-      if (!getResp.ok) {
-        throw new Error(`Error al obtener archivo: ${getResp.status} ${getResp.statusText}`);
-      }
-
-      const fileData = await getResp.json();
-      const currentContent = atob(fileData.content.replace(/\n/g, ''));
-      const sha = fileData.sha;
-
-      // 2. Find insertion point
-      const section = document.getElementById('section').value;
-      const marker = getSectionMarker(section);
-      const cardHtml = generateCardHtml();
-
-      // Find the cards-grid closing tag in the right section
-      const markerIdx = currentContent.indexOf(marker);
-      if (markerIdx === -1) {
-        throw new Error(`No se encontro la seccion "${marker}" en index.html`);
-      }
-
-      // Find the </div><!-- /cards-grid --> after the marker
-      let searchFrom = markerIdx;
-      const gridStart = currentContent.indexOf('<div class="cards-grid">', searchFrom);
-      if (gridStart === -1) {
-        throw new Error('No se encontro cards-grid en la seccion');
-      }
-
-      // Find the closing </div> of cards-grid (before </section>)
-      const sectionEnd = currentContent.indexOf('</section>', gridStart);
-      const gridEnd = currentContent.lastIndexOf('</div>', sectionEnd);
-
-      // Insert new card before the closing </div> of cards-grid
-      const newContent = currentContent.slice(0, gridEnd) + '\n' + cardHtml + '\n    ' + currentContent.slice(gridEnd);
-
-      showStatus('Subiendo cambios a GitHub...', 'loading');
-
-      // 3. Update file via GitHub API
-      const titleEs = document.getElementById('titleEs').value;
-      const putResp = await fetch(
-        `https://api.github.com/repos/${user}/${repo}/contents/index.html`,
-        {
-          method: 'PUT',
-          headers: {
-            Authorization: `token ${token}`,
-            Accept: 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            message: `content: add "${titleEs}" via admin panel`,
-            content: btoa(unescape(encodeURIComponent(newContent))),
-            sha: sha,
-          }),
-        }
-      );
-
-      if (!putResp.ok) {
-        const errData = await putResp.json();
-        throw new Error(`Error al subir: ${putResp.status} - ${errData.message}`);
-      }
-
-      showStatus(`Publicado! Card "${titleEs}" agregada. GitHub Pages se actualiza en ~1 min.`, 'success');
-      addToHistory(titleEs, section);
-      clearForm();
-
-    } catch (err) {
-      showStatus(`Error: ${err.message}`, 'error');
-    }
-  }
-
-  // ── STATUS ──
   function showStatus(msg, type) {
     const el = document.getElementById('statusMsg');
     el.textContent = msg;
     el.className = `status show ${type}`;
   }
 
-  // ── HISTORY ──
   function addToHistory(title, section) {
     const history = JSON.parse(localStorage.getItem('aipulse_history') || '[]');
-    history.unshift({
-      title,
-      section,
-      time: new Date().toLocaleString(),
-    });
+    history.unshift({ title, section, time: new Date().toLocaleString() });
     if (history.length > 10) history.pop();
     localStorage.setItem('aipulse_history', JSON.stringify(history));
     renderHistory();
@@ -696,15 +879,15 @@
 
   function renderHistory() {
     const history = JSON.parse(localStorage.getItem('aipulse_history') || '[]');
-    const container = document.getElementById('history');
-    if (history.length === 0) {
-      container.innerHTML = '<p style="font-size:0.75rem; color:var(--text2);">Sin actualizaciones previas.</p>';
+    const el = document.getElementById('history');
+    if (!history.length) {
+      el.innerHTML = '<p style="font-size:0.7rem;color:var(--text2);">Sin actualizaciones previas.</p>';
       return;
     }
-    container.innerHTML = history.map(h =>
+    el.innerHTML = history.map(h =>
       `<div class="history-item">
-        <span>✓ ${escapeHtml(h.title)}</span>
-        <span class="time">${h.time}</span>
+        <span class="h-title">✓ ${escapeHtml(h.title)}</span>
+        <span class="h-time">${h.time}</span>
       </div>`
     ).join('');
   }
