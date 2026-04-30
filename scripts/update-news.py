@@ -177,7 +177,8 @@ def build_news_card(article, emoji, is_featured=False):
 
 def update_index_html(top_article, secondary_articles):
     """Replace the 'Noticia del Dia' section in index.html."""
-    index_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "index.html")
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    index_path = os.path.join(os.path.dirname(script_dir), "index.html")
 
     with open(index_path, "r", encoding="utf-8") as f:
         content = f.read()
@@ -217,26 +218,37 @@ def update_index_html(top_article, secondary_articles):
   </section>"""
 
     # Replace existing section using markers
-    pattern = r"  <!-- =+\s*-->\s*\n\s*<!-- NOTICIA DEL D[IÍ]A.*?</section>"
+    # Match both ASCII = and Unicode ═ in comment borders
+    pattern = r"  <!-- [=═]+\s*-->\s*\n\s*<!-- NOTICIA DEL D[IÍi]A.*?</section>"
     match = re.search(pattern, content, re.DOTALL | re.IGNORECASE)
 
     if match:
         content = content[:match.start()] + new_section + content[match.end():]
-        print(f"[OK] Noticia del Dia section updated")
+        print("[OK] Noticia del Dia section updated")
     else:
-        # Insert after breaking banner
-        marker = "</div>\n\n  <!-- "
-        idx = content.find("<!-- SECCION 1") or content.find("<!-- SECCIÓN 1")
-        if idx == -1:
-            idx = content.find("<!-- =")
-            if idx == -1:
-                print("[ERROR] Could not find insertion point")
-                return False
+        # Fallback: find the cybersecurity section and insert before it
+        for marker in ["CIBERSEGURIDAD", "CYBERSECURITY", "SECCI"]:
+            idx = content.find(marker)
+            if idx != -1:
+                break
 
-        # Find the line before section 1
-        insert_before = content.rfind("\n", 0, idx)
-        content = content[:insert_before] + "\n\n" + new_section + "\n\n" + content[insert_before:]
-        print(f"[OK] Noticia del Dia section inserted")
+        if idx == -1:
+            print("[ERROR] Could not find insertion point")
+            return False
+
+        # Find the comment block start before this marker
+        comment_start = content.rfind("<!--", 0, idx)
+        if comment_start == -1:
+            print("[ERROR] Could not find comment before section")
+            return False
+
+        # Go back to the start of the line
+        line_start = content.rfind("\n", 0, comment_start)
+        if line_start == -1:
+            line_start = 0
+
+        content = content[:line_start] + "\n\n" + new_section + "\n\n" + content[line_start:]
+        print("[OK] Noticia del Dia section inserted")
 
     # Update ticker with top news
     top_title = html.escape(top_article["title"])
