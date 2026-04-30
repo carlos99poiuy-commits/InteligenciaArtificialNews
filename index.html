@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>AI PULSE — Noticias de Inteligencia Artificial</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -346,6 +349,75 @@
   .card-link:hover { gap: 0.8rem; }
   .card-link::after { content: '→'; }
 
+  /* ── VIDEO CTA BUTTON ── */
+  .video-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    padding: 0.9rem 1.5rem;
+    margin: 0 1.25rem 1.25rem;
+    background: linear-gradient(135deg, #ff0000, #cc0000);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .video-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transform: translateX(-100%);
+    animation: shimmer 2.5s ease-in-out infinite;
+  }
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    50% { transform: translateX(100%); }
+    100% { transform: translateX(100%); }
+  }
+  .video-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255,0,0,0.4);
+  }
+  .video-cta .play-icon {
+    font-size: 1.4rem;
+    animation: playBounce 1.5s ease-in-out infinite;
+  }
+  @keyframes playBounce {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+  .video-cta .cta-text { position: relative; z-index: 1; }
+
+  .video-cta.facebook {
+    background: linear-gradient(135deg, #1877F2, #0d5bbd);
+  }
+  .video-cta.facebook:hover {
+    box-shadow: 0 8px 25px rgba(24,119,242,0.4);
+  }
+
+  /* ── NEWS DATE STAMP ── */
+  .news-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--accent3);
+    letter-spacing: 1px;
+    padding: 0.2rem 0.5rem;
+    background: rgba(255,209,102,0.1);
+    border: 1px solid rgba(255,209,102,0.2);
+    border-radius: 3px;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+
   .card-platform {
     font-family: 'Space Mono', monospace;
     font-size: 0.6rem;
@@ -590,6 +662,7 @@
         <div class="card-emoji-banner">🤖🧠🔥</div>
         <div style="display:flex; flex-direction:column; flex:1;">
           <div class="card-body">
+            <span class="news-date" id="newsDayDate"></span>
             <p class="card-type">
               <span data-lang-inline="es">📰 Noticia del dia · TechCrunch</span>
               <span data-lang-inline="en">📰 News of the day · TechCrunch</span>
@@ -704,13 +777,13 @@
               <span data-lang-inline="en">Artificial intelligence is redefining the cybersecurity landscape. Attackers now use AI to create more sophisticated malware, personalized phishing and automated exploits. But defenders also have new weapons. This video addresses the most common myths about AI and security, and why it's urgent for every company to understand this new reality.</span>
             </p>
           </div>
-          <div class="card-footer">
-            <a class="card-link" href="https://www.facebook.com/share/v/1Cmyoeezo5/" target="_blank" rel="noopener">
-              <span data-lang-inline="es">Ver video</span>
-              <span data-lang-inline="en">Watch video</span>
-            </a>
-            <span class="card-platform">Facebook Video</span>
-          </div>
+          <a class="video-cta facebook" href="https://www.facebook.com/share/v/1Cmyoeezo5/" target="_blank" rel="noopener">
+            <span class="play-icon">▶</span>
+            <span class="cta-text">
+              <span data-lang-inline="es">VER VIDEO COMPLETO</span>
+              <span data-lang-inline="en">WATCH FULL VIDEO</span>
+            </span>
+          </a>
         </div>
       </div>
 
@@ -761,13 +834,13 @@
             <span data-lang-inline="en">What if instead of writing code directly, you first write a detailed specification that AI executes? Spec Driven Development (SDD) is the paradigm replacing "vibe coding". Learn how to structure your prompts as formal specs, why this produces more robust code, and how Tech Leads can leverage this to accelerate entire teams without losing architectural control.</span>
           </p>
         </div>
-        <div class="card-footer">
-          <a class="card-link" href="https://youtu.be/p2WA672HrdI?si=k2vWrlYoioGEN6A-" target="_blank" rel="noopener">
-            <span data-lang-inline="es">Ver en YouTube</span>
-            <span data-lang-inline="en">Watch on YouTube</span>
-          </a>
-          <span class="card-platform">YouTube</span>
-        </div>
+        <a class="video-cta" href="https://youtu.be/p2WA672HrdI?si=k2vWrlYoioGEN6A-" target="_blank" rel="noopener">
+          <span class="play-icon">▶</span>
+          <span class="cta-text">
+            <span data-lang-inline="es">VER VIDEO EN YOUTUBE</span>
+            <span data-lang-inline="en">WATCH VIDEO ON YOUTUBE</span>
+          </span>
+        </a>
       </div>
 
     </div>
@@ -953,6 +1026,15 @@
   document.querySelectorAll('.ticker-inner').forEach(t => {
     t.innerHTML += t.innerHTML;
   });
+
+  // ── NEWS DATE STAMP ──
+  const newsDateEl = document.getElementById('newsDayDate');
+  if (newsDateEl) {
+    const now = new Date();
+    const dateEs = now.toLocaleDateString('es-MX', { year:'numeric', month:'long', day:'numeric', timeZone:'America/Mexico_City' });
+    const dateEn = now.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric', timeZone:'America/Mexico_City' });
+    newsDateEl.innerHTML = `<span data-lang-inline="es">📅 ${dateEs}</span><span data-lang-inline="en">📅 ${dateEn}</span>`;
+  }
 
   // ── DATE BAR ──
   function updateDateBar() {
