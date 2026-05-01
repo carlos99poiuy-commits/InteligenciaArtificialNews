@@ -6,11 +6,13 @@ and commits changes automatically.
 """
 
 import urllib.request
+import urllib.parse
 import xml.etree.ElementTree as ET
 import re
 import html
 import json
 import os
+import time
 from datetime import datetime, timezone
 
 
@@ -27,6 +29,37 @@ EMOJIS_POOL = [
     "🤖🧠🔥", "📊🌍⚡", "🚀🤖💡", "🧬🤖🔬",
     "💻🤖📈", "🌐🧠🔮", "⚡🤖🌟", "🔬🧠💫",
 ]
+
+
+def translate_text(text, source='en', target='es'):
+    """Translate text using MyMemory API (free, no key needed)."""
+    if not text or len(text.strip()) < 3:
+        return text
+    try:
+        encoded = urllib.parse.quote(text[:500])
+        url = f"https://api.mymemory.translated.net/get?q={encoded}&langpair={source}|{target}"
+        req = urllib.request.Request(url, headers={"User-Agent": "AI-PULSE-Bot/1.0"})
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read())
+        translated = data.get("responseData", {}).get("translatedText", "")
+        if translated and translated.upper() != translated:
+            return html.unescape(translated)
+        if translated:
+            # MyMemory sometimes returns ALL CAPS, try to fix
+            return html.unescape(translated.capitalize())
+    except Exception as e:
+        print(f"  [WARN] Translation failed: {e}")
+    return text
+
+
+def translate_article(article):
+    """Add Spanish translations to an article dict."""
+    print(f"  Translating: {article['title'][:60]}...")
+    article["title_es"] = translate_text(article["title"])
+    time.sleep(0.5)  # Rate limit courtesy
+    article["description_es"] = translate_text(article["description"])
+    time.sleep(0.5)
+    return article
 
 
 def fetch_feed(url, timeout=10):
@@ -115,10 +148,12 @@ def get_source_name(url):
 
 
 def build_news_card(article, emoji, is_featured=False):
-    """Generate HTML card for a news article."""
+    """Generate HTML card for a news article (bilingual ES/EN)."""
     source = get_source_name(article.get("source", article["link"]))
-    title = html.escape(article["title"])
-    desc = html.escape(article["description"])
+    title_en = html.escape(article["title"])
+    title_es = html.escape(article.get("title_es", article["title"]))
+    desc_en = html.escape(article["description"])
+    desc_es = html.escape(article.get("description_es", article["description"]))
     link = html.escape(article["link"])
 
     if is_featured:
@@ -131,12 +166,12 @@ def build_news_card(article, emoji, is_featured=False):
               <span data-lang-inline="en">📰 News of the day · {source}</span>
             </p>
             <h3>
-              <span data-lang-inline="es">{title}</span>
-              <span data-lang-inline="en">{title}</span>
+              <span data-lang-inline="es">{title_es}</span>
+              <span data-lang-inline="en">{title_en}</span>
             </h3>
             <p>
-              <span data-lang-inline="es">{desc}</span>
-              <span data-lang-inline="en">{desc}</span>
+              <span data-lang-inline="es">{desc_es}</span>
+              <span data-lang-inline="en">{desc_en}</span>
             </p>
           </div>
           <div class="card-footer">
@@ -157,12 +192,12 @@ def build_news_card(article, emoji, is_featured=False):
             <span data-lang-inline="en">📰 News · {source}</span>
           </p>
           <h3>
-            <span data-lang-inline="es">{title}</span>
-            <span data-lang-inline="en">{title}</span>
+            <span data-lang-inline="es">{title_es}</span>
+            <span data-lang-inline="en">{title_en}</span>
           </h3>
           <p>
-            <span data-lang-inline="es">{desc}</span>
-            <span data-lang-inline="en">{desc}</span>
+            <span data-lang-inline="es">{desc_es}</span>
+            <span data-lang-inline="en">{desc_en}</span>
           </p>
         </div>
         <div class="card-footer">
@@ -288,8 +323,9 @@ def update_index_html(top_article, secondary_articles):
         else:
             print("[WARN] Could not find insertion point for Mas Noticias")
 
-    # ── Update ticker with top news ──
-    top_title = html.escape(top_article["title"])
+    # ── Update ticker with top news (bilingual) ──
+    top_title_en = html.escape(top_article["title"])
+    top_title_es = html.escape(top_article.get("title_es", top_article["title"]))
     ticker_es_pattern = r'(<div class="ticker-inner" data-lang="es">)(.*?)(</div>)'
     ticker_en_pattern = r'(<div class="ticker-inner" data-lang="en">)(.*?)(</div>)'
 
@@ -302,8 +338,8 @@ def update_index_html(top_article, secondary_articles):
             spans.append(f"<span>📰 {new_item}</span>")
         return opening + "\n    " + "\n    ".join(spans) + "\n  " + closing
 
-    content = re.sub(ticker_es_pattern, lambda m: update_ticker(m, top_title), content, flags=re.DOTALL)
-    content = re.sub(ticker_en_pattern, lambda m: update_ticker(m, top_title), content, flags=re.DOTALL)
+    content = re.sub(ticker_es_pattern, lambda m: update_ticker(m, top_title_es), content, flags=re.DOTALL)
+    content = re.sub(ticker_en_pattern, lambda m: update_ticker(m, top_title_en), content, flags=re.DOTALL)
 
     with open(index_path, "w", encoding="utf-8") as f:
         f.write(content)
@@ -347,6 +383,13 @@ def main():
     print(f"\nTop article: {top['title']}")
     for i, s in enumerate(secondary):
         print(f"Secondary {i+1}: {s['title']}")
+
+    # Translate articles to Spanish
+    print("\n── Translating to Spanish ──")
+    translate_article(top)
+    for art in secondary:
+        translate_article(art)
+    print(f"  ES title: {top.get('title_es', 'N/A')}")
 
     # Update index.html
     if update_index_html(top, secondary):
