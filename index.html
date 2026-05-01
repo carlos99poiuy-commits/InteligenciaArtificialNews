@@ -251,6 +251,16 @@
 
   section { margin-bottom: 4rem; }
 
+  /* ── SECTION DIVIDER ── */
+  .section-divider {
+    margin: 3.5rem 0;
+    height: 2px;
+    border: none;
+    border-radius: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--accent) 25%, var(--accent2) 50%, var(--accent3) 75%, transparent 100%);
+    opacity: 0.4;
+  }
+
   /* ── CARDS ── */
   .cards-grid {
     display: grid;
@@ -662,6 +672,7 @@
         <div class="card-emoji-banner">🤖🧠🔥</div>
         <div style="display:flex; flex-direction:column; flex:1;">
           <div class="card-body">
+            <span class="news-date" id="newsDayDate"></span>
             <p class="card-type">
               <span data-lang-inline="es">📰 Noticia del dia · TechCrunch</span>
               <span data-lang-inline="en">📰 News of the day · TechCrunch</span>
@@ -684,7 +695,116 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
 
+  <!-- ═══════════════════════════════════ -->
+  <!-- SECTION DIVIDER 1                  -->
+  <!-- ═══════════════════════════════════ -->
+  <hr class="section-divider">
+
+  <!-- ═══════════════════════════════ -->
+  <!-- SECCION 2: VIDEOS DESTACADOS   -->
+  <!-- ═══════════════════════════════ -->
+  <section>
+    <div class="section-header reveal">
+      <span class="section-emoji">🎬</span>
+      <h2 class="section-title">
+        <span data-lang-inline="es">Videos Destacados</span>
+        <span data-lang-inline="en">Featured Videos</span>
+      </h2>
+      <span class="section-badge hot">
+        <span data-lang-inline="es">🔥 IMPERDIBLES</span>
+        <span data-lang-inline="en">🔥 MUST WATCH</span>
+      </span>
+    </div>
+
+    <div class="cards-grid">
+
+      <!-- CARD: MYTHOS Cybersecurity Video -->
+      <div class="card reveal">
+        <div class="card-emoji-banner">🕵️‍♂️💻🔓</div>
+        <div class="card-body">
+          <p class="card-type">
+            <span data-lang-inline="es">🎥 Video · Facebook</span>
+            <span data-lang-inline="en">🎥 Video · Facebook</span>
+          </p>
+          <h3>
+            <span data-lang-inline="es">MYTHOS: Ciberseguridad en la Era de la IA</span>
+            <span data-lang-inline="en">MYTHOS: Cybersecurity in the AI Era</span>
+          </h3>
+          <p>
+            <span data-lang-inline="es">La inteligencia artificial está redefiniendo el panorama de la ciberseguridad. Los atacantes ahora usan IA para crear malware más sofisticado, phishing personalizado y exploits automatizados. Pero también los defensores tienen nuevas armas.</span>
+            <span data-lang-inline="en">Artificial intelligence is redefining the cybersecurity landscape. Attackers now use AI to create more sophisticated malware, personalized phishing and automated exploits. But defenders also have new weapons.</span>
+          </p>
+        </div>
+        <a class="video-cta facebook" href="https://www.facebook.com/share/v/1Cmyoeezo5/" target="_blank" rel="noopener">
+          <span class="play-icon">▶</span>
+          <span class="cta-text">
+            <span data-lang-inline="es">VER VIDEO COMPLETO</span>
+            <span data-lang-inline="en">WATCH FULL VIDEO</span>
+          </span>
+        </a>
+      </div>
+
+      <!-- CARD: Spec Driven Development -->
+      <div class="card reveal">
+        <div class="card-emoji-banner">📋✍️🚀</div>
+        <div class="card-body">
+          <p class="card-type">
+            <span data-lang-inline="es">🎥 Video · YouTube</span>
+            <span data-lang-inline="en">🎥 Video · YouTube</span>
+          </p>
+          <h3>
+            <span data-lang-inline="es">Spec Driven Development: El Futuro de la Programación</span>
+            <span data-lang-inline="en">Spec Driven Development: The Future of Programming</span>
+          </h3>
+          <p>
+            <span data-lang-inline="es">¿Y si en lugar de escribir código directamente, primero escribes una especificación detallada que la IA ejecuta? Spec Driven Development (SDD) es el paradigma que está reemplazando al "vibe coding".</span>
+            <span data-lang-inline="en">What if instead of writing code directly, you first write a detailed specification that AI executes? Spec Driven Development (SDD) is the paradigm replacing "vibe coding".</span>
+          </p>
+        </div>
+        <a class="video-cta" href="https://youtu.be/p2WA672HrdI?si=k2vWrlYoioGEN6A-" target="_blank" rel="noopener">
+          <span class="play-icon">▶</span>
+          <span class="cta-text">
+            <span data-lang-inline="es">VER VIDEO EN YOUTUBE</span>
+            <span data-lang-inline="en">WATCH VIDEO ON YOUTUBE</span>
+          </span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MEME DIVIDER -->
+  <div class="meme-divider reveal">
+    <span class="meme-emoji">😱🔓🤖</span>
+    <p>
+      <span data-lang-inline="es">"Yo pensando que tenía buena contraseña..." <strong>vs la IA crackeándola en 0.3 segundos.</strong></span>
+      <span data-lang-inline="en">"Me thinking I had a strong password..." <strong>vs the AI cracking it in 0.3 seconds.</strong></span>
+    </p>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- =============================== -->
+  <!-- MAS NOTICIAS DE IA             -->
+  <!-- Actualizado: 2026-05-01       -->
+  <!-- =============================== -->
+  <section>
+    <div class="section-header reveal">
+      <span class="section-emoji">📡</span>
+      <h2 class="section-title">
+        <span data-lang-inline="es">Mas Noticias de IA</span>
+        <span data-lang-inline="en">More AI News</span>
+      </h2>
+      <span class="section-badge trending">
+        <span data-lang-inline="es">📈 RECIENTES</span>
+        <span data-lang-inline="en">📈 RECENT</span>
+      </span>
+    </div>
+
+    <div class="cards-grid">
 
       <div class="card reveal">
         <div class="card-emoji-banner">📊🌍⚡</div>
@@ -698,8 +818,8 @@
             <span data-lang-inline="en">Sources: Anthropic potential $900B+ valuation round could happen within 2 weeks</span>
           </h3>
           <p>
-            <span data-lang-inline="es">Anthropic is asking investors to submit allocations for the AI company’s latest fundraise within the next 48 hours, according to sources familiar with the matter.</span>
-            <span data-lang-inline="en">Anthropic is asking investors to submit allocations for the AI company’s latest fundraise within the next 48 hours, according to sources familiar with the matter.</span>
+            <span data-lang-inline="es">Anthropic is asking investors to submit allocations for the AI company&#x27;s latest fundraise within the next 48 hours, according to sources familiar with the matter.</span>
+            <span data-lang-inline="en">Anthropic is asking investors to submit allocations for the AI company&#x27;s latest fundraise within the next 48 hours, according to sources familiar with the matter.</span>
           </p>
         </div>
         <div class="card-footer">
@@ -735,112 +855,6 @@
           <span class="card-platform">TechCrunch</span>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════ -->
-  <!-- SECCIÓN 1: CIBERSEGURIDAD + IA -->
-  <!-- ═══════════════════════════════ -->
-  <section>
-    <div class="section-header reveal">
-      <span class="section-emoji">🛡️</span>
-      <h2 class="section-title">
-        <span data-lang-inline="es">Ciberseguridad & IA</span>
-        <span data-lang-inline="en">Cybersecurity & AI</span>
-      </h2>
-      <span class="section-badge hot">
-        <span data-lang-inline="es">🔥 URGENTE</span>
-        <span data-lang-inline="en">🔥 URGENT</span>
-      </span>
-    </div>
-
-    <div class="cards-grid">
-
-      <!-- CARD FEATURED: Facebook cybersecurity -->
-      <div class="card card-featured reveal">
-        <div class="card-emoji-banner">
-          🕵️‍♂️💻🔓
-        </div>
-        <div style="display:flex; flex-direction:column; flex:1;">
-          <div class="card-body">
-            <p class="card-type">
-              <span data-lang-inline="es">📰 Noticia General</span>
-              <span data-lang-inline="en">📰 General News</span>
-            </p>
-            <h3>
-              <span data-lang-inline="es">MYTHOS: Ciberseguridad en la Era de la IA</span>
-              <span data-lang-inline="en">MYTHOS: Cybersecurity in the AI Era</span>
-            </h3>
-            <p>
-              <span data-lang-inline="es">La inteligencia artificial está redefiniendo el panorama de la ciberseguridad. Los atacantes ahora usan IA para crear malware más sofisticado, phishing personalizado y exploits automatizados. Pero también los defensores tienen nuevas armas. Este video aborda los mitos más comunes sobre IA y seguridad, y por qué es urgente que toda empresa entienda esta nueva realidad.</span>
-              <span data-lang-inline="en">Artificial intelligence is redefining the cybersecurity landscape. Attackers now use AI to create more sophisticated malware, personalized phishing and automated exploits. But defenders also have new weapons. This video addresses the most common myths about AI and security, and why it's urgent for every company to understand this new reality.</span>
-            </p>
-          </div>
-          <a class="video-cta facebook" href="https://www.facebook.com/share/v/1Cmyoeezo5/" target="_blank" rel="noopener">
-            <span class="play-icon">▶</span>
-            <span class="cta-text">
-              <span data-lang-inline="es">VER VIDEO COMPLETO</span>
-              <span data-lang-inline="en">WATCH FULL VIDEO</span>
-            </span>
-          </a>
-        </div>
-      </div>
-
-    </div><!-- /cards-grid -->
-  </section>
-
-  <!-- MEME DIVIDER -->
-  <div class="meme-divider reveal">
-    <span class="meme-emoji">😱🔓🤖</span>
-    <p>
-      <span data-lang-inline="es">"Yo pensando que tenía buena contraseña..." <strong>vs la IA crackeándola en 0.3 segundos.</strong></span>
-      <span data-lang-inline="en">"Me thinking I had a strong password..." <strong>vs the AI cracking it in 0.3 seconds.</strong></span>
-    </p>
-  </div>
-
-  <!-- ══════════════════════════════════════ -->
-  <!-- SECCIÓN 2: EL FUTURO DE LA PROGRAMACIÓN -->
-  <!-- ══════════════════════════════════════ -->
-  <section>
-    <div class="section-header reveal">
-      <span class="section-emoji">⚡</span>
-      <h2 class="section-title">
-        <span data-lang-inline="es">El Futuro del Desarrollo</span>
-        <span data-lang-inline="en">The Future of Development</span>
-      </h2>
-      <span class="section-badge new">
-        <span data-lang-inline="es">🆕 TENDENCIA</span>
-        <span data-lang-inline="en">🆕 TRENDING</span>
-      </span>
-    </div>
-
-    <div class="cards-grid">
-
-      <!-- CARD: Spec Driven Development -->
-      <div class="card reveal">
-        <div class="card-emoji-banner">📋✍️🚀</div>
-        <div class="card-body">
-          <p class="card-type">
-            <span data-lang-inline="es">🎥 Video · YouTube</span>
-            <span data-lang-inline="en">🎥 Video · YouTube</span>
-          </p>
-          <h3>
-            <span data-lang-inline="es">Spec Driven Development: El Futuro de la Programación</span>
-            <span data-lang-inline="en">Spec Driven Development: The Future of Programming</span>
-          </h3>
-          <p>
-            <span data-lang-inline="es">¿Y si en lugar de escribir código directamente, primero escribes una especificación detallada que la IA ejecuta? Spec Driven Development (SDD) es el paradigma que está reemplazando al "vibe coding". Aprende cómo estructurar tus prompts como specs formales, por qué esto produce código más robusto, y cómo los Tech Leads pueden aprovechar esto para acelerar equipos enteros sin perder control de la arquitectura.</span>
-            <span data-lang-inline="en">What if instead of writing code directly, you first write a detailed specification that AI executes? Spec Driven Development (SDD) is the paradigm replacing "vibe coding". Learn how to structure your prompts as formal specs, why this produces more robust code, and how Tech Leads can leverage this to accelerate entire teams without losing architectural control.</span>
-          </p>
-        </div>
-        <a class="video-cta" href="https://youtu.be/p2WA672HrdI?si=k2vWrlYoioGEN6A-" target="_blank" rel="noopener">
-          <span class="play-icon">▶</span>
-          <span class="cta-text">
-            <span data-lang-inline="es">VER VIDEO EN YOUTUBE</span>
-            <span data-lang-inline="en">WATCH VIDEO ON YOUTUBE</span>
-          </span>
-        </a>
-      </div>
 
     </div>
   </section>
@@ -854,8 +868,10 @@
     </p>
   </div>
 
+  <hr class="section-divider">
+
   <!-- ══════════════════════════════════ -->
-  <!-- SECCIÓN 3: NOTICIAS DESTACADAS IA -->
+  <!-- SECCION 4: LO QUE DEBES SABER    -->
   <!-- ══════════════════════════════════ -->
   <section>
     <div class="section-header reveal">

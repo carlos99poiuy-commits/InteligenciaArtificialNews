@@ -176,25 +176,19 @@ def build_news_card(article, emoji, is_featured=False):
 
 
 def update_index_html(top_article, secondary_articles):
-    """Replace the 'Noticia del Dia' section in index.html."""
+    """Replace 'Noticia del Dia' and 'Mas Noticias' sections in index.html."""
     script_dir = os.path.dirname(os.path.abspath(__file__))
     index_path = os.path.join(os.path.dirname(script_dir), "index.html")
 
     with open(index_path, "r", encoding="utf-8") as f:
         content = f.read()
 
-    # Build the featured card
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
+    # ── SECTION 1: Noticia del Dia (featured card only) ──
     featured_card = build_news_card(top_article, EMOJIS_POOL[0], is_featured=True)
 
-    # Build secondary cards
-    secondary_html = ""
-    for i, art in enumerate(secondary_articles[:2]):
-        emoji = EMOJIS_POOL[(i + 1) % len(EMOJIS_POOL)]
-        secondary_html += "\n\n" + build_news_card(art, emoji)
-
-    # Build complete section
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    new_section = f"""  <!-- =============================== -->
+    noticia_section = f"""  <!-- =============================== -->
   <!-- NOTICIA DEL DIA                -->
   <!-- Actualizado: {today}       -->
   <!-- =============================== -->
@@ -213,44 +207,88 @@ def update_index_html(top_article, secondary_articles):
 
     <div class="cards-grid">
 {featured_card}
-{secondary_html}
     </div>
   </section>"""
 
-    # Replace existing section using markers
-    # Match both ASCII = and Unicode ═ in comment borders
+    # Replace NOTICIA DEL DIA section
     pattern = r"  <!-- [=═]+\s*-->\s*\n\s*<!-- NOTICIA DEL D[IÍi]A.*?</section>"
     match = re.search(pattern, content, re.DOTALL | re.IGNORECASE)
 
     if match:
-        content = content[:match.start()] + new_section + content[match.end():]
+        content = content[:match.start()] + noticia_section + content[match.end():]
         print("[OK] Noticia del Dia section updated")
     else:
-        # Fallback: find the cybersecurity section and insert before it
-        for marker in ["CIBERSEGURIDAD", "CYBERSECURITY", "SECCI"]:
+        # Fallback: insert before Videos Destacados or first section divider
+        for marker in ["VIDEOS DESTACADOS", "SECCION 2", "section-divider"]:
             idx = content.find(marker)
             if idx != -1:
                 break
-
         if idx == -1:
-            print("[ERROR] Could not find insertion point")
+            print("[ERROR] Could not find insertion point for Noticia del Dia")
             return False
-
-        # Find the comment block start before this marker
         comment_start = content.rfind("<!--", 0, idx)
         if comment_start == -1:
-            print("[ERROR] Could not find comment before section")
-            return False
-
-        # Go back to the start of the line
-        line_start = content.rfind("\n", 0, comment_start)
+            comment_start = content.rfind("<hr", 0, idx)
+        line_start = content.rfind("\n", 0, comment_start) if comment_start != -1 else -1
         if line_start == -1:
             line_start = 0
-
-        content = content[:line_start] + "\n\n" + new_section + "\n\n" + content[line_start:]
+        content = content[:line_start] + "\n\n" + noticia_section + "\n\n" + content[line_start:]
         print("[OK] Noticia del Dia section inserted")
 
-    # Update ticker with top news
+    # ── SECTION 3: Mas Noticias de IA (secondary cards) ──
+    secondary_html = ""
+    for i, art in enumerate(secondary_articles[:2]):
+        emoji = EMOJIS_POOL[(i + 1) % len(EMOJIS_POOL)]
+        secondary_html += "\n\n" + build_news_card(art, emoji)
+
+    mas_noticias_section = f"""  <!-- =============================== -->
+  <!-- MAS NOTICIAS DE IA             -->
+  <!-- Actualizado: {today}       -->
+  <!-- =============================== -->
+  <section>
+    <div class="section-header reveal">
+      <span class="section-emoji">📡</span>
+      <h2 class="section-title">
+        <span data-lang-inline="es">Mas Noticias de IA</span>
+        <span data-lang-inline="en">More AI News</span>
+      </h2>
+      <span class="section-badge trending">
+        <span data-lang-inline="es">📈 RECIENTES</span>
+        <span data-lang-inline="en">📈 RECENT</span>
+      </span>
+    </div>
+
+    <div class="cards-grid">
+{secondary_html}
+    </div>
+  </section>"""
+
+    # Replace MAS NOTICIAS section
+    pattern2 = r"  <!-- [=═]+\s*-->\s*\n\s*<!-- MAS NOTICIAS.*?</section>"
+    match2 = re.search(pattern2, content, re.DOTALL | re.IGNORECASE)
+
+    if match2:
+        content = content[:match2.start()] + mas_noticias_section + content[match2.end():]
+        print("[OK] Mas Noticias section updated")
+    else:
+        # Fallback: insert before "Lo que debes saber" section
+        for marker in ["LO QUE DEBES SABER", "SECCION 4", "TOP TEMAS"]:
+            idx2 = content.find(marker)
+            if idx2 != -1:
+                break
+        if idx2 != -1:
+            comment_start = content.rfind("<!--", 0, idx2)
+            if comment_start == -1:
+                comment_start = content.rfind("<hr", 0, idx2)
+            line_start = content.rfind("\n", 0, comment_start) if comment_start != -1 else -1
+            if line_start == -1:
+                line_start = 0
+            content = content[:line_start] + "\n\n" + mas_noticias_section + "\n\n" + content[line_start:]
+            print("[OK] Mas Noticias section inserted")
+        else:
+            print("[WARN] Could not find insertion point for Mas Noticias")
+
+    # ── Update ticker with top news ──
     top_title = html.escape(top_article["title"])
     ticker_es_pattern = r'(<div class="ticker-inner" data-lang="es">)(.*?)(</div>)'
     ticker_en_pattern = r'(<div class="ticker-inner" data-lang="en">)(.*?)(</div>)'
