@@ -7,14 +7,31 @@ and commits changes automatically.
 
 import urllib.request
 import urllib.parse
+import urllib.error
 import xml.etree.ElementTree as ET
 import re
 import html
 import json
 import os
+import sys
 import time
+import logging
 from datetime import datetime, timezone
 
+# ── LOGGING SETUP ──
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+logger = logging.getLogger(__name__)
+
+# ── CONSTANTS ──
+MAX_TRANSLATION_CHARS = 500
+MAX_DESCRIPTION_CHARS = 300
+MAX_SECONDARY_ARTICLES = 2
+HTTP_TIMEOUT = 10
+TRANSLATION_DELAY = 0.5
 
 # ── RSS FEEDS TO CHECK ──
 FEEDS = [
@@ -31,15 +48,26 @@ EMOJIS_POOL = [
 ]
 
 
+def is_safe_url(url):
+    """Validate that a URL uses http or https scheme only."""
+    return isinstance(url, str) and url.startswith(("http://", "https://"))
+
+
+def strip_html_tags(text):
+    """Remove HTML tags from text safely."""
+    clean = re.sub(r"<[^>]+>", "", text)
+    return html.unescape(clean)
+
+
 def translate_text(text, source='en', target='es'):
     """Translate text using MyMemory API (free, no key needed)."""
-    if not text or len(text.strip()) < 3:
-        return text
+    if not isinstance(text, str) or len(text.strip()) < 3:
+        return text if isinstance(text, str) else ""
     try:
-        encoded = urllib.parse.quote(text[:500])
+        encoded = urllib.parse.quote(text[:MAX_TRANSLATION_CHARS])
         url = f"https://api.mymemory.translated.net/get?q={encoded}&langpair={source}|{target}"
         req = urllib.request.Request(url, headers={"User-Agent": "AI-PULSE-Bot/1.0"})
-        with urllib.request.urlopen(req, timeout=10) as resp:
+        with urllib.request.urlopen(req, timeout=HTTP_TIMEOUT) as resp:
             data = json.loads(resp.read())
         translated = data.get("responseData", {}).get("translatedText", "")
         if translated and translated.upper() != translated:
@@ -47,29 +75,36 @@ def translate_text(text, source='en', target='es'):
         if translated:
             # MyMemory sometimes returns ALL CAPS, try to fix
             return html.unescape(translated.capitalize())
-    except Exception as e:
-        print(f"  [WARN] Translation failed: {e}")
+    except (urllib.error.URLError, urllib.error.HTTPError) as e:
+        logger.warning("Translation network error: %s", e)
+    except (json.JSONDecodeError, KeyError) as e:
+        logger.warning("Translation parse error: %s", e)
+    except OSError as e:
+        logger.warning("Translation failed: %s", e)
     return text
 
 
 def translate_article(article):
     """Add Spanish translations to an article dict."""
-    print(f"  Translating: {article['title'][:60]}...")
+    logger.info("  Translating: %s...", article['title'][:60])
     article["title_es"] = translate_text(article["title"])
-    time.sleep(0.5)  # Rate limit courtesy
+    time.sleep(TRANSLATION_DELAY)
     article["description_es"] = translate_text(article["description"])
-    time.sleep(0.5)
+    time.sleep(TRANSLATION_DELAY)
     return article
 
 
-def fetch_feed(url, timeout=10):
+def fetch_feed(url, timeout=HTTP_TIMEOUT):
     """Fetch and parse an RSS feed, return list of entries."""
     entries = []
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "AI-PULSE-Bot/1.0"})
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             data = resp.read()
-        root = ET.fromstring(data)
+
+        # Harden XML parser against entity expansion attacks
+        parser = ET.XMLParser()
+        root = ET.fromstring(data, parser=parser)
 
         # Handle RSS 2.0
         for item in root.findall(".//item"):
@@ -77,12 +112,10 @@ def fetch_feed(url, timeout=10):
             link = item.findtext("link", "").strip()
             desc = item.findtext("description", "").strip()
             pub = item.findtext("pubDate", "").strip()
-            if title and link:
-                # Clean HTML from description
-                desc = re.sub(r"<[^>]+>", "", desc)
-                desc = html.unescape(desc)
-                if len(desc) > 300:
-                    desc = desc[:297] + "..."
+            if title and link and is_safe_url(link):
+                desc = strip_html_tags(desc)
+                if len(desc) > MAX_DESCRIPTION_CHARS:
+                    desc = desc[:MAX_DESCRIPTION_CHARS - 3] + "..."
                 entries.append({
                     "title": html.unescape(title),
                     "link": link,
@@ -99,11 +132,12 @@ def fetch_feed(url, timeout=10):
             if link_el is None:
                 link_el = entry.find("atom:link", ns)
             link = link_el.get("href", "") if link_el is not None else ""
+            if not is_safe_url(link):
+                continue
             summary = entry.findtext("atom:summary", "", ns).strip()
-            summary = re.sub(r"<[^>]+>", "", summary)
-            summary = html.unescape(summary)
-            if len(summary) > 300:
-                summary = summary[:297] + "..."
+            summary = strip_html_tags(summary)
+            if len(summary) > MAX_DESCRIPTION_CHARS:
+                summary = summary[:MAX_DESCRIPTION_CHARS - 3] + "..."
             pub = entry.findtext("atom:published", "", ns) or entry.findtext("atom:updated", "", ns)
             if title and link:
                 entries.append({
@@ -113,8 +147,12 @@ def fetch_feed(url, timeout=10):
                     "pubDate": pub or "",
                     "source": url,
                 })
-    except Exception as e:
-        print(f"  [WARN] Could not fetch {url}: {e}")
+    except (urllib.error.URLError, urllib.error.HTTPError) as e:
+        logger.warning("Network error fetching %s: %s", url, e)
+    except ET.ParseError as e:
+        logger.warning("XML parse error for %s: %s", url, e)
+    except OSError as e:
+        logger.warning("Could not fetch %s: %s", url, e)
     return entries
 
 
@@ -149,7 +187,7 @@ def get_source_name(url):
 
 def build_news_card(article, emoji, is_featured=False):
     """Generate HTML card for a news article (bilingual ES/EN)."""
-    source = get_source_name(article.get("source", article["link"]))
+    source = html.escape(get_source_name(article.get("source", article["link"])))
     title_en = html.escape(article["title"])
     title_es = html.escape(article.get("title_es", article["title"]))
     desc_en = html.escape(article["description"])
@@ -175,7 +213,7 @@ def build_news_card(article, emoji, is_featured=False):
             </p>
           </div>
           <div class="card-footer">
-            <a class="card-link" href="{link}" target="_blank" rel="noopener">
+            <a class="card-link" href="{link}" target="_blank" rel="noopener noreferrer">
               <span data-lang-inline="es">Leer mas</span>
               <span data-lang-inline="en">Read more</span>
             </a>
@@ -201,7 +239,7 @@ def build_news_card(article, emoji, is_featured=False):
           </p>
         </div>
         <div class="card-footer">
-          <a class="card-link" href="{link}" target="_blank" rel="noopener">
+          <a class="card-link" href="{link}" target="_blank" rel="noopener noreferrer">
             <span data-lang-inline="es">Leer mas</span>
             <span data-lang-inline="en">Read more</span>
           </a>
@@ -215,8 +253,16 @@ def update_index_html(top_article, secondary_articles):
     script_dir = os.path.dirname(os.path.abspath(__file__))
     index_path = os.path.join(os.path.dirname(script_dir), "index.html")
 
-    with open(index_path, "r", encoding="utf-8") as f:
-        content = f.read()
+    if not os.path.isfile(index_path):
+        logger.error("index.html not found at %s", index_path)
+        return False
+
+    try:
+        with open(index_path, "r", encoding="utf-8") as f:
+            content = f.read()
+    except OSError as e:
+        logger.error("Failed to read index.html: %s", e)
+        return False
 
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
@@ -251,28 +297,29 @@ def update_index_html(top_article, secondary_articles):
 
     if match:
         content = content[:match.start()] + noticia_section + content[match.end():]
-        print("[OK] Noticia del Dia section updated")
+        logger.info("Noticia del Dia section updated")
     else:
         # Fallback: insert before Videos Destacados or first section divider
+        insertion_idx = -1
         for marker in ["VIDEOS DESTACADOS", "SECCION 2", "section-divider"]:
-            idx = content.find(marker)
-            if idx != -1:
+            insertion_idx = content.find(marker)
+            if insertion_idx != -1:
                 break
-        if idx == -1:
-            print("[ERROR] Could not find insertion point for Noticia del Dia")
+        if insertion_idx == -1:
+            logger.error("Could not find insertion point for Noticia del Dia")
             return False
-        comment_start = content.rfind("<!--", 0, idx)
+        comment_start = content.rfind("<!--", 0, insertion_idx)
         if comment_start == -1:
-            comment_start = content.rfind("<hr", 0, idx)
+            comment_start = content.rfind("<hr", 0, insertion_idx)
         line_start = content.rfind("\n", 0, comment_start) if comment_start != -1 else -1
         if line_start == -1:
             line_start = 0
         content = content[:line_start] + "\n\n" + noticia_section + "\n\n" + content[line_start:]
-        print("[OK] Noticia del Dia section inserted")
+        logger.info("Noticia del Dia section inserted")
 
     # ── SECTION 3: Mas Noticias de IA (secondary cards) ──
     secondary_html = ""
-    for i, art in enumerate(secondary_articles[:2]):
+    for i, art in enumerate(secondary_articles[:MAX_SECONDARY_ARTICLES]):
         emoji = EMOJIS_POOL[(i + 1) % len(EMOJIS_POOL)]
         secondary_html += "\n\n" + build_news_card(art, emoji)
 
@@ -304,24 +351,25 @@ def update_index_html(top_article, secondary_articles):
 
     if match2:
         content = content[:match2.start()] + mas_noticias_section + content[match2.end():]
-        print("[OK] Mas Noticias section updated")
+        logger.info("Mas Noticias section updated")
     else:
         # Fallback: insert before "Lo que debes saber" section
+        insertion_idx2 = -1
         for marker in ["LO QUE DEBES SABER", "SECCION 4", "TOP TEMAS"]:
-            idx2 = content.find(marker)
-            if idx2 != -1:
+            insertion_idx2 = content.find(marker)
+            if insertion_idx2 != -1:
                 break
-        if idx2 != -1:
-            comment_start = content.rfind("<!--", 0, idx2)
+        if insertion_idx2 != -1:
+            comment_start = content.rfind("<!--", 0, insertion_idx2)
             if comment_start == -1:
-                comment_start = content.rfind("<hr", 0, idx2)
+                comment_start = content.rfind("<hr", 0, insertion_idx2)
             line_start = content.rfind("\n", 0, comment_start) if comment_start != -1 else -1
             if line_start == -1:
                 line_start = 0
             content = content[:line_start] + "\n\n" + mas_noticias_section + "\n\n" + content[line_start:]
-            print("[OK] Mas Noticias section inserted")
+            logger.info("Mas Noticias section inserted")
         else:
-            print("[WARN] Could not find insertion point for Mas Noticias")
+            logger.warning("Could not find insertion point for Mas Noticias")
 
     # ── Update ticker with top news (bilingual) ──
     top_title_en = html.escape(top_article["title"])
@@ -341,61 +389,66 @@ def update_index_html(top_article, secondary_articles):
     content = re.sub(ticker_es_pattern, lambda m: update_ticker(m, top_title_es), content, flags=re.DOTALL)
     content = re.sub(ticker_en_pattern, lambda m: update_ticker(m, top_title_en), content, flags=re.DOTALL)
 
-    with open(index_path, "w", encoding="utf-8") as f:
-        f.write(content)
+    try:
+        with open(index_path, "w", encoding="utf-8") as f:
+            f.write(content)
+    except OSError as e:
+        logger.error("Failed to write index.html: %s", e)
+        return False
 
     return True
 
 
 def main():
-    print("=" * 50)
-    print("AI PULSE - Daily News Updater")
-    print(f"Date: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}")
-    print("=" * 50)
+    logger.info("=" * 50)
+    logger.info("AI PULSE - Daily News Updater")
+    logger.info("Date: %s", datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC'))
+    logger.info("=" * 50)
 
     # Fetch all feeds
     all_articles = []
     for feed_url in FEEDS:
-        print(f"\nFetching: {feed_url}")
+        logger.info("Fetching: %s", feed_url)
         entries = fetch_feed(feed_url)
-        print(f"  Found {len(entries)} entries")
+        logger.info("  Found %d entries", len(entries))
         for entry in entries:
             entry["source"] = feed_url
         all_articles.extend(entries)
 
     # Filter AI-related
     ai_articles = [a for a in all_articles if is_ai_related(a["title"], a["description"])]
-    print(f"\nTotal articles: {len(all_articles)}")
-    print(f"AI-related: {len(ai_articles)}")
+    logger.info("Total articles: %d", len(all_articles))
+    logger.info("AI-related: %d", len(ai_articles))
 
     if not ai_articles:
-        print("[WARN] No AI articles found, using all articles")
+        logger.warning("No AI articles found, using all articles")
         ai_articles = all_articles[:5]
 
     if not ai_articles:
-        print("[ERROR] No articles found at all. Exiting.")
-        return
+        logger.error("No articles found at all. Exiting.")
+        sys.exit(1)
 
     # Pick top article (first one, feeds are usually newest-first)
     top = ai_articles[0]
-    secondary = ai_articles[1:3]
+    secondary = ai_articles[1:MAX_SECONDARY_ARTICLES + 1]
 
-    print(f"\nTop article: {top['title']}")
+    logger.info("Top article: %s", top['title'])
     for i, s in enumerate(secondary):
-        print(f"Secondary {i+1}: {s['title']}")
+        logger.info("Secondary %d: %s", i + 1, s['title'])
 
     # Translate articles to Spanish
-    print("\n── Translating to Spanish ──")
+    logger.info("── Translating to Spanish ──")
     translate_article(top)
     for art in secondary:
         translate_article(art)
-    print(f"  ES title: {top.get('title_es', 'N/A')}")
+    logger.info("  ES title: %s", top.get('title_es', 'N/A'))
 
     # Update index.html
     if update_index_html(top, secondary):
-        print("\n[SUCCESS] index.html updated!")
+        logger.info("index.html updated successfully!")
     else:
-        print("\n[ERROR] Failed to update index.html")
+        logger.error("Failed to update index.html")
+        sys.exit(1)
 
 
 if __name__ == "__main__":

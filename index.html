@@ -6,8 +6,12 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>AI PULSE — Noticias de Inteligencia Artificial</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75'>🤖</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet" crossorigin="anonymous">
 <style>
   :root[data-theme="dark"] {
     --bg: #0a0a0f;
@@ -589,11 +593,11 @@
 <header>
   <div class="logo">AI<span>PULSE</span></div>
   <div class="controls">
-    <button class="btn-toggle" id="langBtn" onclick="toggleLang()">
+    <button class="btn-toggle" id="langBtn" aria-label="Toggle language">
       <span data-lang-inline="es">🌐 EN</span>
       <span data-lang-inline="en">🌐 ES</span>
     </button>
-    <button class="btn-toggle" id="themeBtn" onclick="toggleTheme()">
+    <button class="btn-toggle" id="themeBtn" aria-label="Toggle theme">
       <span data-lang-inline="es">☀️ DÍA</span>
       <span data-lang-inline="en">☀️ DAY</span>
     </button>
@@ -985,15 +989,23 @@
     <span data-lang-inline="es">Curado con ❤️ + IA · Contenido educativo · 2026</span>
     <span data-lang-inline="en">Curated with ❤️ + AI · Educational content · 2026</span>
   </p>
-  <p style="margin-top: 0.5rem;">
-    <a href="admin.html" style="font-family:'Space Mono',monospace; font-size:0.55rem; color:var(--text2); text-decoration:none; letter-spacing:2px; opacity:0.5;">
-      <span data-lang-inline="es">⚙️ ADMIN</span>
-      <span data-lang-inline="en">⚙️ ADMIN</span>
-    </a>
-  </p>
 </footer>
 
 <script>
+  // ── HELPER: create bilingual span pair safely ──
+  function createLangSpans(textEs, textEn) {
+    const frag = document.createDocumentFragment();
+    const es = document.createElement('span');
+    es.setAttribute('data-lang-inline', 'es');
+    es.textContent = textEs;
+    const en = document.createElement('span');
+    en.setAttribute('data-lang-inline', 'en');
+    en.textContent = textEn;
+    frag.appendChild(es);
+    frag.appendChild(en);
+    return frag;
+  }
+
   // ── THEME TOGGLE ──
   function toggleTheme() {
     const html = document.documentElement;
@@ -1001,9 +1013,11 @@
     html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
     const btn = document.getElementById('themeBtn');
     const isLight = html.getAttribute('data-theme') === 'light';
-    btn.innerHTML = isLight
-      ? `<span data-lang-inline="es">🌙 NOCHE</span><span data-lang-inline="en">🌙 NIGHT</span>`
-      : `<span data-lang-inline="es">☀️ DÍA</span><span data-lang-inline="en">☀️ DAY</span>`;
+    while (btn.firstChild) btn.removeChild(btn.firstChild);
+    btn.appendChild(createLangSpans(
+      isLight ? '🌙 NOCHE' : '☀️ DÍA',
+      isLight ? '🌙 NIGHT' : '☀️ DAY'
+    ));
     applyLang();
   }
 
@@ -1018,8 +1032,6 @@
     document.body.classList.remove('lang-es', 'lang-en');
     document.body.classList.add('lang-' + currentLang);
     document.documentElement.lang = currentLang;
-
-    // Update page title
     document.title = currentLang === 'es'
       ? 'AI PULSE — Noticias de Inteligencia Artificial'
       : 'AI PULSE — Artificial Intelligence News';
@@ -1037,9 +1049,10 @@
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // ── TICKER DUPLICATE ──
+  // ── TICKER DUPLICATE (clone nodes instead of innerHTML) ──
   document.querySelectorAll('.ticker-inner').forEach(t => {
-    t.innerHTML += t.innerHTML;
+    const children = Array.from(t.children);
+    children.forEach(child => t.appendChild(child.cloneNode(true)));
   });
 
   // ── NEWS DATE STAMP ──
@@ -1048,23 +1061,28 @@
     const now = new Date();
     const dateEs = now.toLocaleDateString('es-MX', { year:'numeric', month:'long', day:'numeric', timeZone:'America/Mexico_City' });
     const dateEn = now.toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric', timeZone:'America/Mexico_City' });
-    newsDateEl.innerHTML = `<span data-lang-inline="es">📅 ${dateEs}</span><span data-lang-inline="en">📅 ${dateEn}</span>`;
+    while (newsDateEl.firstChild) newsDateEl.removeChild(newsDateEl.firstChild);
+    newsDateEl.appendChild(createLangSpans('📅 ' + dateEs, '📅 ' + dateEn));
   }
 
   // ── DATE BAR ──
   function updateDateBar() {
     const now = new Date();
-    const optEs = { weekday:'long', year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit', timeZone:'America/Mexico_City' };
-    const optEn = { weekday:'long', year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit', timeZone:'America/Mexico_City' };
-    const dateEs = now.toLocaleDateString('es-MX', optEs) + ' · ' + now.toLocaleTimeString('es-MX', { hour:'2-digit', minute:'2-digit', timeZone:'America/Mexico_City' }) + ' CST';
-    const dateEn = now.toLocaleDateString('en-US', optEn) + ' · ' + now.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', timeZone:'America/Mexico_City' }) + ' CST';
+    const opt = { weekday:'long', year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit', timeZone:'America/Mexico_City' };
+    const dateEs = now.toLocaleDateString('es-MX', opt) + ' · ' + now.toLocaleTimeString('es-MX', { hour:'2-digit', minute:'2-digit', timeZone:'America/Mexico_City' }) + ' CST';
+    const dateEn = now.toLocaleDateString('en-US', opt) + ' · ' + now.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', timeZone:'America/Mexico_City' }) + ' CST';
     const bar = document.getElementById('dateBar');
     if (bar) {
-      bar.innerHTML = `<span data-lang-inline="es">${dateEs}</span><span data-lang-inline="en">${dateEn}</span>`;
+      while (bar.firstChild) bar.removeChild(bar.firstChild);
+      bar.appendChild(createLangSpans(dateEs, dateEn));
     }
   }
   updateDateBar();
   setInterval(updateDateBar, 60000);
+
+  // ── EVENT LISTENERS (no inline onclick) ──
+  document.getElementById('langBtn').addEventListener('click', toggleLang);
+  document.getElementById('themeBtn').addEventListener('click', toggleTheme);
 
   // Init
   applyLang();
