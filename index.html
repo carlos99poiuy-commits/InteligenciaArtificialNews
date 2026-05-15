@@ -40,7 +40,7 @@
       line-height: 1.6;
     }
 
-    /* ── NAV ── */
+    /* NAV */
     nav {
       background: var(--nav-bg);
       border-bottom: 1px solid var(--border);
@@ -54,12 +54,7 @@
       z-index: 100;
       box-shadow: var(--shadow);
     }
-    .logo {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: var(--accent);
-      letter-spacing: -0.5px;
-    }
+    .logo { font-size: 1.3rem; font-weight: 800; color: var(--accent); letter-spacing: -0.5px; }
     .logo span { color: var(--text); }
     .nav-controls { display: flex; gap: 10px; align-items: center; }
     button {
@@ -75,15 +70,23 @@
     }
     button:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-    /* ── HERO ── */
+    /* HERO */
     .hero {
       text-align: center;
       padding: 60px 24px 40px;
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      background: linear-gradient(135deg, #3b0f8a 0%, var(--accent2) 60%, #a21caf 100%);
       color: #fff;
+      position: relative;
+      overflow: hidden;
     }
-    .hero h1 { font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 900; margin-bottom: 12px; }
-    .hero p { font-size: 1.05rem; opacity: 0.9; max-width: 560px; margin: 0 auto 20px; }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(255,255,255,0.07) 0%, transparent 70%);
+    }
+    .hero h1 { font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 900; margin-bottom: 12px; position: relative; }
+    .hero p { font-size: 1.05rem; opacity: 0.9; max-width: 560px; margin: 0 auto 20px; position: relative; }
     .hero-badge {
       display: inline-block;
       background: rgba(255,255,255,0.2);
@@ -93,12 +96,20 @@
       font-size: 0.8rem;
       font-weight: 700;
       letter-spacing: 1px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .hero-date {
+      font-size: 0.78rem;
+      opacity: 0.75;
+      margin-top: -10px;
+      margin-bottom: 16px;
+      position: relative;
     }
 
-    /* ── COMIC STRIP ── */
+    /* COMIC STRIP */
     .comic-strip {
       display: flex;
-      gap: 0;
       overflow-x: auto;
       padding: 20px 24px;
       background: var(--card);
@@ -107,126 +118,30 @@
     }
     .comic-strip::-webkit-scrollbar { display: none; }
     .comic-panel {
-      min-width: 200px;
+      min-width: 190px;
       border: 3px solid var(--text);
       border-radius: 8px;
       margin-right: 12px;
-      padding: 16px;
+      padding: 14px;
       background: var(--card);
       text-align: center;
-      position: relative;
       flex-shrink: 0;
     }
-    .comic-panel .emoji { font-size: 3rem; display: block; margin-bottom: 8px; }
-    .comic-panel p { font-size: 0.78rem; font-weight: 700; line-height: 1.3; color: var(--text); }
+    .comic-panel .emoji { font-size: 2.6rem; display: block; margin-bottom: 8px; }
+    .comic-panel p { font-size: 0.76rem; font-weight: 700; line-height: 1.3; color: var(--text); }
     .comic-panel.highlight { background: #fef3c7; border-color: #f59e0b; }
     body.dark .comic-panel.highlight { background: #3a2a00; border-color: #f59e0b; }
     .speech-bubble {
       background: var(--tag-bg);
-      border-radius: 12px;
-      padding: 6px 10px;
-      font-size: 0.75rem;
+      border-radius: 10px;
+      padding: 5px 8px;
+      font-size: 0.72rem;
       color: var(--tag-text);
       font-style: italic;
-      margin-top: 8px;
+      margin-top: 7px;
     }
 
-    /* ── MAIN LAYOUT ── */
-    main { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 24px;
-      padding-bottom: 12px;
-      border-bottom: 2px solid var(--accent);
-    }
-    .section-header h2 { font-size: 1.4rem; font-weight: 800; color: var(--accent); }
-    .section-icon { font-size: 1.5rem; }
-
-    /* ── CARD GRID ── */
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-bottom: 50px; }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      transition: transform 0.2s, box-shadow 0.2s;
-      display: flex;
-      flex-direction: column;
-    }
-    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(91,33,182,0.15); }
-
-    .card-thumb {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      display: block;
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
-    }
-    .card-thumb-placeholder {
-      width: 100%;
-      height: 180px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 4rem;
-      background: linear-gradient(135deg, var(--tag-bg) 0%, var(--border) 100%);
-    }
-
-    .card-body { padding: 16px; flex: 1; display: flex; flex-direction: column; }
-    .card-tag {
-      display: inline-block;
-      background: var(--tag-bg);
-      color: var(--tag-text);
-      border-radius: 12px;
-      padding: 2px 10px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 8px;
-    }
-    .card-tag.red { background: #fee2e2; color: #b91c1c; }
-    body.dark .card-tag.red { background: #3a0a0a; color: #f87171; }
-    .card-tag.green { background: #d1fae5; color: #065f46; }
-    body.dark .card-tag.green { background: #0a2a1a; color: #34d399; }
-    .card-tag.blue { background: #dbeafe; color: #1e40af; }
-    body.dark .card-tag.blue { background: #0a1a3a; color: #60a5fa; }
-
-    .card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; color: var(--text); line-height: 1.4; }
-    .card p { font-size: 0.88rem; color: var(--sub); flex: 1; margin-bottom: 14px; }
-    .card-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--accent);
-      color: #fff;
-      text-decoration: none;
-      border-radius: 8px;
-      padding: 8px 14px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      transition: background 0.2s;
-      align-self: flex-start;
-    }
-    .card-link:hover { background: var(--accent2); }
-
-    /* ── FEATURED (wide card) ── */
-    .featured {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-    }
-    .featured .card-thumb-placeholder { height: 100%; min-height: 220px; font-size: 6rem; }
-    @media (max-width: 600px) {
-      .featured { grid-template-columns: 1fr; }
-    }
-
-    /* ── BREAKING NEWS TICKER ── */
+    /* TICKER */
     .ticker-wrap {
       background: var(--accent);
       color: #fff;
@@ -247,7 +162,7 @@
     }
     .ticker-content {
       display: inline-block;
-      animation: ticker 30s linear infinite;
+      animation: ticker 35s linear infinite;
       font-size: 0.85rem;
       font-weight: 600;
     }
@@ -256,20 +171,313 @@
       100% { transform: translateX(-100%); }
     }
 
-    /* ── QUOTE ── */
+    /* MAIN */
+    main { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--accent);
+    }
+    .section-header h2 { font-size: 1.4rem; font-weight: 800; color: var(--accent); }
+    .section-icon { font-size: 1.5rem; }
+
+    /* GRID */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-bottom: 50px; }
+
+    /* STANDARD CARD */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(91,33,182,0.15); }
+    .card-thumb-placeholder {
+      width: 100%; height: 150px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem;
+      background: linear-gradient(135deg, var(--tag-bg) 0%, var(--border) 100%);
+    }
+    .card-body { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+    .card-tag {
+      display: inline-block;
+      background: var(--tag-bg); color: var(--tag-text);
+      border-radius: 12px; padding: 2px 10px;
+      font-size: 0.72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .card-tag.red { background: #fee2e2; color: #b91c1c; }
+    body.dark .card-tag.red { background: #3a0a0a; color: #f87171; }
+    .card-tag.green { background: #d1fae5; color: #065f46; }
+    body.dark .card-tag.green { background: #0a2a1a; color: #34d399; }
+    .card-tag.blue { background: #dbeafe; color: #1e40af; }
+    body.dark .card-tag.blue { background: #0a1a3a; color: #60a5fa; }
+    .card-tag.orange { background: #ffedd5; color: #c2410c; }
+    body.dark .card-tag.orange { background: #3a1500; color: #fb923c; }
+    .card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; color: var(--text); line-height: 1.4; }
+    .card p { font-size: 0.88rem; color: var(--sub); flex: 1; margin-bottom: 14px; }
+    .card-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--accent); color: #fff;
+      text-decoration: none; border-radius: 8px;
+      padding: 8px 14px; font-size: 0.82rem; font-weight: 700;
+      transition: background 0.2s; align-self: flex-start;
+    }
+    .card-link:hover { background: var(--accent2); }
+
+    /* ═══════════════════════════════════════
+       VIDEO CARD — llamativo y atractivo
+    ═══════════════════════════════════════ */
+    .video-section-wrap {
+      margin-bottom: 50px;
+    }
+    .video-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .video-card {
+      background: var(--card);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(91,33,182,0.12);
+      border: 2px solid transparent;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .video-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 16px 40px rgba(91,33,182,0.25);
+      border-color: var(--accent);
+    }
+
+    /* badge MUST WATCH */
+    .must-watch {
+      position: absolute;
+      top: 14px; left: 14px;
+      background: linear-gradient(90deg, #f59e0b, #ef4444);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      z-index: 3;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      animation: pulse-badge 2s ease-in-out infinite;
+    }
+    @keyframes pulse-badge {
+      0%, 100% { box-shadow: 0 2px 8px rgba(245,158,11,0.4); }
+      50%       { box-shadow: 0 2px 18px rgba(245,158,11,0.8); }
+    }
+
+    /* thumbnail con play button */
+    .video-thumb {
+      position: relative;
+      width: 100%;
+      height: 210px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .video-thumb-bg {
+      position: absolute;
+      inset: 0;
+      font-size: 6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: blur(0px);
+      transition: filter 0.3s, transform 0.3s;
+    }
+    .video-card:hover .video-thumb-bg {
+      filter: blur(2px);
+      transform: scale(1.08);
+    }
+    .video-thumb-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(91,33,182,0.7) 0%, rgba(124,58,237,0.5) 100%);
+      transition: opacity 0.3s;
+    }
+    .video-card:hover .video-thumb-gradient { opacity: 0.85; }
+
+    /* play circle */
+    .play-btn {
+      position: relative;
+      z-index: 2;
+      width: 70px; height: 70px;
+      background: rgba(255,255,255,0.95);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 0 8px rgba(255,255,255,0.25), 0 8px 24px rgba(0,0,0,0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: play-pulse 2.5s ease-in-out infinite;
+    }
+    .video-card:hover .play-btn {
+      transform: scale(1.12);
+      box-shadow: 0 0 0 12px rgba(255,255,255,0.3), 0 8px 32px rgba(0,0,0,0.4);
+      animation: none;
+    }
+    @keyframes play-pulse {
+      0%, 100% { box-shadow: 0 0 0 8px rgba(255,255,255,0.25), 0 8px 24px rgba(0,0,0,0.3); }
+      50%       { box-shadow: 0 0 0 14px rgba(255,255,255,0.15), 0 8px 24px rgba(0,0,0,0.3); }
+    }
+    .play-icon {
+      width: 0; height: 0;
+      border-top: 14px solid transparent;
+      border-bottom: 14px solid transparent;
+      border-left: 22px solid var(--accent);
+      margin-left: 5px;
+    }
+
+    /* duración / plataforma badge */
+    .video-meta {
+      position: absolute;
+      bottom: 10px; right: 10px;
+      z-index: 3;
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    /* body del video card */
+    .video-body {
+      padding: 18px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .video-platform {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--sub);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .video-body h3 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.35;
+      margin-bottom: 10px;
+    }
+    .video-body p {
+      font-size: 0.86rem;
+      color: var(--sub);
+      flex: 1;
+      margin-bottom: 16px;
+      line-height: 1.55;
+    }
+    .video-cta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .video-cta a {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 10px;
+      padding: 11px 16px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      transition: opacity 0.2s, transform 0.2s;
+      box-shadow: 0 4px 12px rgba(91,33,182,0.3);
+    }
+    .video-cta a:hover { opacity: 0.92; transform: scale(1.02); }
+    .video-cta-arrow { font-size: 1rem; }
+    .video-hint {
+      font-size: 0.72rem;
+      color: var(--sub);
+      font-style: italic;
+      text-align: center;
+      margin-top: 6px;
+    }
+
+    /* QUOTE */
     .quote-box {
       background: var(--card);
       border-left: 5px solid var(--accent);
       border-radius: 0 12px 12px 0;
       padding: 20px 24px;
       margin: 30px 0;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-style: italic;
       color: var(--sub);
     }
-    .quote-box span { display: block; margin-top: 8px; font-size: 0.85rem; font-weight: 700; font-style: normal; color: var(--accent); }
+    .quote-box cite { display: block; margin-top: 8px; font-size: 0.85rem; font-weight: 700; font-style: normal; color: var(--accent); }
 
-    /* ── FOOTER ── */
+    /* FUN FACTS */
+    .fun-facts {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 50px;
+    }
+    .fun-facts h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; color: var(--accent); }
+    .fun-facts-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(200px,1fr)); gap: 12px; }
+    .fact-item {
+      background: var(--tag-bg);
+      border-radius: 10px;
+      padding: 14px;
+      text-align: center;
+    }
+    .fact-item .fact-icon { font-size: 2rem; margin-bottom: 6px; }
+    .fact-item p { font-size: 0.82rem; color: var(--text); font-weight: 600; }
+
+    /* MEME */
+    .meme-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      margin-bottom: 50px;
+      text-align: center;
+    }
+    .meme-box h3 { font-size: 1rem; font-weight: 800; margin-bottom: 20px; color: var(--accent); }
+    .meme-row { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+    .meme-panel {
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      max-width: 185px;
+      text-align: center;
+    }
+    .meme-panel.active { border-color: var(--accent); }
+    .meme-panel .emoji { font-size: 2.8rem; display: block; margin-bottom: 8px; }
+    .meme-panel strong { font-size: 0.8rem; color: var(--text); display: block; margin-bottom: 4px; }
+    .meme-panel span { font-size: 0.73rem; color: var(--sub); }
+
+    /* FOOTER */
     footer {
       text-align: center;
       padding: 30px 24px;
@@ -279,13 +487,17 @@
       background: var(--card);
     }
 
-    /* ── LANG HIDDEN ── */
+    /* LANG */
     [data-lang] { display: none; }
     .lang-es [data-lang="es"],
     .lang-en [data-lang="en"] { display: block; }
     .lang-es [data-lang-inline="es"],
     .lang-en [data-lang-inline="en"] { display: inline; }
     [data-lang-inline] { display: none; }
+
+    @media (max-width: 640px) {
+      .video-cards { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body class="lang-es">
@@ -299,14 +511,13 @@
 
 <!-- TICKER -->
 <div class="ticker-wrap">
-  <span class="ticker-label" data-lang-inline="es">🔴 BREAKING</span>
-  <span class="ticker-label" data-lang-inline="en">🔴 BREAKING</span>
+  <span class="ticker-label">🔴 HOY</span>
   <span class="ticker-content">
     <span data-lang-inline="es">
-      🤖 La IA ya programa sola · 🔐 Ciberseguridad en la era de la IA · 🚀 Spec Driven Development cambia el futuro del código · 🧠 Los modelos de lenguaje superan barreras · 💡 ¿Puede la IA ser creativa?
+      🤖 Claude Opus 4.7 supera benchmarks históricos · 🔐 Ataques con IA rompen récords en mayo 2026 · 🚀 Spec Driven Development es el método del año · 🧠 GPT-5 multimodal ya disponible globalmente · 💡 Meta lanza Llama 4 como open-source · ⚡ EU AI Act: primeras multas millonarias · 🌍 IA aporta $3.7B a Latam en Q1 2026
     </span>
     <span data-lang-inline="en">
-      🤖 AI now codes on its own · 🔐 Cybersecurity in the AI era · 🚀 Spec Driven Development reshapes coding · 🧠 Language models break new barriers · 💡 Can AI truly be creative?
+      🤖 Claude Opus 4.7 breaks historical benchmarks · 🔐 AI-powered attacks hit record in May 2026 · 🚀 Spec Driven Development is method of the year · 🧠 GPT-5 multimodal globally available · 💡 Meta releases Llama 4 open-source · ⚡ EU AI Act: first million-dollar fines · 🌍 AI contributes $3.7B to LatAm in Q1 2026
     </span>
   </span>
 </div>
@@ -315,6 +526,10 @@
 <div class="hero">
   <div class="hero-badge" data-lang="es">🌎 NOTICIAS DE INTELIGENCIA ARTIFICIAL</div>
   <div class="hero-badge" data-lang="en">🌎 ARTIFICIAL INTELLIGENCE NEWS</div>
+  <p class="hero-date">
+    <span data-lang-inline="es">📅 Actualizado: 15 de mayo de 2026</span>
+    <span data-lang-inline="en">📅 Updated: May 15, 2026</span>
+  </p>
   <h1 data-lang="es">El futuro es ahora 🤖</h1>
   <h1 data-lang="en">The future is now 🤖</h1>
   <p data-lang="es">Todo lo que necesitás saber sobre IA, ciberseguridad y el nuevo mundo del desarrollo de software.</p>
@@ -334,216 +549,292 @@
     <span class="emoji">🤖</span>
     <p data-lang-inline="es">"Ya lo hice yo."</p>
     <p data-lang-inline="en">"Already done."</p>
-    <div class="speech-bubble" data-lang-inline="es">— La IA, 2025</div>
-    <div class="speech-bubble" data-lang-inline="en">— AI, 2025</div>
+    <div class="speech-bubble" data-lang-inline="es">— La IA, 2026</div>
+    <div class="speech-bubble" data-lang-inline="en">— AI, 2026</div>
   </div>
   <div class="comic-panel highlight">
     <span class="emoji">😳</span>
     <p data-lang-inline="es">"¿Y los bugs?"</p>
     <p data-lang-inline="en">"What about the bugs?"</p>
-    <div class="speech-bubble" data-lang-inline="es">preguntó el dev nervioso</div>
-    <div class="speech-bubble" data-lang-inline="en">asked the nervous dev</div>
+    <div class="speech-bubble" data-lang-inline="es">el dev, nervioso</div>
+    <div class="speech-bubble" data-lang-inline="en">the dev, nervous</div>
   </div>
   <div class="comic-panel">
     <span class="emoji">🤖✅</span>
     <p data-lang-inline="es">"Los corregí también."</p>
     <p data-lang-inline="en">"Fixed those too."</p>
-    <div class="speech-bubble" data-lang-inline="es">— La IA, imparable</div>
+    <div class="speech-bubble" data-lang-inline="es">— la IA, imparable</div>
     <div class="speech-bubble" data-lang-inline="en">— AI, unstoppable</div>
   </div>
   <div class="comic-panel highlight">
     <span class="emoji">😭</span>
-    <p data-lang-inline="es">"¿Entonces para qué me necesitan?"</p>
-    <p data-lang-inline="en">"So why do you need me?"</p>
-    <div class="speech-bubble" data-lang-inline="es">— El dev, existencial</div>
-    <div class="speech-bubble" data-lang-inline="en">— The dev, existentially</div>
+    <p data-lang-inline="es">"¿Para qué me necesitan?"</p>
+    <p data-lang-inline="en">"Why do you need me?"</p>
+    <div class="speech-bubble" data-lang-inline="es">— el dev, existencial</div>
+    <div class="speech-bubble" data-lang-inline="en">— the dev, existential</div>
   </div>
   <div class="comic-panel">
     <span class="emoji">☕</span>
     <p data-lang-inline="es">"Para hacer el café."</p>
     <p data-lang-inline="en">"To make the coffee."</p>
-    <div class="speech-bubble" data-lang-inline="es">— La IA, honesta</div>
+    <div class="speech-bubble" data-lang-inline="es">— la IA, honesta</div>
     <div class="speech-bubble" data-lang-inline="en">— AI, honest</div>
   </div>
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
 <main>
 
-  <!-- SECTION 1: CYBERSECURITY -->
+  <!-- ══════════════════════════════
+       SECCIÓN VIDEOS — DESTACADA
+  ══════════════════════════════ -->
+  <div class="section-header">
+    <span class="section-icon">🎬</span>
+    <h2 data-lang="es">Videos que No Te Podés Perder</h2>
+    <h2 data-lang="en">Videos You Can't Miss</h2>
+  </div>
+
+  <!-- call-to-action intro -->
+  <div style="background:linear-gradient(135deg,var(--tag-bg),var(--border));border-radius:14px;padding:18px 24px;margin-bottom:24px;display:flex;align-items:center;gap:14px;">
+    <span style="font-size:2rem;">🍿</span>
+    <div>
+      <p style="font-weight:800;font-size:1rem;color:var(--accent);" data-lang="es">¡Agarra el pochoclo y mirá esto!</p>
+      <p style="font-weight:800;font-size:1rem;color:var(--accent);" data-lang="en">Grab the popcorn and watch this!</p>
+      <p style="font-size:0.83rem;color:var(--sub);" data-lang="es">Los videos más importantes de la semana sobre IA. Hacé clic en cualquiera para verlo ahora.</p>
+      <p style="font-size:0.83rem;color:var(--sub);" data-lang="en">The most important AI videos of the week. Click any of them to watch now.</p>
+    </div>
+  </div>
+
+  <div class="video-section-wrap">
+    <div class="video-cards">
+
+      <!-- VIDEO 1: Facebook — Cybersecurity IA Mythos -->
+      <div class="video-card">
+        <span class="must-watch" data-lang-inline="es">🔥 IMPERDIBLE</span>
+        <span class="must-watch" data-lang-inline="en">🔥 MUST WATCH</span>
+        <a href="https://www.facebook.com/share/v/1Cmyoeezo5/" target="_blank" rel="noopener" style="text-decoration:none;">
+          <div class="video-thumb" style="background:linear-gradient(135deg,#1e0050,#7c3aed);">
+            <div class="video-thumb-bg">🛡️</div>
+            <div class="video-thumb-gradient"></div>
+            <div class="play-btn"><div class="play-icon"></div></div>
+            <div class="video-meta">📘 Facebook</div>
+          </div>
+        </a>
+        <div class="video-body">
+          <div class="video-platform">
+            <span>📘</span>
+            <span data-lang-inline="es">Facebook · Ciberseguridad</span>
+            <span data-lang-inline="en">Facebook · Cybersecurity</span>
+          </div>
+          <h3 data-lang="es">Ciberseguridad, IA y los Mythos: lo que nadie te está contando</h3>
+          <h3 data-lang="en">Cybersecurity, AI & the Mythos: what nobody is telling you</h3>
+          <p data-lang="es">La IA ya está siendo usada como arma por atacantes sofisticados. Este video desmonta los mitos más peligrosos sobre la seguridad informática en la era de la IA — y te dice cómo protegerte.</p>
+          <p data-lang="en">AI is already being weaponized by sophisticated attackers. This video dismantles the most dangerous myths about cybersecurity in the AI era — and tells you how to protect yourself.</p>
+          <div class="video-cta">
+            <a href="https://www.facebook.com/share/v/1Cmyoeezo5/" target="_blank" rel="noopener">
+              <span class="video-cta-arrow">▶</span>
+              <span data-lang-inline="es">Ver video ahora</span>
+              <span data-lang-inline="en">Watch video now</span>
+            </a>
+          </div>
+          <p class="video-hint" data-lang="es">👆 Hacé clic — son minutos que pueden cambiar cómo ves la seguridad digital</p>
+          <p class="video-hint" data-lang="en">👆 Click it — minutes that can change how you see digital security</p>
+        </div>
+      </div>
+
+      <!-- VIDEO 2: YouTube — Spec Driven Development -->
+      <div class="video-card">
+        <span class="must-watch" data-lang-inline="es">🚀 TENDENCIA</span>
+        <span class="must-watch" data-lang-inline="en">🚀 TRENDING</span>
+        <a href="https://youtu.be/p2WA672HrdI?si=k2vWrlYoioGEN6A-" target="_blank" rel="noopener" style="text-decoration:none;">
+          <div class="video-thumb" style="background:linear-gradient(135deg,#0a2a0a,#065f46);">
+            <div class="video-thumb-bg">📐</div>
+            <div class="video-thumb-gradient" style="background:linear-gradient(135deg,rgba(6,95,70,0.75),rgba(5,150,105,0.5));"></div>
+            <div class="play-btn"><div class="play-icon" style="border-left-color:#065f46;"></div></div>
+            <div class="video-meta">▶ YouTube</div>
+          </div>
+        </a>
+        <div class="video-body">
+          <div class="video-platform">
+            <span>▶</span>
+            <span data-lang-inline="es">YouTube · Programación</span>
+            <span data-lang-inline="en">YouTube · Programming</span>
+          </div>
+          <h3 data-lang="es">Spec Driven Development: el futuro de la programación con IA</h3>
+          <h3 data-lang="en">Spec Driven Development: the future of AI-powered programming</h3>
+          <p data-lang="es">¿Y si escribís especificaciones en vez de código y la IA programa por vos? Este método está revolucionando cómo los devs trabajan con IA. Descubrí el cambio de paradigma que ya están usando los mejores equipos.</p>
+          <p data-lang="en">What if you write specs instead of code and AI programs for you? This method is revolutionizing how devs work with AI. Discover the paradigm shift top teams are already using.</p>
+          <div class="video-cta">
+            <a href="https://youtu.be/p2WA672HrdI?si=k2vWrlYoioGEN6A-" target="_blank" rel="noopener" style="background:linear-gradient(135deg,#065f46,#059669);">
+              <span class="video-cta-arrow">▶</span>
+              <span data-lang-inline="es">Ver en YouTube</span>
+              <span data-lang-inline="en">Watch on YouTube</span>
+            </a>
+          </div>
+          <p class="video-hint" data-lang="es">👆 Hacé clic — este método te va a ahorrar horas de trabajo</p>
+          <p class="video-hint" data-lang="en">👆 Click it — this method will save you hours of work</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- QUOTE -->
+  <div class="quote-box">
+    <span data-lang="es">"El programador del futuro no escribe código — escribe intenciones. La IA hace el resto."</span>
+    <span data-lang="en">"The developer of the future doesn't write code — they write intentions. AI does the rest."</span>
+    <cite>— Spec Driven Development, 2026</cite>
+  </div>
+
+  <!-- ══════════════════════════════
+       NOTICIAS DEL DÍA — 15 MAY 2026
+  ══════════════════════════════ -->
+  <div class="section-header">
+    <span class="section-icon">📰</span>
+    <h2 data-lang="es">Noticias de Hoy · 15 mayo 2026</h2>
+    <h2 data-lang="en">Today's News · May 15, 2026</h2>
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-thumb-placeholder">🧠</div>
+      <div class="card-body">
+        <span class="card-tag red" data-lang="es">🔴 ÚLTIMA HORA</span>
+        <span class="card-tag red" data-lang="en">🔴 BREAKING</span>
+        <h3 data-lang="es">Claude Opus 4.7 rompe todos los benchmarks de razonamiento</h3>
+        <h3 data-lang="en">Claude Opus 4.7 breaks all reasoning benchmarks</h3>
+        <p data-lang="es">Anthropic lanzó hoy Claude Opus 4.7, el modelo más avanzado hasta la fecha. Supera al anterior en un 34% en tareas de razonamiento complejo y ya está disponible vía API.</p>
+        <p data-lang="en">Anthropic today released Claude Opus 4.7, the most advanced model to date. It surpasses the previous version by 34% on complex reasoning tasks and is already available via API.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-thumb-placeholder">🌐</div>
+      <div class="card-body">
+        <span class="card-tag blue" data-lang="es">GLOBAL</span>
+        <span class="card-tag blue" data-lang="en">GLOBAL</span>
+        <h3 data-lang="es">GPT-5 multimodal: texto, imagen, audio y video en un solo modelo</h3>
+        <h3 data-lang="en">GPT-5 multimodal: text, image, audio and video in one model</h3>
+        <p data-lang="es">OpenAI confirmó que GPT-5 ya está disponible globalmente con capacidades multimodales completas. Procesa video en tiempo real y genera respuestas en menos de 800ms.</p>
+        <p data-lang="en">OpenAI confirmed GPT-5 is now globally available with full multimodal capabilities. It processes video in real-time and generates responses in under 800ms.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-thumb-placeholder">⚖️</div>
+      <div class="card-body">
+        <span class="card-tag orange" data-lang="es">⚠️ REGULACIÓN</span>
+        <span class="card-tag orange" data-lang="en">⚠️ REGULATION</span>
+        <h3 data-lang="es">EU AI Act: primeras multas de €40M a empresas tech</h3>
+        <h3 data-lang="en">EU AI Act: first €40M fines hit tech companies</h3>
+        <p data-lang="es">La Unión Europea aplicó las primeras multas históricas bajo el AI Act a tres empresas que usaban sistemas de reconocimiento facial sin consentimiento explícito.</p>
+        <p data-lang="en">The European Union issued the first historic fines under the AI Act against three companies using facial recognition systems without explicit consent.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-thumb-placeholder">🦙</div>
+      <div class="card-body">
+        <span class="card-tag green" data-lang="es">OPEN SOURCE</span>
+        <span class="card-tag green" data-lang="en">OPEN SOURCE</span>
+        <h3 data-lang="es">Meta lanza Llama 4: open-source y supera a modelos propietarios</h3>
+        <h3 data-lang="en">Meta releases Llama 4: open-source and beats proprietary models</h3>
+        <p data-lang="es">Llama 4 de Meta está disponible gratuitamente y supera en varios benchmarks a modelos de pago. La comunidad de desarrolladores ya lo está integrando en miles de proyectos.</p>
+        <p data-lang="en">Meta's Llama 4 is freely available and beats paid models on several benchmarks. The developer community is already integrating it into thousands of projects.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-thumb-placeholder">🔐</div>
+      <div class="card-body">
+        <span class="card-tag red" data-lang="es">🔴 ALERTA</span>
+        <span class="card-tag red" data-lang="en">🔴 ALERT</span>
+        <h3 data-lang="es">Ataques de phishing con IA aumentan 320% en 2026</h3>
+        <h3 data-lang="en">AI-powered phishing attacks up 320% in 2026</h3>
+        <p data-lang="es">Según un informe de CrowdStrike, los ataques de phishing generados con IA son ahora indistinguibles de comunicaciones reales, alcanzando tasas de éxito sin precedentes.</p>
+        <p data-lang="en">According to a CrowdStrike report, AI-generated phishing attacks are now indistinguishable from real communications, reaching unprecedented success rates.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-thumb-placeholder">🤝</div>
+      <div class="card-body">
+        <span class="card-tag" data-lang="es">NEGOCIOS</span>
+        <span class="card-tag" data-lang="en">BUSINESS</span>
+        <h3 data-lang="es">Agentes de IA ya manejan proyectos completos de software</h3>
+        <h3 data-lang="en">AI agents now manage complete software projects</h3>
+        <p data-lang="es">Startups como Devin AI y SWE-Agent reportan que sus agentes completan sprints enteros con revisión humana mínima. El rol del programador está evolucionando hacia arquitecto de IA.</p>
+        <p data-lang="en">Startups like Devin AI and SWE-Agent report their agents complete entire sprints with minimal human review. The developer role is evolving into AI architect.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CIBERSEGURIDAD SECTION -->
   <div class="section-header">
     <span class="section-icon">🔐</span>
     <h2 data-lang="es">Ciberseguridad & IA</h2>
     <h2 data-lang="en">Cybersecurity & AI</h2>
   </div>
 
-  <div class="grid">
-    <!-- FEATURED: Facebook video - Cybersecurity IA Mythos -->
-    <div class="card featured">
-      <div class="card-thumb-placeholder">🛡️</div>
-      <div class="card-body">
-        <span class="card-tag red" data-lang="es">🔴 NOTICIA DESTACADA</span>
-        <span class="card-tag red" data-lang="en">🔴 FEATURED NEWS</span>
-        <h3 data-lang="es">Ciberseguridad, IA y los Mythos: lo que nadie te está contando</h3>
-        <h3 data-lang="en">Cybersecurity, AI & the Mythos: what nobody is telling you</h3>
-        <p data-lang="es">
-          Un análisis profundo sobre cómo la inteligencia artificial está redefiniendo el panorama de la ciberseguridad global.
-          Los actores maliciosos ya usan IA para automatizar ataques, mientras los defensores luchan por mantenerse al día.
-          Este video revela los mitos más peligrosos que rodean a la IA en seguridad informática — y por qué importan.
-        </p>
-        <p data-lang="en">
-          A deep dive into how artificial intelligence is redefining the global cybersecurity landscape.
-          Malicious actors are already using AI to automate attacks, while defenders struggle to keep up.
-          This video exposes the most dangerous myths surrounding AI in information security — and why they matter.
-        </p>
-        <a class="card-link" href="https://www.facebook.com/share/v/1Cmyoeezo5/" target="_blank" rel="noopener">
-          ▶
-          <span data-lang-inline="es">Ver en Facebook</span>
-          <span data-lang-inline="en">Watch on Facebook</span>
-        </a>
-      </div>
-    </div>
-  </div>
-
   <div class="quote-box">
-    <span data-lang="es">"La IA no solo cambia cómo trabajamos — cambia quién nos ataca y cómo nos defienden."</span>
-    <span data-lang="en">"AI doesn't just change how we work — it changes who attacks us and how we're defended."</span>
-    <span>— Ciberseguridad IA Mythos</span>
+    <span data-lang="es">"La IA no solo cambia cómo trabajamos — cambia quién nos ataca y cómo nos defendemos."</span>
+    <span data-lang="en">"AI doesn't just change how we work — it changes who attacks us and how we defend ourselves."</span>
+    <cite>— Ciberseguridad IA Mythos</cite>
   </div>
 
-  <!-- SECTION 2: DEVELOPMENT & AI -->
-  <div class="section-header">
-    <span class="section-icon">🚀</span>
-    <h2 data-lang="es">El Futuro del Desarrollo</h2>
-    <h2 data-lang="en">The Future of Development</h2>
-  </div>
-
-  <div class="grid">
-    <!-- YouTube: Spec Driven Development -->
-    <div class="card featured">
-      <div class="card-thumb-placeholder">📐</div>
-      <div class="card-body">
-        <span class="card-tag green" data-lang="es">🟢 TENDENCIA</span>
-        <span class="card-tag green" data-lang="en">🟢 TRENDING</span>
-        <h3 data-lang="es">Spec Driven Development: el futuro de la programación</h3>
-        <h3 data-lang="en">Spec Driven Development: the future of programming</h3>
-        <p data-lang="es">
-          ¿Y si en vez de escribir código escribís especificaciones, y la IA programa por vos?
-          El <strong>Spec Driven Development</strong> es la metodología que está cambiando cómo los desarrolladores
-          interactúan con la inteligencia artificial. En este video se explora cómo definir lo que querés
-          antes de escribir una sola línea — y dejar que la IA haga el resto.
-          Un cambio de paradigma que todo programador necesita entender hoy.
-        </p>
-        <p data-lang="en">
-          What if instead of writing code you write specifications, and AI programs for you?
-          <strong>Spec Driven Development</strong> is the methodology reshaping how developers
-          interact with artificial intelligence. This video explores how to define what you want
-          before writing a single line — and let AI handle the rest.
-          A paradigm shift every programmer needs to understand today.
-        </p>
-        <a class="card-link" href="https://youtu.be/p2WA672HrdI?si=k2vWrlYoioGEN6A-" target="_blank" rel="noopener">
-          ▶
-          <span data-lang-inline="es">Ver en YouTube</span>
-          <span data-lang-inline="en">Watch on YouTube</span>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- FUN FACTS STRIP -->
-  <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:50px;">
-    <h3 style="font-size:1.1rem;font-weight:800;margin-bottom:16px;color:var(--accent);">
-      <span data-lang-inline="es">🤯 ¿Sabías que…?</span>
-      <span data-lang-inline="en">🤯 Did you know…?</span>
+  <!-- FUN FACTS -->
+  <div class="fun-facts">
+    <h3>
+      <span data-lang-inline="es">🤯 ¿Sabías que… (Mayo 2026)?</span>
+      <span data-lang-inline="en">🤯 Did you know… (May 2026)?</span>
     </h3>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;">
-      <div style="background:var(--tag-bg);border-radius:10px;padding:14px;text-align:center;">
-        <div style="font-size:2rem;margin-bottom:6px;">⚡</div>
-        <p style="font-size:0.82rem;color:var(--text);font-weight:600;" data-lang="es">GPT-4 procesa más palabras por segundo que cualquier humano puede leer en toda su vida</p>
-        <p style="font-size:0.82rem;color:var(--text);font-weight:600;" data-lang="en">GPT-4 processes more words per second than any human could read in their entire lifetime</p>
+    <div class="fun-facts-grid">
+      <div class="fact-item">
+        <div class="fact-icon">⚡</div>
+        <p data-lang="es">Claude Opus 4.7 responde preguntas complejas 3× más rápido que un experto humano</p>
+        <p data-lang="en">Claude Opus 4.7 answers complex questions 3× faster than a human expert</p>
       </div>
-      <div style="background:var(--tag-bg);border-radius:10px;padding:14px;text-align:center;">
-        <div style="font-size:2rem;margin-bottom:6px;">🔐</div>
-        <p style="font-size:0.82rem;color:var(--text);font-weight:600;" data-lang="es">El 80% de los ataques cibernéticos en 2024 usaron algún componente de IA</p>
-        <p style="font-size:0.82rem;color:var(--text);font-weight:600;" data-lang="en">80% of cyberattacks in 2024 used some AI component</p>
+      <div class="fact-item">
+        <div class="fact-icon">🔐</div>
+        <p data-lang="es">En Q1 2026, el 91% de los ataques avanzados usaron IA generativa como herramienta</p>
+        <p data-lang="en">In Q1 2026, 91% of advanced attacks used generative AI as a tool</p>
       </div>
-      <div style="background:var(--tag-bg);border-radius:10px;padding:14px;text-align:center;">
-        <div style="font-size:2rem;margin-bottom:6px;">💰</div>
-        <p style="font-size:0.82rem;color:var(--text);font-weight:600;" data-lang="es">Las empresas que adoptan IA en desarrollo reducen el tiempo de entrega hasta un 40%</p>
-        <p style="font-size:0.82rem;color:var(--text);font-weight:600;" data-lang="en">Companies that adopt AI in development reduce delivery time by up to 40%</p>
+      <div class="fact-item">
+        <div class="fact-icon">💰</div>
+        <p data-lang="es">El mercado global de IA superó los $500 billones en abril 2026</p>
+        <p data-lang="en">The global AI market surpassed $500 billion in April 2026</p>
       </div>
-      <div style="background:var(--tag-bg);border-radius:10px;padding:14px;text-align:center;">
-        <div style="font-size:2rem;margin-bottom:6px;">🌍</div>
-        <p style="font-size:0.82rem;color:var(--text);font-weight:600;" data-lang="es">Para 2030, la IA podría aportar $15.7 billones a la economía global</p>
-        <p style="font-size:0.82rem;color:var(--text);font-weight:600;" data-lang="en">By 2030, AI could contribute $15.7 trillion to the global economy</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- SECTION 3: MORE AI NEWS -->
-  <div class="section-header">
-    <span class="section-icon">🧠</span>
-    <h2 data-lang="es">Más sobre IA</h2>
-    <h2 data-lang="en">More on AI</h2>
-  </div>
-
-  <div class="grid">
-    <div class="card">
-      <div class="card-thumb-placeholder" style="height:140px;font-size:3rem;">🤖</div>
-      <div class="card-body">
-        <span class="card-tag blue" data-lang="es">ANÁLISIS</span>
-        <span class="card-tag blue" data-lang="en">ANALYSIS</span>
-        <h3 data-lang="es">¿La IA va a reemplazar a los programadores?</h3>
-        <h3 data-lang="en">Will AI replace programmers?</h3>
-        <p data-lang="es">La respuesta corta: no todavía. La respuesta larga: depende de qué tan rápido te adaptés.</p>
-        <p data-lang="en">The short answer: not yet. The long answer: it depends on how fast you adapt.</p>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-thumb-placeholder" style="height:140px;font-size:3rem;">🧩</div>
-      <div class="card-body">
-        <span class="card-tag" data-lang="es">TENDENCIA</span>
-        <span class="card-tag" data-lang="en">TREND</span>
-        <h3 data-lang="es">Los modelos de lenguaje grandes (LLMs) en 2025</h3>
-        <h3 data-lang="en">Large Language Models (LLMs) in 2025</h3>
-        <p data-lang="es">De GPT a Claude, Gemini y Llama: quién lidera la carrera de los modelos de IA este año.</p>
-        <p data-lang="en">From GPT to Claude, Gemini and Llama: who leads the AI model race this year.</p>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-thumb-placeholder" style="height:140px;font-size:3rem;">⚠️</div>
-      <div class="card-body">
-        <span class="card-tag red" data-lang="es">ALERTA</span>
-        <span class="card-tag red" data-lang="en">ALERT</span>
-        <h3 data-lang="es">Deepfakes y desinformación: el lado oscuro de la IA</h3>
-        <h3 data-lang="en">Deepfakes and disinformation: AI's dark side</h3>
-        <p data-lang="es">Cómo detectar contenido generado por IA y protegerte de la manipulación digital.</p>
-        <p data-lang="en">How to detect AI-generated content and protect yourself from digital manipulation.</p>
+      <div class="fact-item">
+        <div class="fact-icon">🌍</div>
+        <p data-lang="es">Latam tiene 4.2M de desarrolladores usando IA en su flujo diario de trabajo</p>
+        <p data-lang="en">LatAm has 4.2M developers using AI in their daily workflow</p>
       </div>
     </div>
   </div>
 
-  <!-- MEME SECTION -->
-  <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:30px;margin-bottom:50px;text-align:center;">
-    <p style="font-size:1rem;font-weight:800;margin-bottom:20px;color:var(--accent);">
-      <span data-lang-inline="es">😂 El estado del desarrollo en 2025</span>
-      <span data-lang-inline="en">😂 The state of development in 2025</span>
-    </p>
-    <div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;">
-      <div style="background:var(--bg);border:2px solid var(--border);border-radius:10px;padding:20px;max-width:200px;">
-        <div style="font-size:3rem;">👨‍💻</div>
-        <p style="font-size:0.8rem;font-weight:700;margin-top:8px;color:var(--text);" data-lang="es">Programador antes de la IA</p>
-        <p style="font-size:0.8rem;font-weight:700;margin-top:8px;color:var(--text);" data-lang="en">Developer before AI</p>
-        <p style="font-size:0.75rem;color:var(--sub);margin-top:4px;" data-lang="es">Escribe código, stackoverflowea, llora, repite</p>
-        <p style="font-size:0.75rem;color:var(--sub);margin-top:4px;" data-lang="en">Writes code, stackoverflow's, cries, repeats</p>
+  <!-- MEME -->
+  <div class="meme-box">
+    <h3>
+      <span data-lang-inline="es">😂 El estado del desarrollo en mayo 2026</span>
+      <span data-lang-inline="en">😂 The state of development in May 2026</span>
+    </h3>
+    <div class="meme-row">
+      <div class="meme-panel">
+        <span class="emoji">👨‍💻</span>
+        <strong data-lang="es">Dev antes de la IA</strong>
+        <strong data-lang="en">Dev before AI</strong>
+        <span data-lang="es">Escribe código, stackoverflowea, llora, repite</span>
+        <span data-lang="en">Writes code, stackoverflow's, cries, repeats</span>
       </div>
       <div style="font-size:2rem;display:flex;align-items:center;">➡️</div>
-      <div style="background:var(--bg);border:2px solid var(--accent);border-radius:10px;padding:20px;max-width:200px;">
-        <div style="font-size:3rem;">🧑‍✈️</div>
-        <p style="font-size:0.8rem;font-weight:700;margin-top:8px;color:var(--accent);" data-lang="es">Programador con IA</p>
-        <p style="font-size:0.8rem;font-weight:700;margin-top:8px;color:var(--accent);" data-lang="en">Developer with AI</p>
-        <p style="font-size:0.75rem;color:var(--sub);margin-top:4px;" data-lang="es">Escribe specs, revisa código, se lleva el crédito</p>
-        <p style="font-size:0.75rem;color:var(--sub);margin-top:4px;" data-lang="en">Writes specs, reviews code, takes the credit</p>
+      <div class="meme-panel active">
+        <span class="emoji">🧑‍✈️</span>
+        <strong data-lang="es" style="color:var(--accent);">Dev con Spec Driven + IA</strong>
+        <strong data-lang="en" style="color:var(--accent);">Dev with Spec Driven + AI</strong>
+        <span data-lang="es">Escribe specs, revisa PR, cobra el sueldo</span>
+        <span data-lang="en">Writes specs, reviews PRs, collects paycheck</span>
       </div>
     </div>
   </div>
@@ -552,9 +843,9 @@
 
 <footer>
   <p style="font-weight:700;font-size:1rem;margin-bottom:8px;color:var(--accent);">⚡ IANews</p>
-  <p data-lang="es">Mantenete al día con lo último en inteligencia artificial. Actualizado para vos.</p>
-  <p data-lang="en">Stay up to date with the latest in artificial intelligence. Updated for you.</p>
-  <p style="margin-top:12px;font-size:0.75rem;opacity:0.6;">© 2025 IANews · Hecho con 🤖 y ☕</p>
+  <p data-lang="es">Mantenete al día con lo último en inteligencia artificial.</p>
+  <p data-lang="en">Stay up to date with the latest in artificial intelligence.</p>
+  <p style="margin-top:12px;font-size:0.75rem;opacity:0.6;">© 2026 IANews · 15 mayo 2026 · Hecho con 🤖 y ☕</p>
 </footer>
 
 <script>
@@ -564,25 +855,22 @@
     body.classList.toggle('dark');
     const isDark = body.classList.contains('dark');
     const isEs = body.classList.contains('lang-es');
-    if (isEs) btn.textContent = isDark ? '☀️ Día' : '🌙 Noche';
-    else btn.textContent = isDark ? '☀️ Day' : '🌙 Night';
+    btn.textContent = isDark
+      ? (isEs ? '☀️ Día' : '☀️ Day')
+      : (isEs ? '🌙 Noche' : '🌙 Night');
   }
-
   function toggleLang() {
     const body = document.body;
     const btn = document.getElementById('lang-btn');
     const darkBtn = document.getElementById('dark-btn');
     const isDark = body.classList.contains('dark');
-
     if (body.classList.contains('lang-es')) {
-      body.classList.remove('lang-es');
-      body.classList.add('lang-en');
+      body.classList.replace('lang-es', 'lang-en');
       document.documentElement.lang = 'en';
       btn.textContent = '🌐 Español';
       darkBtn.textContent = isDark ? '☀️ Day' : '🌙 Night';
     } else {
-      body.classList.remove('lang-en');
-      body.classList.add('lang-es');
+      body.classList.replace('lang-en', 'lang-es');
       document.documentElement.lang = 'es';
       btn.textContent = '🌐 English';
       darkBtn.textContent = isDark ? '☀️ Día' : '🌙 Noche';

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Spec · 12 Variables de Ingreso · Hipoteca Azul</title>
+  <style>
+    :root {
+      --bg: #f0f4ff;
+      --card: #ffffff;
+      --text: #0f172a;
+      --sub: #475569;
+      --accent: #1d4ed8;
+      --accent2: #3b82f6;
+      --border: #cbd5e1;
+      --tag-bg: #dbeafe;
+      --tag-text: #1e40af;
+      --nav-bg: #1e3a8a;
+      --success: #059669;
+      --warn: #d97706;
+      --danger: #dc2626;
+      --shadow: 0 2px 12px rgba(30,58,138,0.08);
+    }
+    body.dark {
+      --bg: #0a0f1e;
+      --card: #111827;
+      --text: #e2e8f0;
+      --sub: #94a3b8;
+      --accent: #60a5fa;
+      --accent2: #93c5fd;
+      --border: #1e2d4a;
+      --tag-bg: #1e2d4a;
+      --tag-text: #93c5fd;
+      --nav-bg: #0f172a;
+      --shadow: 0 2px 12px rgba(0,0,0,0.4);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      transition: background 0.3s, color 0.3s;
+      line-height: 1.65;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--nav-bg);
+      color: #fff;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 58px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    .nav-brand { font-size: 1rem; font-weight: 800; letter-spacing: -0.3px; }
+    .nav-brand span { opacity: 0.65; font-weight: 400; font-size: 0.85rem; margin-left: 8px; }
+    .nav-controls { display: flex; gap: 8px; }
+    button {
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    button:hover { background: rgba(255,255,255,0.25); }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 60%, #2563eb 100%);
+      color: #fff;
+      padding: 48px 28px 40px;
+      text-align: center;
+    }
+    .hero-version {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 20px;
+      padding: 3px 14px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      margin-bottom: 14px;
+    }
+    .hero h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900; margin-bottom: 10px; }
+    .hero p { font-size: 0.95rem; opacity: 0.85; max-width: 520px; margin: 0 auto; }
+    .hero-meta {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .hero-chip {
+      background: rgba(255,255,255,0.15);
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    /* MAIN */
+    main { max-width: 960px; margin: 0 auto; padding: 36px 24px 60px; }
+
+    /* SECTION */
+    .spec-section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 24px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .spec-section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--tag-bg);
+    }
+    .spec-section-header h2 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.2px;
+    }
+    .section-num {
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      width: 26px; height: 26px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+    .spec-section-body { padding: 20px; }
+
+    /* TABLES */
+    .spec-table-wrap { overflow-x: auto; margin-top: 4px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    thead th {
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 0.8rem;
+      letter-spacing: 0.3px;
+    }
+    thead th:first-child { border-radius: 6px 0 0 0; }
+    thead th:last-child  { border-radius: 0 6px 0 0; }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--tag-bg); }
+    tbody td { padding: 10px 14px; color: var(--text); vertical-align: top; }
+    .mono {
+      font-family: 'Consolas', 'Courier New', monospace;
+      background: var(--tag-bg);
+      color: var(--accent);
+      border-radius: 5px;
+      padding: 2px 7px;
+      font-size: 0.84rem;
+    }
+
+    /* LOGIC STEPS */
+    .steps { list-style: none; counter-reset: steps; }
+    .steps li {
+      counter-increment: steps;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .steps li:last-child { border-bottom: none; }
+    .step-num {
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      min-width: 30px; height: 30px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.82rem;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+    .step-content strong { display: block; font-size: 0.9rem; color: var(--text); margin-bottom: 3px; }
+    .step-content span { font-size: 0.85rem; color: var(--sub); }
+
+    /* WARNING BOX */
+    .warn-box {
+      background: #fffbeb;
+      border: 1px solid #fbbf24;
+      border-left: 4px solid #f59e0b;
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 16px;
+      font-size: 0.88rem;
+      color: #78350f;
+    }
+    body.dark .warn-box { background: #2a1a00; border-color: #b45309; color: #fcd34d; }
+    .warn-box .warn-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+
+    /* EXCEPTION TABLE */
+    .exc-badge {
+      display: inline-block;
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .exc-badge.zero { background: #fee2e2; color: #991b1b; }
+    body.dark .exc-badge.zero { background: #3a0808; color: #fca5a5; }
+    .exc-badge.exclude { background: #fef3c7; color: #92400e; }
+    body.dark .exc-badge.exclude { background: #3a2200; color: #fde68a; }
+    .exc-badge.fill { background: #d1fae5; color: #065f46; }
+    body.dark .exc-badge.fill { background: #082a1a; color: #6ee7b7; }
+
+    /* CATALOG TAG */
+    .cat-yes {
+      display: inline-block;
+      background: #d1fae5; color: #065f46;
+      border-radius: 8px; padding: 3px 10px;
+      font-size: 0.78rem; font-weight: 700;
+    }
+    body.dark .cat-yes { background: #082a1a; color: #6ee7b7; }
+    .cat-no {
+      display: inline-block;
+      background: var(--tag-bg); color: var(--sub);
+      border-radius: 8px; padding: 3px 10px;
+      font-size: 0.78rem; font-weight: 600;
+    }
+
+    /* BREADCRUMB */
+    .breadcrumb {
+      font-size: 0.8rem;
+      color: var(--sub);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: var(--sub);
+      background: var(--card);
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-brand">
+    🏦 Hipoteca Azul
+    <span>Especificaciones Técnicas</span>
+  </div>
+  <div class="nav-controls">
+    <button onclick="document.body.classList.toggle('dark');this.textContent=document.body.classList.contains('dark')?'☀️ Día':'🌙 Noche'">🌙 Noche</button>
+    <a href="index.html" style="display:inline-block;border:1px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.12);color:#fff;border-radius:20px;padding:5px 14px;font-size:0.8rem;font-weight:600;text-decoration:none;">← IANews</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-version">ESPECIFICACIÓN · v1.0 · Mayo 2026</div>
+  <h1>Trámites Internos<br>12 Variables de Ingreso</h1>
+  <p>Regla de cálculo para la determinación del ingreso mensual de nómina del cliente en los últimos 6 meses.</p>
+  <div class="hero-meta">
+    <div class="hero-chip">📋 Proyecto: Hipoteca Azul</div>
+    <div class="hero-chip">⚙️ Tipo: Regla de Cálculo</div>
+    <div class="hero-chip">📅 Mayo 2026</div>
+    <div class="hero-chip">🔢 12 Variables</div>
+  </div>
+</div>
+
+<main>
+
+  <div class="breadcrumb">
+    <a href="index.html">IANews</a>
+    <span>›</span>
+    <span>Hipoteca Azul</span>
+    <span>›</span>
+    <span>12 Variables de Ingreso</span>
+  </div>
+
+  <!-- SECCIÓN 1: VARIABLES DE ENTRADA -->
+  <div class="spec-section">
+    <div class="spec-section-header">
+      <div class="section-num">1</div>
+      <h2>Variables de Entrada</h2>
+    </div>
+    <div class="spec-section-body">
+      <div class="spec-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Variable</th>
+              <th>Tipo de Dato</th>
+              <th>Longitud</th>
+              <th>Ejemplo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Transacciones de nómina del cliente</td>
+              <td>Numérico</td>
+              <td>10 posiciones, 2 decimales</td>
+              <td><span class="mono">1000000.00</span></td>
+            </tr>
+            <tr>
+              <td>Mes calendario de cada transacción</td>
+              <td>Numérico</td>
+              <td>2 posiciones</td>
+              <td><span class="mono">01</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 2: VARIABLES DE SALIDA -->
+  <div class="spec-section">
+    <div class="spec-section-header">
+      <div class="section-num">2</div>
+      <h2>Variables de Salida</h2>
+    </div>
+    <div class="spec-section-body">
+      <div class="spec-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Variable</th>
+              <th>Descripción</th>
+              <th>Tipo</th>
+              <th>Ejemplo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="mono">Ingreso_M1</span> … <span class="mono">Ingreso_M6</span></td>
+              <td>Ingreso nómina por mes. <strong>M6 = mes más reciente</strong></td>
+              <td>Numérico 10,2</td>
+              <td><span class="mono">1000000.00</span></td>
+            </tr>
+            <tr>
+              <td><span class="mono">Mes1</span> … <span class="mono">Mes6</span></td>
+              <td>Mes calendario al que corresponde cada ingreso</td>
+              <td>Numérico 2 pos</td>
+              <td><span class="mono">01</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 3: INSUMOS / CATÁLOGOS -->
+  <div class="spec-section">
+    <div class="spec-section-header">
+      <div class="section-num">3</div>
+      <h2>Insumos / Catálogos</h2>
+    </div>
+    <div class="spec-section-body">
+      <div class="spec-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Catálogo</th>
+              <th>Descripción</th>
+              <th>Parametrizable</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Catálogo de transacciones</strong></td>
+              <td>Define qué transacciones son válidas o inválidas para nómina. Alta y baja desde pestaña de Transacciones</td>
+              <td><span class="cat-yes">✓ Sí</span></td>
+            </tr>
+            <tr>
+              <td><strong>Catálogo de meses</strong></td>
+              <td>
+                <span class="mono">01</span> Enero ·
+                <span class="mono">02</span> Febrero ·
+                <span class="mono">03</span> Marzo ·
+                <span class="mono">04</span> Abril ·
+                <span class="mono">05</span> Mayo ·
+                <span class="mono">06</span> Junio ·
+                <span class="mono">07</span> Julio ·
+                <span class="mono">08</span> Agosto ·
+                … <span class="mono">12</span> Diciembre
+              </td>
+              <td><span class="cat-no">No</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 4: LÓGICA DE CÁLCULO -->
+  <div class="spec-section">
+    <div class="spec-section-header">
+      <div class="section-num">4</div>
+      <h2>Lógica de Cálculo</h2>
+    </div>
+    <div class="spec-section-body">
+      <ol class="steps">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <strong>Filtrar transacciones válidas</strong>
+            <span>Identificar del historial del cliente las transacciones que pertenecen al catálogo de nómina válido.</span>
+          </div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <strong>Agrupar por mes calendario</strong>
+            <span>Agrupar las transacciones válidas por mes completo usando el catálogo de meses.</span>
+          </div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <strong>Calcular ingreso mensual</strong>
+            <span>Sumar el monto de todas las transacciones válidas de cada mes → genera <span class="mono">Ingreso_M1</span> a <span class="mono">Ingreso_M6</span>.</span>
+          </div>
+        </li>
+        <li>
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <strong>Asignar mes calendario</strong>
+            <span>Asignar a cada <span class="mono">Ingreso_MX</span> su mes calendario correspondiente → genera <span class="mono">Mes1</span> a <span class="mono">Mes6</span>.</span>
+          </div>
+        </li>
+        <li>
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <strong>Establecer mes más reciente</strong>
+            <span><span class="mono">Ingreso_M6</span> y <span class="mono">Mes6</span> siempre corresponden al mes más reciente disponible.</span>
+          </div>
+        </li>
+      </ol>
+
+      <div class="warn-box">
+        <span class="warn-icon">⚠️</span>
+        <div>
+          <strong>Restricción importante:</strong> El cálculo debe considerar el <strong>mes completo</strong>.
+          No se deben incluir meses parciales en el período de evaluación.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 5: EXCEPCIONES -->
+  <div class="spec-section">
+    <div class="spec-section-header">
+      <div class="section-num">5</div>
+      <h2>Excepciones</h2>
+    </div>
+    <div class="spec-section-body">
+      <div class="spec-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Caso</th>
+              <th>Comportamiento esperado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mes sin transacciones válidas</td>
+              <td>
+                <span class="exc-badge zero">Ingreso_MX = 0.00</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Transacción fuera del catálogo válido</td>
+              <td>
+                <span class="exc-badge exclude">Se excluye del cálculo</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Menos de 6 meses disponibles</td>
+              <td>
+                <span class="exc-badge fill">Se completan los disponibles; los restantes quedan en 0.00</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESUMEN VISUAL -->
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-top:8px;">
+    <h3 style="font-size:1rem;font-weight:800;color:var(--accent);margin-bottom:16px;">📊 Resumen de Variables de Salida</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;">
+      <div style="background:var(--tag-bg);border-radius:10px;padding:12px;text-align:center;border:2px solid var(--border);">
+        <div style="font-size:0.72rem;color:var(--sub);font-weight:700;margin-bottom:6px;">MÁS ANTIGUO</div>
+        <div style="font-size:1rem;font-weight:900;color:var(--sub);" class="mono">M1</div>
+        <div style="font-size:0.7rem;color:var(--sub);margin-top:4px;">Ingreso_M1<br>Mes1</div>
+      </div>
+      <div style="background:var(--tag-bg);border-radius:10px;padding:12px;text-align:center;">
+        <div style="font-size:1rem;font-weight:900;color:var(--sub);" class="mono">M2</div>
+        <div style="font-size:0.7rem;color:var(--sub);margin-top:4px;">Ingreso_M2<br>Mes2</div>
+      </div>
+      <div style="background:var(--tag-bg);border-radius:10px;padding:12px;text-align:center;">
+        <div style="font-size:1rem;font-weight:900;color:var(--sub);" class="mono">M3</div>
+        <div style="font-size:0.7rem;color:var(--sub);margin-top:4px;">Ingreso_M3<br>Mes3</div>
+      </div>
+      <div style="background:var(--tag-bg);border-radius:10px;padding:12px;text-align:center;">
+        <div style="font-size:1rem;font-weight:900;color:var(--sub);" class="mono">M4</div>
+        <div style="font-size:0.7rem;color:var(--sub);margin-top:4px;">Ingreso_M4<br>Mes4</div>
+      </div>
+      <div style="background:var(--tag-bg);border-radius:10px;padding:12px;text-align:center;">
+        <div style="font-size:1rem;font-weight:900;color:var(--sub);" class="mono">M5</div>
+        <div style="font-size:0.7rem;color:var(--sub);margin-top:4px;">Ingreso_M5<br>Mes5</div>
+      </div>
+      <div style="background:var(--accent);border-radius:10px;padding:12px;text-align:center;border:2px solid var(--accent);">
+        <div style="font-size:0.72rem;color:rgba(255,255,255,0.75);font-weight:700;margin-bottom:6px;">MÁS RECIENTE</div>
+        <div style="font-size:1rem;font-weight:900;color:#fff;" class="mono">M6</div>
+        <div style="font-size:0.7rem;color:rgba(255,255,255,0.8);margin-top:4px;">Ingreso_M6<br>Mes6</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p style="font-weight:700;color:var(--accent);margin-bottom:6px;">🏦 Hipoteca Azul · Especificaciones Técnicas</p>
+  <p>Trámites Internos · Regla de Cálculo · 12 Variables de Ingreso · v1.0</p>
+  <p style="margin-top:8px;opacity:0.6;">© Mayo 2026 · <a href="index.html" style="color:var(--accent);">← Volver a IANews</a></p>
+</footer>
+</body>
+</html>
